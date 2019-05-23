@@ -68,12 +68,12 @@ A recipe website for people who are time-conscious but want to prepare food with
 | `get` | `/recipes/:id` | RecipeDetailPageComponent  | registered user | details of one recipe, if logged in - button to save recipe, show indicator if already saved, ability to add notes, ability to add feedback
 | `put` | `/recipes/:id` | RecipeDetailPageComponent  | registered user | details of one recipe, if logged in - button to save recipe, show indicator if already saved, ability to add notes, ability to add feedback
 | `delete` | `/recipes/:id` | na | registered user only | delete recipe
-| `get` | `/profile/:id` | ProfilePageComponent | registered user only | user details, created recipes, saved recipes
-| `put` | `/profile/:id` | ProfilePageComponent | registered user only | update display name, biography, and password
-| `delete` | `/profile/:id` | na | registered user only | delete user
-| `post` | `/profile/:id/pantry` | PantryPageComponent | registered user only | adds ingredients and their quantities
-| `put` | `/profile/:id/pantry` | PantryPageComponent | registered user only | updates ingredients and their quantities
-| `delete` | `/profile/:id/pantry` | PantryPageComponent | registered user only | deletes ingredients and their quantities
+| `get` | `/user/:id` | ProfilePageComponent | registered user only | user details, created recipes, saved recipes
+| `put` | `/user/:id` | ProfilePageComponent | registered user only | update display name, biography, and password
+| `delete` | `/user/:id` | na | registered user only | delete user
+| `post` | `/user/:id/pantry` | PantryPageComponent | registered user only | adds ingredients and their quantities
+| `put` | `/user/:id/pantry` | PantryPageComponent | registered user only | updates ingredients and their quantities
+| `delete` | `/user/:id/pantry` | PantryPageComponent | registered user only | deletes ingredients and their quantities
 | `get` | `**` | NotFoundPageComponent | all | 
 
 
@@ -204,12 +204,12 @@ levels: {[name, duration]}
 - POST /auth/logout
   - body: (empty)
   - 204
-- GET /profile/:id
+- GET /user/:id
   - id is valid (404)
   - id exists (404)
-- GET /profile/me/pantry
+- GET /user/me/pantry
   - 200 with user object
-- POST/PUT /profile/me/pantry
+- POST/PUT /user/me/pantry
   - body:
     - ingredient
     - quantity
@@ -217,7 +217,7 @@ levels: {[name, duration]}
     - ingredient is valid (400)
     - quantity is valid (400)
   - add to pantry if not there yet
-- DELETE /profile/me/pantry
+- DELETE /user/me/pantry
   - body:
     - ingredient
     - quantity
@@ -225,7 +225,10 @@ levels: {[name, duration]}
     - ingredient is valid (400)
     - quantity is valid (400)
   - remove from pantry
-- POST /profile/me/save
+- DELETE /user/me/delete
+  - removes user
+  - destroys sessions
+- POST /user/me/save
   - body:
     - recipeId
   - validation
@@ -233,7 +236,7 @@ levels: {[name, duration]}
     - id exists (404)
   - add to savedRecipes
   - updates user in session
-- DELETE /profile/me/save/:recipeId
+- DELETE /user/me/save/:recipeId
   - validation
     - id is valid (404)
     - id exists (404)

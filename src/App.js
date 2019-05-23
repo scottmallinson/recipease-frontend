@@ -1,10 +1,15 @@
 import React, { Component } from "react";
-import { Switch } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import Private from "./pages/Private";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
+import Recipes from "./views/Recipes";
+import RecipeCreate from "./views/RecipeCreate";
+import RecipeDetail from "./views/RecipeDetail";
+import Pantry from "./views/Pantry";
+import Profile from "./views/Profile";
+import Signup from "./views/Signup";
+import Login from "./views/Login";
+import Home from "./views/Home";
 
 import PrivateRoute from "./components/PrivateRoute";
 import AnonRoute from "./components/AnonRoute";
@@ -15,12 +20,19 @@ class App extends Component {
     return (
       <AuthProvider>
         <div className="container">
-          <h1>Basic React Authentication</h1>
+          <header>
+            <h1>App.js</h1>
+          </header>
           <Navbar />
           <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/recipes" component={Recipes} />
+            <Route exact path="/recipes/create" component={RecipeCreate} />
+            <Route exact path="/recipes/:id" component={RecipeDetail} />
             <AnonRoute path="/signup" component={Signup} />
             <AnonRoute path="/login" component={Login} />
-            <PrivateRoute path="/private" component={Private} />
+            <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute path="/pantry" component={Pantry} />
           </Switch>
         </div>
       </AuthProvider>

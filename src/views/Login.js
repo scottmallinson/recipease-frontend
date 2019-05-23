@@ -22,6 +22,7 @@ class Login extends Component {
     const { username, password } = this.state;
     return (
       <form onSubmit={this.handleFormSubmit}>
+        <h2>Login.js</h2>
         <label>Username:</label>
         <input
           type="text"
