@@ -53,13 +53,6 @@ class Pantry extends Component {
         <h2>Pantry.js</h2>
         <h1>Welcome {this.props.user.username}</h1>
         <p>This is your pantry</p>
-        {/* {this.state.pantry.map((item, index) => {
-          return (
-            <div key={index}>
-              <p><strong>{item.item}</strong> - {item.quantity}</p>
-            </div>
-          )
-        })} */}
         {
             this.state.pantry.map((item, index) => {
               return (
