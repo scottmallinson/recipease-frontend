@@ -1,10 +1,21 @@
 import React, { Component } from "react";
+import { withAuth } from "../lib/AuthProvider";
+import axios from "axios";
 
-export default class Recipes extends Component {
-  state = {
-    ingredients: [],
-    instructions: []
-  }
+class Recipes extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      creatorId: this.props.user._id,
+      name: '',
+      description: '',
+      photoUrl: '',
+      duration: '',
+      ingredients: [],
+      instructions: [],
+      servings: ''
+    }
+  } 
 
   addIngredient(e, items) {
     e.preventDefault();
@@ -58,9 +69,27 @@ export default class Recipes extends Component {
     })
   }
 
+  handleChange(e) {  
+    const {name, value} = e.target;
+    this.setState({[name]: value});
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     console.log(this.state);
+    const { creatorId, name, description, photoUrl, duration, ingredients, instructions, servings } = this.state;
+    axios.post('http://localhost:5000/recipes/create', {
+      creatorId,
+      name,
+      description,
+      photoUrl,
+      duration,
+      ingredients,
+      instructions,
+      servings
+    })
+    .then((response) => console.log(response))
+    .catch((error) => console.log(error));
   }
 
   render() {
@@ -68,10 +97,10 @@ export default class Recipes extends Component {
       <div>
         <h1>Page for creating a recipe</h1>
         <form>
-          <input type="text" name="name" placeholder="name" required />
-          <textarea name="description" placeholder="description" required></textarea>
-          <input type="text" name="duration" placeholder="duration" required />
-          <input type="text" name="servings" placeholder="servings" required />
+          <input type="text" name="name" placeholder="name" value={this.state.name} onChange={(e) => this.handleChange(e)} required />
+          <textarea name="description" placeholder="description" value={this.state.description} onChange={(e) => this.handleChange(e)} required></textarea>
+          <input type="text" name="duration" placeholder="duration" value={this.state.duration} onChange={(e) => this.handleChange(e)} required />
+          <input type="text" name="servings" placeholder="servings" value={this.state.servings} onChange={(e) => this.handleChange(e)} required />
           <h3>Ingredients</h3>
           {
             this.state.ingredients.map((ingredient, index) => {
@@ -103,3 +132,5 @@ export default class Recipes extends Component {
     );
   }
 }
+
+export default withAuth(Recipes);
