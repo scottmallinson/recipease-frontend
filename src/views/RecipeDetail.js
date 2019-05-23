@@ -7,7 +7,6 @@ export default class Recipes extends Component {
 
   render() {
     const { selectedRecipe } = this.state;
-    console.log(selectedRecipe);
     return (
       <div>
         <h1>{ selectedRecipe.name }</h1>
@@ -22,9 +21,9 @@ export default class Recipes extends Component {
         })}
         </ul>
         <ol>
-        {selectedRecipe.instructions.map((item) => {
+        {selectedRecipe.instructions.map((item, index) => {
           return (
-            <li>{item}</li>
+            <li key={index}>{item}</li>
           )
         })}
         </ol>

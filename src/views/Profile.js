@@ -8,7 +8,6 @@ class Pantry extends Component {
     this.state = {
       recipes: []
     }
-    console.log(this.props.user._id);
   }
 
   componentDidMount() {
@@ -21,7 +20,6 @@ class Pantry extends Component {
 
 
   render() {
-    console.log(this.state.recipes);
     return (
       <div>
         <h2>Profile.js</h2>
