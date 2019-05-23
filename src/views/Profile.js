@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "../lib/AuthProvider";
 const axios = require('axios');
-class Pantry extends Component {
+class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -17,7 +17,6 @@ class Pantry extends Component {
     })
     .catch((error) => console.log(error))
   }
-
 
   render() {
     return (
@@ -39,4 +38,4 @@ class Pantry extends Component {
   }
 }
 
-export default withAuth(Pantry);
+export default withAuth(Profile);
