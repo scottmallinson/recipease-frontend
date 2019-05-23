@@ -68,12 +68,12 @@ A recipe website for people who are time-conscious but want to prepare food with
 | `get` | `/recipes/:id` | RecipeDetailPageComponent  | registered user | details of one recipe, if logged in - button to save recipe, show indicator if already saved, ability to add notes, ability to add feedback
 | `put` | `/recipes/:id` | RecipeDetailPageComponent  | registered user | details of one recipe, if logged in - button to save recipe, show indicator if already saved, ability to add notes, ability to add feedback
 | `delete` | `/recipes/:id` | na | registered user only | delete recipe
-| `get` | `/user/:id` | ProfilePageComponent | registered user only | user details, created recipes, saved recipes
-| `put` | `/user/:id` | ProfilePageComponent | registered user only | update display name, biography, and password
-| `delete` | `/user/:id` | na | registered user only | delete user
-| `post` | `/user/:id/pantry` | PantryPageComponent | registered user only | adds ingredients and their quantities
-| `put` | `/user/:id/pantry` | PantryPageComponent | registered user only | updates ingredients and their quantities
-| `delete` | `/user/:id/pantry` | PantryPageComponent | registered user only | deletes ingredients and their quantities
+| `get` | `/profile/:id` | ProfilePageComponent | registered user only | user details, created recipes, saved recipes
+| `put` | `/profile/:id` | ProfilePageComponent | registered user only | update display name, biography, and password
+| `delete` | `/profile/:id` | na | registered user only | delete user
+| `post` | `/profile/:id/pantry` | PantryPageComponent | registered user only | adds ingredients and their quantities
+| `put` | `/profile/:id/pantry` | PantryPageComponent | registered user only | updates ingredients and their quantities
+| `delete` | `/profile/:id/pantry` | PantryPageComponent | registered user only | deletes ingredients and their quantities
 | `get` | `**` | NotFoundPageComponent | all | 
 
 
