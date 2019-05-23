@@ -25,14 +25,14 @@ class App extends Component {
           </header>
           <Navbar />
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/recipes" component={Recipes} />
-            <Route exact path="/recipes/create" component={RecipeCreate} />
+            <PrivateRoute exact path="/recipes/create" component={RecipeCreate} />
             <Route exact path="/recipes/:id" component={RecipeDetail} />
             <AnonRoute path="/signup" component={Signup} />
             <AnonRoute path="/login" component={Login} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/pantry" component={Pantry} />
+            <Route exact path="/recipes" component={Recipes} />
+            <Route exact path="/" component={Home} />
           </Switch>
         </div>
       </AuthProvider>
