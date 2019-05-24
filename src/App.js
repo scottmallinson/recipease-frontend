@@ -26,7 +26,7 @@ class App extends Component {
           <Navbar />
           <Switch>
             <PrivateRoute exact path="/recipes/create" component={RecipeCreate} />
-            <Route exact path="/recipes/:id" component={RecipeDetail} />
+            <AnonRoute exact path="/recipes/:id" component={RecipeDetail} />
             <AnonRoute path="/signup" component={Signup} />
             <AnonRoute path="/login" component={Login} />
             <PrivateRoute path="/profile" component={Profile} />
