@@ -33,9 +33,10 @@ class Recipes extends Component {
 
   handleItemRemove(e, index) {
     e.preventDefault();
+    console.log(this.state.ingredients[index]);
     this.state.ingredients.splice(index, 1);
     this.setState({
-      ingredients: this.state.pingredientsantry
+      ingredients: this.state.ingredients
     })
   }
 
