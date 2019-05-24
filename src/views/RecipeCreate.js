@@ -11,42 +11,41 @@ class Recipes extends Component {
       description: '',
       photoUrl: '',
       duration: '',
-      ingredients: [],
+      ingredients: [{
+        name: '',
+        quantity: ''
+      }],
       instructions: [],
       servings: ''
     }
   } 
 
-  addIngredient(e, items) {
-    e.preventDefault();
-    this.setState({
-      ingredients: [...this.state.ingredients, '']
-    })
-  }
-
-  handleIngredientChange(e, inputIndex) {
+  handleItemChange(e, inputIndex) {
     const {ingredients} = this.state;
     let newIngredients = [...ingredients];
     newIngredients.map((_, index, newIngredients)=>{
-      return index === inputIndex ? newIngredients[index] = e.target.value : null;
+      return index === inputIndex ? newIngredients[index][e.target.name] = e.target.value : null;
     })
     this.setState({
       ingredients: newIngredients,
     })
   }
 
-  handleIngredientRemove(e, index) {
+  handleItemRemove(e, index) {
     e.preventDefault();
     this.state.ingredients.splice(index, 1);
     this.setState({
-      ingredients: this.state.ingredients
+      ingredients: this.state.pingredientsantry
     })
   }
 
-  addInstruction(e, items) {
+  addItem(e, items) {
     e.preventDefault();
     this.setState({
-      instructions: [...this.state.instructions, '']
+      ingredients: [...this.state.ingredients, {
+        name: '',
+        quantity: ''
+      }]
     })
   }
 
@@ -69,27 +68,29 @@ class Recipes extends Component {
     })
   }
 
-  handleChange(e) {  
-    const {name, value} = e.target;
-    this.setState({[name]: value});
+  addInstruction(e, items) {
+    e.preventDefault();
+    this.setState({
+      instructions: [...this.state.instructions, '']
+    })
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
-    const { creatorId, name, description, photoUrl, duration, ingredients, instructions, servings } = this.state;
-    axios.post('http://localhost:5000/recipes/create', {
-      creatorId,
-      name,
-      description,
-      photoUrl,
-      duration,
-      ingredients,
-      instructions,
-      servings
-    })
-    .then((response) => console.log(response))
-    .catch((error) => console.log(error));
+    console.log(this.state.ingredients, this.state.instructions);
+    // const { creatorId, name, description, photoUrl, duration, ingredients, instructions, servings } = this.state;
+    // axios.post('http://localhost:5000/recipes/create', {
+    //   creatorId,
+    //   name,
+    //   description,
+    //   photoUrl,
+    //   duration,
+    //   ingredients,
+    //   instructions,
+    //   servings
+    // })
+    // .then((response) => console.log(response))
+    // .catch((error) => console.log(error));
   }
 
   render() {
@@ -106,13 +107,14 @@ class Recipes extends Component {
             this.state.ingredients.map((ingredient, index) => {
               return (
                 <div key={index}>
-                  <input onChange={(e) => this.handleIngredientChange(e, index)} value={ingredient} />
-                  <button onClick={(e) => this.handleIngredientRemove(e, index)}>Remove</button>
+                  <input onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" />
+                  <input onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" />
+                  <button onClick={(e) => this.handleItemRemove(e, index)}>Remove</button>
                 </div>
               )
             })
           }
-          <button onClick={(e) => this.addIngredient(e)}>Add ingredient</button>
+          <button onClick={(e) => this.addItem(e)}>Add ingredient</button>
           <h3>Instructions</h3>
           {
             this.state.instructions.map((instruction, index) => {
