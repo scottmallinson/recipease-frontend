@@ -25,7 +25,6 @@ class App extends Component {
             <h1>App.js</h1>
           </header>
           <Navbar />
-          {/* <Search /> */}
           <Switch>
             <PrivateRoute exact path="/recipes/create" component={RecipeCreate} />
             <Route exact path="/recipes/:id" component={RecipeDetail} />
