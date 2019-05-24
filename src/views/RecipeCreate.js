@@ -60,6 +60,11 @@ class Recipes extends Component {
     })
   }
 
+  handleChange = (event) => {  
+    const {name, value} = event.target;
+    this.setState({[name]: value});
+  }
+
   handleInstructionRemove(e, index) {
     e.preventDefault();
     this.state.instructions.splice(index, 1);
@@ -78,19 +83,19 @@ class Recipes extends Component {
   handleSubmit(e) {
     e.preventDefault();
     console.log(this.state.ingredients, this.state.instructions);
-    // const { creatorId, name, description, photoUrl, duration, ingredients, instructions, servings } = this.state;
-    // axios.post('http://localhost:5000/recipes/create', {
-    //   creatorId,
-    //   name,
-    //   description,
-    //   photoUrl,
-    //   duration,
-    //   ingredients,
-    //   instructions,
-    //   servings
-    // })
-    // .then((response) => console.log(response))
-    // .catch((error) => console.log(error));
+    const { creatorId, name, description, photoUrl, duration, ingredients, instructions, servings } = this.state;
+    axios.post('http://localhost:5000/recipes/create', {
+      creatorId,
+      name,
+      description,
+      photoUrl,
+      duration,
+      ingredients,
+      instructions,
+      servings
+    })
+    .then((response) => console.log(response))
+    .catch((error) => console.log(error));
   }
 
   render() {
