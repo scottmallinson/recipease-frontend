@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
+import Search from "./..//components/Search";
 const axios = require("axios");
 
 export default class Home extends Component {
-  constructor() {
-    super()
-    this.state = {
+  state = {
       recipes: []
-    }
   }
 
   componentDidMount() {
@@ -20,6 +18,7 @@ export default class Home extends Component {
   render() {
     return (
       <div>
+        <Search />
         <h1>Home</h1>
         {this.state.recipes.map((recipe) => 
           <Link key={recipe._id} to={{
