@@ -13,7 +13,7 @@ class Pantry extends Component {
     const {pantry} = this.state;
     let newPantry = [...pantry];
     newPantry.map((_, index, newPantry)=>{
-      return index === inputIndex ? newPantry[index] = e.target.value : null;
+      return index === inputIndex ? newPantry[index][e.target.name] = e.target.value : null;
     })
     this.setState({
       pantry: newPantry,
@@ -31,23 +31,26 @@ class Pantry extends Component {
   addItem(e, items) {
     e.preventDefault();
     this.setState({
-      pantry: [...this.state.pantry, '']
+      pantry: [...this.state.pantry, {
+        item: '',
+        quantity: ''
+      }]
     })
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
+    const { _id } = this.props.user;
     const { pantry } = this.state;
     axios.put('http://localhost:5000/user/pantry', {
+      _id,
       pantry
     })
-    .then((response) => console.log(response))
+    .then(() => this.props.user.pantry = pantry)
     .catch((error) => console.log(error));
   }
 
   render() {
-    console.log(this.props.user.pantry);
     return (
       <div>
         <h2>Pantry.js</h2>
@@ -57,7 +60,8 @@ class Pantry extends Component {
             this.state.pantry.map((item, index) => {
               return (
                 <div key={index}>
-                  <input onChange={(e) => this.handleItemChange(e, index)} value={item.item} />
+                  <input onChange={(e) => this.handleItemChange(e, index)} value={item.item} name="item"/>
+                  <input onChange={(e) => this.handleItemChange(e, index)} value={item.quantity} name="quantity"/>
                   <button onClick={(e) => this.handleItemRemove(e, index)}>Remove</button>
                 </div>
               )
