@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
+import { withAuth } from './../lib/AuthProvider';
 const axios = require("axios");
 
-export default class Recipes extends Component {
+class Recipes extends Component {
   constructor() {
     super()
     this.state = {
@@ -34,3 +35,5 @@ export default class Recipes extends Component {
     );
   }
 }
+
+export default withAuth(Recipes);
