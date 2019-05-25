@@ -140,9 +140,9 @@ class RecipeDetail extends Component {
             <p>Duration: {this.state.duration}</p>
             <p>Servings: {this.state.servings}</p>
             <ul>
-            {this.state.ingredients.map((item) => {
+            {this.state.ingredients.map((item, index) => {
               return (
-                <li key={item._id}><strong>{item.name}</strong> - {item.quantity}</li>
+                <li key={index}><strong>{item.quantity}</strong> {item.name}</li>
               )
             })}
             </ul>
@@ -165,8 +165,8 @@ class RecipeDetail extends Component {
             this.state.ingredients.map((ingredient, index) => {
               return (
                 <div key={index}>
-                  <input onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" />
                   <input onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" />
+                  <input onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" />
                   <button onClick={(e) => this.handleItemRemove(e, index)}>Remove</button>
                 </div>
               )
