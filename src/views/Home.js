@@ -1,24 +1,35 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import Search from "./..//components/Search";
+import { withAuth } from './../lib/AuthProvider';
 const axios = require("axios");
 
-export default class Home extends Component {
-  state = {
-      recipes: []
+class Home extends Component {
+  constructor(props){
+    const pantryContents = (pantryItems) => { 
+      return pantryItems.map((item) => item.item )
+    } 
+    super(props)
+    this.state = {
+      recipes: [],
+      pantry: pantryContents(this.props.user.pantry)
+    }
   }
 
   componentDidMount() {
     axios.get('http://localhost:5000/recipes/')
     .then(({ data }) => {
-      this.setState({recipes: data})
+      this.setState({
+        recipes: data
+      })
     })
     .catch((error) => console.log(error)) 
   }
+
   render() {
     return (
       <div>
-        <Search />
+        <Search pantry={this.state.pantry} />
         <h1>Home</h1>
         {this.state.recipes.map((recipe) => 
           <Link key={recipe._id} to={{
@@ -33,3 +44,5 @@ export default class Home extends Component {
     );
   }
 }
+
+export default withAuth(Home);

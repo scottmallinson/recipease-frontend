@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Search from "./..//components/Search";
 import { withAuth } from "../lib/AuthProvider";
 const axios = require('axios');
 class Pantry extends Component {
@@ -54,6 +55,7 @@ class Pantry extends Component {
     return (
       <div>
         <h2>Pantry.js</h2>
+        <Search pantry={this.state.pantry} />
         <h1>Welcome {this.props.user.username}</h1>
         <p>This is your pantry</p>
         {
