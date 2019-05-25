@@ -14,7 +14,6 @@ class Profile extends Component {
   componentDidMount() {
     axios.get(`http://localhost:5000/user/profile/${this.props.user._id}`)
     .then(({data}) => {
-      console.log(data)
       this.setState({createdRecipes: data.createdRecipes, savedRecipes: data.savedRecipes})
     })
     .catch((error) => console.log(error))
