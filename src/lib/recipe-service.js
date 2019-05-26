@@ -38,6 +38,12 @@ class RecipeService {
       .then(({ data }) => data)
   }
 
+  getRecipeById(id) {
+    return this.recipe
+      .get(`/${id}`)
+      .then(({ data }) => data)
+  } 
+
   search(query) {
     return this.recipe
       .get(`/search?s=${query}`)
