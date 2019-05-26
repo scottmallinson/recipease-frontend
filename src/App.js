@@ -20,7 +20,7 @@ class App extends Component {
       <AuthProvider>
         <div className="container">
           <header>
-            <h1>App.js</h1>
+            <h1>Recipease</h1>
           </header>
           <Navbar />
           <Switch>
