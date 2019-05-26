@@ -10,7 +10,9 @@ class Pantry extends Component {
     super(props)
     this.state = {
       pantry: [],
-      recipes: []
+      recipes: [],
+      selectedIngredients: [],
+      performSearch: false
     }
   }
 
@@ -62,13 +64,36 @@ class Pantry extends Component {
   handleLucky = (e) => {
     e.preventDefault();
     const searchForItems = this.state.pantry;
+    const ingredients = searchForItems.map((items) => items.item);
     recipe.recipesByAllIngredients({
-      searchForItems
+      ingredients
     })
       .then((data) => {
         this.setState({ recipes: data })
       })
       .catch((error) => console.log(error));
+  }
+
+  handleSearchByIngredients = (e) => {
+    e.preventDefault();
+    const searchForItems = this.state.selectedIngredients
+    recipe.recipesByAllIngredients({
+      searchForItems
+    })
+      .then((data) => {
+        this.setState({ recipes: data, performSearch: true })
+      })
+      .catch((error) => console.log(error));
+  }
+
+  handleCheckChange = (e) => {
+    let positionInArray = null;
+    if (!this.state.selectedIngredients.includes(e.target.name)) {
+      this.state.selectedIngredients.push(e.target.name)
+    } else {
+      positionInArray = this.state.selectedIngredients.indexOf(e.target.name)
+      this.state.selectedIngredients.splice(positionInArray, 1)
+    }
   }
 
   componentDidMount() {
@@ -94,6 +119,7 @@ class Pantry extends Component {
               <div key={index}>
                 <input onChange={(e) => this.handleItemChange(e, index)} value={item.item} name="item" />
                 <input onChange={(e) => this.handleItemChange(e, index)} value={item.quantity} name="quantity" />
+                <input type="checkbox" name={item.item} onChange={(e) => this.handleCheckChange(e, index)} />
                 <button onClick={(e) => this.handleItemRemove(e, index)}>Remove</button>
               </div>
             )
@@ -101,7 +127,11 @@ class Pantry extends Component {
         }
         <button onClick={(e) => this.addItem(e)}>Add item</button>
         <button onClick={(e) => this.handleSubmit(e)}>Save items</button>
-        <button onClick={(e) => this.handleLucky(e)}>Find a recipe with pantry ingredients</button>
+        {/* <button onClick={(e) => this.handleLucky(e)}>Find a recipe with pantry ingredients</button> */}
+        <button onClick={(e) => this.handleSearchByIngredients(e)}>Find a recipe with the selected ingredients</button>
+        {this.state.performSearch ?
+        <h2>{this.state.recipes.length} recipes uses the selected ingredients</h2>
+        : null }
         {this.state.recipes.map((recipe) => {
           return (
             <Link key={recipe._id._id} to={{
