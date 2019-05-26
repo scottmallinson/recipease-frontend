@@ -105,8 +105,7 @@ class Pantry extends Component {
         {this.state.recipes.map((recipe) => {
           return (
             <Link key={recipe._id._id} to={{
-              pathname: `/recipes/${recipe._id._id}`,
-              state: { selectedRecipe: recipe._id }
+              pathname: `/recipes/${recipe._id._id}`
             }}>
               <h1>{recipe._id.name}</h1>
               <p>{recipe._id.description}</p>
