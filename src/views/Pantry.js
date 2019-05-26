@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import Search from "./..//components/Search";
 import { withAuth } from "../lib/AuthProvider";
 const axios = require('axios');
@@ -6,7 +7,8 @@ class Pantry extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      pantry: this.props.user.pantry
+      pantry: this.props.user.pantry,
+      recipes: []
     }
   } 
 
@@ -47,8 +49,34 @@ class Pantry extends Component {
       _id,
       pantry
     })
-    .then(() => this.props.user.pantry = pantry)
+    .then((response) => {
+      this.setState({
+        pantry: response.data.pantry
+      })
+    })
+    // .then((response) => this.props.user.pantry = pantry)
     .catch((error) => console.log(error));
+  }
+
+  handleLucky = (e) => {
+    e.preventDefault();
+    const searchForItems = this.state.pantry;
+    axios.post('http://localhost:5000/recipes/search', {
+      searchForItems
+    })
+    .then(({ data }) => {
+      // console.log('data from query', data)
+      this.setState({recipes: data})
+    })
+    .catch((error) => console.log(error));
+  }
+
+  componentDidMount() {
+    //console.log(this.state.pantry);
+  }
+
+  componentDidUpdate() {
+    console.log(this.state.pantry);
   }
 
   render() {
@@ -71,6 +99,22 @@ class Pantry extends Component {
           }
           <button onClick={(e) => this.addItem(e)}>Add item</button>
           <button onClick={(e) => this.handleSubmit(e)}>Save items</button> 
+          <button onClick={(e) => this.handleLucky(e)}>Find a recipe with pantry ingredients</button>
+          {this.state.recipes.map((recipe) => {
+            return (
+            <Link key={recipe._id._id} to={{
+              pathname: `/recipes/${recipe._id._id}`,
+              state: { selectedRecipe: recipe._id }
+            }}>
+              <h1>{recipe._id.name}</h1>
+              <p>{recipe._id.description}</p>
+            </Link> )
+            {/* console.log('recipe map', recipe._id)
+            console.log('recipe map _id', recipe._id._id)
+            console.log('recipe map name', recipe._id.name)
+            console.log('recipe map description', recipe._id.description)  */}
+            }
+          )}
       </div>
     );
   }
