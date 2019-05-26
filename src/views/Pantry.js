@@ -54,7 +54,6 @@ class Pantry extends Component {
         pantry: response.data.pantry
       })
     })
-    // .then((response) => this.props.user.pantry = pantry)
     .catch((error) => console.log(error));
   }
 
@@ -65,18 +64,9 @@ class Pantry extends Component {
       searchForItems
     })
     .then(({ data }) => {
-      // console.log('data from query', data)
       this.setState({recipes: data})
     })
     .catch((error) => console.log(error));
-  }
-
-  componentDidMount() {
-    //console.log(this.state.pantry);
-  }
-
-  componentDidUpdate() {
-    console.log(this.state.pantry);
   }
 
   render() {
@@ -109,10 +99,6 @@ class Pantry extends Component {
               <h1>{recipe._id.name}</h1>
               <p>{recipe._id.description}</p>
             </Link> )
-            {/* console.log('recipe map', recipe._id)
-            console.log('recipe map _id', recipe._id._id)
-            console.log('recipe map name', recipe._id.name)
-            console.log('recipe map description', recipe._id.description)  */}
             }
           )}
       </div>
