@@ -80,7 +80,7 @@ class AuthProvider extends Component {
           user
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   logout = () => {
@@ -92,25 +92,25 @@ class AuthProvider extends Component {
           user: null
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
   render() {
     const { isLoading, isLoggedin, user } = this.state;
     return isLoading ? (
       <div>Loading</div>
     ) : (
-      <Provider
-        value={{
-          isLoggedin,
-          user,
-          login: this.login,
-          logout: this.logout,
-          signup: this.signup
-        }}
-      >
-        {this.props.children}
-      </Provider>
-    );
+        <Provider
+          value={{
+            isLoggedin,
+            user,
+            login: this.login,
+            logout: this.logout,
+            signup: this.signup
+          }}
+        >
+          {this.props.children}
+        </Provider>
+      );
   }
 }
 

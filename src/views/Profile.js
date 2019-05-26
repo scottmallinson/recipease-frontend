@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "../lib/AuthProvider";
-const axios = require('axios');
+import user from '../lib/user-service';
+
 class Profile extends Component {
   constructor(props) {
     super(props)
@@ -12,11 +13,13 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:5000/user/profile/${this.props.user._id}`)
-    .then(({data}) => {
-      this.setState({createdRecipes: data.createdRecipes, savedRecipes: data.savedRecipes})
-    })
-    .catch((error) => console.log(error))
+    console.log('user ID', this.props.user._id)
+    console.log('this.state', this.state)
+    user.getUser(this.props.user._id)
+      .then((data) => {
+        this.setState({ createdRecipes: data.createdRecipes, savedRecipes: data.savedRecipes })
+      })
+      .catch((error) => console.log(error))
   }
 
   render() {
@@ -26,7 +29,7 @@ class Profile extends Component {
         <h1>This is {this.props.user.username}'s profile</h1>
         <button>Edit profile</button>
         <h2>Created recipes</h2>
-        {this.state.createdRecipes.map((recipe) => 
+        {this.state.createdRecipes.map((recipe) =>
           <Link key={recipe._id} to={{
             pathname: `/recipes/${recipe._id}`,
             state: { selectedRecipe: recipe }
@@ -36,7 +39,7 @@ class Profile extends Component {
           </Link>
         )}
         <h2>Saved recipes</h2>
-        {this.state.savedRecipes.map((recipe) => 
+        {this.state.savedRecipes.map((recipe) =>
           <Link key={recipe._id} to={{
             pathname: `/recipes/${recipe._id}`,
             state: { selectedRecipe: recipe }
