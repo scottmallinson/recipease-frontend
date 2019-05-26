@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { withAuth } from './../lib/AuthProvider';
-const axios = require("axios");
+import recipe from '../lib/recipe-service';
 
 class Recipes extends Component {
   constructor() {
@@ -12,17 +12,18 @@ class Recipes extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/recipes/')
-    .then(({ data }) => {
-      this.setState({recipes: data})
-    })
-    .catch((error) => console.log(error)) 
+    recipe.getAllRecipes()
+      .then((data) => {
+        this.setState({ recipes: data })
+      })
+      .catch((error) => console.log(error))
   }
+  
   render() {
     return (
       <div>
         <h1>Recipes</h1>
-        {this.state.recipes.map((recipe) => 
+        {this.state.recipes.map((recipe) =>
           <Link key={recipe._id} to={{
             pathname: `/recipes/${recipe._id}`,
             state: { selectedRecipe: recipe }
