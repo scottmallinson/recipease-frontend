@@ -5,17 +5,9 @@ import recipe from '../lib/recipe-service';
 class RecipeDetail extends Component {
   constructor(props) {
     super(props)
-    const { _id, creatorId, name, description, photoUrl, duration, ingredients, instructions, servings } = this.props.location.state.selectedRecipe;
     this.state = {
-      _id,
-      creatorId,
-      name,
-      description,
-      photoUrl,
-      duration,
-      ingredients,
-      instructions,
-      servings,
+      _id: this.props.match.params.id,
+      hasRecipe: false,
       editable: false,
       editing: false
     }
@@ -119,6 +111,23 @@ class RecipeDetail extends Component {
   }
 
   componentDidMount() {
+    recipe.getRecipeById(this.state._id)
+      .then((response) => {
+        const { creatorId, name, description, photoUrl, duration, ingredients, instructions, servings } = response
+        this.setState({
+          creatorId,
+          name,
+          description,
+          photoUrl,
+          duration,
+          ingredients,
+          instructions,
+          servings,
+          hasRecipe: true
+        })
+      })
+      .catch((error) => console.log(error))
+    
     if (this.props.user) {
       if (this.props.user._id === this.state.creatorId) {
         this.setState({
@@ -130,6 +139,7 @@ class RecipeDetail extends Component {
 
   render() {
     return (
+      !this.state.hasRecipe ? null :
       <div>
         <h1>{this.state.name}</h1>
         {this.state.editable ? <button onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
