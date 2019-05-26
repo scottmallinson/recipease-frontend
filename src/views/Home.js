@@ -33,7 +33,7 @@ class Home extends Component {
             pathname: `/recipes/${recipe._id}`,
             state: { selectedRecipe: recipe }
           }}>
-            <h1>{recipe.name}</h1>
+            <h2>{recipe.name}</h2>
             <p>{recipe.description}</p>
           </Link>
         )}

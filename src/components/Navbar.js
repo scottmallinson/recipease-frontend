@@ -16,7 +16,7 @@ class Navbar extends Component {
             <Link to="/recipes/create">Add a recipe</Link>
             <Link to="/profile">Profile</Link>
             <Link to="/pantry">Pantry</Link>
-            <button onClick={logout}>Logout</button>
+            <button className="btn btn-primary" type="submit" onClick={logout}>Logout</button>
           </>
         ) : (
           <>

@@ -125,81 +125,79 @@ class RecipeDetail extends Component {
           servings,
           hasRecipe: true
         })
+        if (this.props.user._id === this.state.creatorId) {
+          this.setState({
+            editable: true
+          })
+        }
       })
-      .catch((error) => console.log(error))
-    
-    if (this.props.user) {
-      if (this.props.user._id === this.state.creatorId) {
-        this.setState({
-          editable: true
-        })
-      }
-    }
+      .catch((error) => console.log(error))    
   }
 
   render() {
+    console.log(this.state);
     return (
       !this.state.hasRecipe ? null :
-      <div>
-        <h1>{this.state.name}</h1>
-        {this.state.editable ? <button onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
-        <button onClick={(e) => this.handleSaveRecipe(e)}>Save recipe</button>
-        {!this.state.editing ?
-          <>
-            <p>{this.state.description}</p>
-            <p>Duration: {this.state.duration}</p>
-            <p>Servings: {this.state.servings}</p>
-            <ul>
-              {this.state.ingredients.map((item, index) => {
-                return (
-                  <li key={index}><strong>{item.quantity}</strong> {item.name}</li>
-                )
-              })}
-            </ul>
-            <ol>
-              {this.state.instructions.map((item, index) => {
-                return (
-                  <li key={index}>{item}</li>
-                )
-              })}
-            </ol>
-          </>
-          :
-          <form>
-            <input type="text" name="name" placeholder="name" value={this.state.name} onChange={(e) => this.handleChange(e)} required />
-            <textarea name="description" placeholder="description" value={this.state.description} onChange={(e) => this.handleChange(e)} required></textarea>
-            <input type="text" name="duration" placeholder="duration" value={this.state.duration} onChange={(e) => this.handleChange(e)} required />
-            <input type="text" name="servings" placeholder="servings" value={this.state.servings} onChange={(e) => this.handleChange(e)} required />
-            <h3>Ingredients</h3>
-            {
-              this.state.ingredients.map((ingredient, index) => {
-                return (
-                  <div key={index}>
-                    <input onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" />
-                    <input onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" />
-                    <button onClick={(e) => this.handleItemRemove(e, index)}>Remove</button>
-                  </div>
-                )
-              })
-            }
-            <button onClick={(e) => this.addItem(e)}>Add ingredient</button>
-            <h3>Instructions</h3>
-            {
-              this.state.instructions.map((instruction, index) => {
-                return (
-                  <div key={index}>
-                    <input onChange={(e) => this.handleInstructionChange(e, index)} value={instruction} />
-                    <button onClick={(e) => this.handleInstructionRemove(e, index)}>Remove</button>
-                  </div>
-                )
-              })
-            }
-            <button onClick={(e) => this.addInstruction(e)}>Add instruction</button>
-            <button onClick={(e) => this.handleEditRecipe(e)}>Cancel changes</button>
-            <button onClick={(e) => this.handleSubmit(e)}>Save recipe</button>
-          </form>
-        }
-      </div>
+        <div>
+          <h1>{this.state.name}</h1>
+          {this.state.editable ? <button onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
+          <button onClick={(e) => this.handleSaveRecipe(e)}>Save recipe</button>
+          {!this.state.editing ?
+            <>
+              <p>{this.state.description}</p>
+              <p>Duration: {this.state.duration}</p>
+              <p>Servings: {this.state.servings}</p>
+              <ul>
+                {this.state.ingredients.map((item, index) => {
+                  return (
+                    <li key={index}><strong>{item.quantity}</strong> {item.name}</li>
+                  )
+                })}
+              </ul>
+              <ol>
+                {this.state.instructions.map((item, index) => {
+                  return (
+                    <li key={index}>{item}</li>
+                  )
+                })}
+              </ol>
+            </>
+            :
+            <form>
+              <input type="text" name="name" placeholder="name" value={this.state.name} onChange={(e) => this.handleChange(e)} required />
+              <textarea name="description" placeholder="description" value={this.state.description} onChange={(e) => this.handleChange(e)} required></textarea>
+              <input type="text" name="duration" placeholder="duration" value={this.state.duration} onChange={(e) => this.handleChange(e)} required />
+              <input type="text" name="servings" placeholder="servings" value={this.state.servings} onChange={(e) => this.handleChange(e)} required />
+              <h3>Ingredients</h3>
+              {
+                this.state.ingredients.map((ingredient, index) => {
+                  return (
+                    <div key={index}>
+                      <input onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" />
+                      <input onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" />
+                      <button onClick={(e) => this.handleItemRemove(e, index)}>Remove</button>
+                    </div>
+                  )
+                })
+              }
+              <button onClick={(e) => this.addItem(e)}>Add ingredient</button>
+              <h3>Instructions</h3>
+              {
+                this.state.instructions.map((instruction, index) => {
+                  return (
+                    <div key={index}>
+                      <input onChange={(e) => this.handleInstructionChange(e, index)} value={instruction} />
+                      <button onClick={(e) => this.handleInstructionRemove(e, index)}>Remove</button>
+                    </div>
+                  )
+                })
+              }
+              <button onClick={(e) => this.addInstruction(e)}>Add instruction</button>
+              <button onClick={(e) => this.handleEditRecipe(e)}>Cancel changes</button>
+              <button onClick={(e) => this.handleSubmit(e)}>Save recipe</button>
+            </form>
+          }
+        </div>
     );
   }
 }

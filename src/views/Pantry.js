@@ -12,7 +12,8 @@ class Pantry extends Component {
       pantry: [],
       recipes: [],
       selectedIngredients: [],
-      performSearch: false
+      performSearch: false,
+      searchIngredients: true
     }
   }
 
@@ -94,6 +95,11 @@ class Pantry extends Component {
       positionInArray = this.state.selectedIngredients.indexOf(e.target.name)
       this.state.selectedIngredients.splice(positionInArray, 1)
     }
+    if (this.state.selectedIngredients.length > 0){
+      this.setState({ searchIngredients: false })
+    } else {
+      this.setState({ searchIngredients: true })
+    }
   }
 
   componentDidMount() {
@@ -116,19 +122,37 @@ class Pantry extends Component {
         {
           this.state.pantry.map((item, index) => {
             return (
-              <div key={index}>
-                <input onChange={(e) => this.handleItemChange(e, index)} value={item.item} name="item" />
-                <input onChange={(e) => this.handleItemChange(e, index)} value={item.quantity} name="quantity" />
-                <input type="checkbox" name={item.item} onChange={(e) => this.handleCheckChange(e, index)} />
-                <button onClick={(e) => this.handleItemRemove(e, index)}>Remove</button>
+              <div className="form-row" key={index}>
+                <div className="col">
+                  <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={item.item} name="item" />
+                </div>
+                <div className="col">
+                  <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={item.quantity} name="quantity" />
+                </div>
+                <div className="col">
+                  <input className="form-control" type="checkbox" name={item.item} onChange={(e) => this.handleCheckChange(e, index)} />
+                </div>
+                <div className="col">
+                  <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}>Remove</button>
+                </div>
               </div>
             )
           })
         }
-        <button onClick={(e) => this.addItem(e)}>Add item</button>
-        <button onClick={(e) => this.handleSubmit(e)}>Save items</button>
-        {/* <button onClick={(e) => this.handleLucky(e)}>Find a recipe with pantry ingredients</button> */}
-        <button onClick={(e) => this.handleSearchByIngredients(e)}>Find a recipe with the selected ingredients</button>
+        <div className="form-row">
+          <div className="col">
+            <button className="btn btn-primary" type="submit" onClick={(e) => this.addItem(e)}>Add item</button>
+          </div>
+          <div className="col">
+            <button className="btn btn-success" type="submit" onClick={(e) => this.handleSubmit(e)}>Save items</button>
+          </div>
+          {/* <button onClick={(e) => this.handleLucky(e)}>Find a recipe with pantry ingredients</button> */}
+        </div>
+        <div className="form-row">
+          <div className="col">
+            <button className="btn btn-primary" type="submit" onClick={(e) => this.handleSearchByIngredients(e)} disabled={this.state.searchIngredients}>Find a recipe with the selected ingredients</button>
+          </div>
+        </div>
         {this.state.performSearch ?
         <h2>{this.state.recipes.length} recipes uses the selected ingredients</h2>
         : null }
@@ -137,7 +161,7 @@ class Pantry extends Component {
             <Link key={recipe._id._id} to={{
               pathname: `/recipes/${recipe._id._id}`
             }}>
-              <h1>{recipe._id.name}</h1>
+              <h2>{recipe._id.name}</h2>
               <p>{recipe._id.description}</p>
             </Link> )
             }

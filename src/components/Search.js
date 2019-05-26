@@ -30,14 +30,14 @@ class Search extends Component {
     return (
       <div>
         <form>
-          <input type="text" autoFocus name="searchTerm" value={this.state.searchTerm} placeholder="Find a recipe" onChange={(e) => this.handleSearch(e)} />
+          <input className="form-control" type="text" autoFocus name="searchTerm" value={this.state.searchTerm} placeholder="Find a recipe" onChange={(e) => this.handleSearch(e)} />
         </form>
         {this.state.recipes.map((recipe) =>
           <Link key={recipe._id} to={{
             pathname: `/recipes/${recipe._id}`,
             state: { selectedRecipe: recipe }
           }}>
-            <h1>{recipe.name}</h1>
+            <h2>{recipe.name}</h2>
             <p>{recipe.description}</p>
           </Link>
         )}
