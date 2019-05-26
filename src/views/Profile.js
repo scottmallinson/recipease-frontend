@@ -13,8 +13,10 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    user.usersRecipes(this.props.user._id)
-      .then(({ data }) => {
+    console.log('user ID', this.props.user._id)
+    console.log('this.state', this.state)
+    user.getUser(this.props.user._id)
+      .then((data) => {
         this.setState({ createdRecipes: data.createdRecipes, savedRecipes: data.savedRecipes })
       })
       .catch((error) => console.log(error))

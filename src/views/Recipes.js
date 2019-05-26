@@ -13,7 +13,7 @@ class Recipes extends Component {
 
   componentDidMount() {
     recipe.getAllRecipes()
-      .then(({ data }) => {
+      .then((data) => {
         this.setState({ recipes: data })
       })
       .catch((error) => console.log(error))

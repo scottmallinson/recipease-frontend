@@ -9,7 +9,7 @@ class Pantry extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      pantry: this.props.user.pantry,
+      pantry: [],
       recipes: []
     }
   }
@@ -65,14 +65,20 @@ class Pantry extends Component {
     recipe.recipesByAllIngredients({
       searchForItems
     })
-      .then(({ data }) => {
+      .then((data) => {
         this.setState({ recipes: data })
       })
       .catch((error) => console.log(error));
   }
 
-  componentDidUpdate() {
-    console.log(this.state.pantry);
+  componentDidMount() {
+    user.getUser(this.props.user._id)
+      .then((data) => {
+        this.setState({
+          pantry: data.pantry
+        })
+      })
+      .catch((error) => console.log(error))
   }
 
   render() {

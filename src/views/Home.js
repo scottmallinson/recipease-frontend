@@ -12,13 +12,13 @@ class Home extends Component {
     super(props)
     this.state = {
       recipes: [],
-      pantry: pantryContents(this.props.user.pantry)
+      pantry: []
     }
   }
 
   componentDidMount() {
     recipe.getAllRecipes()
-      .then(({ data }) => {
+      .then((data) => {
         this.setState({
           recipes: data
         })

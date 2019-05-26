@@ -20,7 +20,7 @@ class Search extends Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
     recipe.search(e.target.value)
-      .then(({ data }) => {
+      .then((data) => {
         this.setState({ recipes: data })
       })
       .catch((error) => console.log(error));

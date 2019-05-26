@@ -11,7 +11,7 @@ class RecipeService {
   getAllRecipes() {
     return this.recipe
       .get('/')
-      .then(({ data }) => data)
+      .then(({ data }) => data )
   }
 
   createRecipe(recipe) {

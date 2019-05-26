@@ -8,15 +8,15 @@ class UserService {
     });
   }
 
-  usersRecipes(id) {
+  getUser(id) {
     return this.user
-      .put(`/profile/${id}`)
+      .get(`/profile/${id}`)
       .then(({ data }) => data)
   }
 
   updatePantry(pantry) {
     return this.user
-      .put('http://localhost:5000/user/pantry', pantry)
+      .put('/pantry', pantry)
       .then(({ data }) => data)
   }
 }
