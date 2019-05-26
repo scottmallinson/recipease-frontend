@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-
 import Navbar from "./components/Navbar";
 import Search from "./components/Search";
 import Recipes from "./views/Recipes";
@@ -11,7 +10,6 @@ import Profile from "./views/Profile";
 import Signup from "./views/Signup";
 import Login from "./views/Login";
 import Home from "./views/Home";
-
 import PrivateRoute from "./components/PrivateRoute";
 import AnonRoute from "./components/AnonRoute";
 import AuthProvider from "./lib/AuthProvider";

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withAuth } from "../lib/AuthProvider";
-import axios from "axios";
+import recipe from '../lib/recipe-service';
 
 class Recipes extends Component {
   constructor(props) {
@@ -18,12 +18,12 @@ class Recipes extends Component {
       instructions: [],
       servings: ''
     }
-  } 
+  }
 
   handleItemChange(e, inputIndex) {
-    const {ingredients} = this.state;
+    const { ingredients } = this.state;
     let newIngredients = [...ingredients];
-    newIngredients.map((_, index, newIngredients)=>{
+    newIngredients.map((_, index, newIngredients) => {
       return index === inputIndex ? newIngredients[index][e.target.name] = e.target.value : null;
     })
     this.setState({
@@ -50,9 +50,9 @@ class Recipes extends Component {
   }
 
   handleInstructionChange(e, inputIndex) {
-    const {instructions} = this.state;
+    const { instructions } = this.state;
     let newInstructions = [...instructions];
-    newInstructions.map((_, index, newInstructions)=>{
+    newInstructions.map((_, index, newInstructions) => {
       return index === inputIndex ? newInstructions[index] = e.target.value : null;
     })
     this.setState({
@@ -60,9 +60,9 @@ class Recipes extends Component {
     })
   }
 
-  handleChange = (event) => {  
-    const {name, value} = event.target;
-    this.setState({[name]: value});
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   }
 
   handleInstructionRemove(e, index) {
@@ -84,7 +84,7 @@ class Recipes extends Component {
     e.preventDefault();
     console.log(this.state.ingredients, this.state.instructions);
     const { creatorId, name, description, photoUrl, duration, ingredients, instructions, servings } = this.state;
-    axios.post('http://localhost:5000/recipes/create', {
+    recipe.create({
       creatorId,
       name,
       description,
@@ -94,8 +94,8 @@ class Recipes extends Component {
       instructions,
       servings
     })
-    .then((response) => console.log(response))
-    .catch((error) => console.log(error));
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
   }
 
   render() {
@@ -132,9 +132,9 @@ class Recipes extends Component {
             })
           }
           <button onClick={(e) => this.addInstruction(e)}>Add instruction</button>
-          <button onClick={(e) => this.handleSubmit(e)}>Save recipe</button> 
+          <button onClick={(e) => this.handleSubmit(e)}>Save recipe</button>
         </form>
-        
+
       </div>
     );
   }

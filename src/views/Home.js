@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import Search from "./..//components/Search";
 import { withAuth } from './../lib/AuthProvider';
-const axios = require("axios");
+import recipe from '../lib/recipe-service';
 
 class Home extends Component {
-  constructor(props){
-    const pantryContents = (pantryItems) => { 
-      return pantryItems.map((item) => item.item )
-    } 
+  constructor(props) {
+    const pantryContents = (pantryItems) => {
+      return pantryItems.map((item) => item.item)
+    }
     super(props)
     this.state = {
       recipes: [],
@@ -17,13 +17,13 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/recipes/')
-    .then(({ data }) => {
-      this.setState({
-        recipes: data
+    recipe.getAllRecipes()
+      .then(({ data }) => {
+        this.setState({
+          recipes: data
+        })
       })
-    })
-    .catch((error) => console.log(error)) 
+      .catch((error) => console.log(error))
   }
 
   render() {
@@ -31,7 +31,7 @@ class Home extends Component {
       <div>
         <Search pantry={this.state.pantry} />
         <h1>Home</h1>
-        {this.state.recipes.map((recipe) => 
+        {this.state.recipes.map((recipe) =>
           <Link key={recipe._id} to={{
             pathname: `/recipes/${recipe._id}`,
             state: { selectedRecipe: recipe }

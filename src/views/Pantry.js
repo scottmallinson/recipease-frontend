@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import Search from "./..//components/Search";
 import { withAuth } from "../lib/AuthProvider";
-const axios = require('axios');
+import user from '../lib/user-service';
+import recipe from '../lib/recipe-service';
+
 class Pantry extends Component {
   constructor(props) {
     super(props)
@@ -10,12 +12,12 @@ class Pantry extends Component {
       pantry: this.props.user.pantry,
       recipes: []
     }
-  } 
+  }
 
   handleItemChange(e, inputIndex) {
-    const {pantry} = this.state;
+    const { pantry } = this.state;
     let newPantry = [...pantry];
-    newPantry.map((_, index, newPantry)=>{
+    newPantry.map((_, index, newPantry) => {
       return index === inputIndex ? newPantry[index][e.target.name] = e.target.value : null;
     })
     this.setState({
@@ -45,34 +47,28 @@ class Pantry extends Component {
     e.preventDefault();
     const { _id } = this.props.user;
     const { pantry } = this.state;
-    axios.put('http://localhost:5000/user/pantry', {
+    user.updatePantry({
       _id,
       pantry
     })
-    .then((response) => {
-      this.setState({
-        pantry: response.data.pantry
+      .then((response) => {
+        this.setState({
+          pantry: response.data.pantry
+        })
       })
-    })
-    // .then((response) => this.props.user.pantry = pantry)
-    .catch((error) => console.log(error));
+      .catch((error) => console.log(error));
   }
 
   handleLucky = (e) => {
     e.preventDefault();
     const searchForItems = this.state.pantry;
-    axios.post('http://localhost:5000/recipes/search', {
+    recipe.recipesByAllIngredients({
       searchForItems
     })
-    .then(({ data }) => {
-      // console.log('data from query', data)
-      this.setState({recipes: data})
-    })
-    .catch((error) => console.log(error));
-  }
-
-  componentDidMount() {
-    //console.log(this.state.pantry);
+      .then(({ data }) => {
+        this.setState({ recipes: data })
+      })
+      .catch((error) => console.log(error));
   }
 
   componentDidUpdate() {
@@ -87,34 +83,30 @@ class Pantry extends Component {
         <h1>Welcome {this.props.user.username}</h1>
         <p>This is your pantry</p>
         {
-            this.state.pantry.map((item, index) => {
-              return (
-                <div key={index}>
-                  <input onChange={(e) => this.handleItemChange(e, index)} value={item.item} name="item"/>
-                  <input onChange={(e) => this.handleItemChange(e, index)} value={item.quantity} name="quantity"/>
-                  <button onClick={(e) => this.handleItemRemove(e, index)}>Remove</button>
-                </div>
-              )
-            })
-          }
-          <button onClick={(e) => this.addItem(e)}>Add item</button>
-          <button onClick={(e) => this.handleSubmit(e)}>Save items</button> 
-          <button onClick={(e) => this.handleLucky(e)}>Find a recipe with pantry ingredients</button>
-          {this.state.recipes.map((recipe) => {
+          this.state.pantry.map((item, index) => {
             return (
+              <div key={index}>
+                <input onChange={(e) => this.handleItemChange(e, index)} value={item.item} name="item" />
+                <input onChange={(e) => this.handleItemChange(e, index)} value={item.quantity} name="quantity" />
+                <button onClick={(e) => this.handleItemRemove(e, index)}>Remove</button>
+              </div>
+            )
+          })
+        }
+        <button onClick={(e) => this.addItem(e)}>Add item</button>
+        <button onClick={(e) => this.handleSubmit(e)}>Save items</button>
+        <button onClick={(e) => this.handleLucky(e)}>Find a recipe with pantry ingredients</button>
+        {this.state.recipes.map((recipe) => {
+          return (
             <Link key={recipe._id._id} to={{
               pathname: `/recipes/${recipe._id._id}`,
               state: { selectedRecipe: recipe._id }
             }}>
               <h1>{recipe._id.name}</h1>
               <p>{recipe._id.description}</p>
-            </Link> )
-            {/* console.log('recipe map', recipe._id)
-            console.log('recipe map _id', recipe._id._id)
-            console.log('recipe map name', recipe._id.name)
-            console.log('recipe map description', recipe._id.description)  */}
-            }
-          )}
+            </Link>)
+        }
+        )}
       </div>
     );
   }
