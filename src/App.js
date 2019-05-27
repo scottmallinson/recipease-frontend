@@ -19,7 +19,6 @@ class App extends Component {
     return (
       <AuthProvider>
         <Navbar />
-        {/* <div className="container pt-5"> */}
           <Switch>
             <PrivateRoute exact path="/recipes/create" component={RecipeCreate} />
             <Route exact path="/recipes/:id" component={RecipeDetail} />
@@ -31,7 +30,11 @@ class App extends Component {
             <Route exact path="/search" component={Search} />
             <Route exact path="/" component={Home} />
           </Switch>
-        {/* </div> */}
+          <nav className="navbar navbar-light bg-light">
+            <div className="container">
+              <span className="navbar-text" href="/">&copy; Recipease - Scott Mallinson 2019.</span>
+            </div>
+          </nav>
       </AuthProvider>
     );
   }

@@ -82,7 +82,6 @@ class Recipes extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state.ingredients, this.state.instructions);
     const { creatorId, name, description, photoUrl, duration, ingredients, instructions, servings } = this.state;
     recipe.create({
       creatorId,
@@ -112,13 +111,15 @@ class Recipes extends Component {
             <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required="required" className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
             <span id="descriptionHelpBlock" className="form-text text-muted">Provide a description of the recipe.</span>
           </div>
-          <div className="form-group">
-            <label htmlFor="duration">Duration</label>
-            <input id="duration" name="duration" type="text" required="required" className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="servings">Servings</label>
-            <input id="servings" name="servings" type="text" required="required" className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} />
+          <div className="form-row">
+            <div className="col">
+              <label htmlFor="duration">Duration</label>
+              <input id="duration" name="duration" type="text" required="required" className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} placeholder="Enter a value in minutes" />
+            </div>
+            <div className="col">
+              <label htmlFor="servings">Servings</label>
+              <input id="servings" name="servings" type="text" required="required" className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} placeholder="E.g. number of people this would serve" />
+            </div>
           </div>
           <div className="form-group">
             <label htmlFor="ingredients_1">Ingredients</label>
@@ -127,13 +128,13 @@ class Recipes extends Component {
                 return (
                   <div className="form-row" key={index}>
                     <div className="col">
-                      <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" />
+                      <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" placeholder="Ingredient name" />
                     </div>
                     <div className="col">
-                      <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" />
+                      <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" placeholder="Quantity required" />
                     </div>
                     <div className="col">
-                      <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}>Remove</button>
+                      <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i class="far fa-trash-alt"></i></button>
                     </div>
                   </div>
                 )
@@ -141,7 +142,7 @@ class Recipes extends Component {
             }
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary" onClick={(e) => this.addItem(e)}>Add ingredient</button>
+            <button type="submit" className="btn btn-primary" onClick={(e) => this.addItem(e)}><i class="fas fa-plus"></i> Add ingredient</button>
           </div>
           <div className="form-group">
             <label htmlFor="instructions_!">Instructions</label>
@@ -153,7 +154,7 @@ class Recipes extends Component {
                       <textarea className="form-control" onChange={(e) => this.handleInstructionChange(e, index)} value={instruction}></textarea>
                     </div>
                     <div className="col">
-                      <button className="btn btn-warning" onClick={(e) => this.handleInstructionRemove(e, index)}>Remove</button>
+                      <button className="btn btn-warning" onClick={(e) => this.handleInstructionRemove(e, index)}><i class="far fa-trash-alt"></i></button>
                     </div>
                   </div>
                 )
@@ -161,10 +162,10 @@ class Recipes extends Component {
             }
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}>Add instruction</button>
+            <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}><i class="fas fa-plus"></i> Add instruction</button>
           </div>
           <div className="form-group">
-            <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}>Save recipe</button>
+            <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i class="fas fa-cloud"></i> Save recipe</button>
           </div>
         </form>
       </div>

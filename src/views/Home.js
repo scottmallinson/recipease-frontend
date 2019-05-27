@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Search from "./..//components/Search";
 import { withAuth } from './../lib/AuthProvider';
 import recipe from '../lib/recipe-service';
+const moment = require('moment');
 
 class Home extends Component {
   constructor(props) {
@@ -27,37 +28,36 @@ class Home extends Component {
     return (
       <div>
 
-        <div className="jumbotron bg-light vw-100 vh-100 d-flex align-items-center">
+        <div className="jumbotron bg-light vw-100 d-flex align-items-center">
           <div className="container">
             <h1 className="display-4">Recipease</h1>
             <p className="lead">Recipes for the time conscious.</p>
             <hr className="my-4" />
-            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <p>Search our vast database of <strong>{this.state.recipes.length}</strong> recipes by name or ingredient.</p>
             <Search pantry={this.state.pantry} />
           </div>
         </div>
-        <h2>Latest recipes</h2>
-        {this.state.recipes.map((recipe) =>
-          <div className="card mb-3">
-          <div className="row no-gutters">
-            <div className="col-md-4">
-              <img src="..." className="card-img" alt="..." />
-            </div>
-            <div className="col-md-8">
-              <div className="card-body">
-                <h5 className="card-title">
-                  <Link key={recipe._id} to={{
-            pathname: `/recipes/${recipe._id}`,
-            state: { selectedRecipe: recipe }
-          }}>{recipe.name}</Link>
-                </h5>
-                <p className="card-text">{recipe.description}</p>
-                <p className="card-text"><small className="text-muted">Last updated {recipe.updated_at}</small></p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className="container pb-5">
+        <h2>Freshest recipes</h2>
+
+          <div className="card-deck">
+        {this.state.recipes.slice(0, 3).reverse().map((recipe) =>
+  <div className="card" key={recipe._id}>
+    <img src={`https://source.unsplash.com/1600x1200/?${recipe.name}`} className="card-img-top" alt="..." />
+    <div className="card-body">
+    <h5 className="card-title">
+                    <Link to={{
+                      pathname: `/recipes/${recipe._id}`,
+                      state: { selectedRecipe: recipe }
+                    }}>{recipe.name}</Link>
+                  </h5>
+                  <p className="card-text">{recipe.description}</p>
+      <p className="card-text"><small className="text-muted">Last updated {moment(recipe.updated_at).fromNow()}</small></p>
+    </div>
+  </div>
         )}
+</div>
+        </div>
       </div>
     );
   }

@@ -26,7 +26,13 @@ class Profile extends Component {
   render() {
     return (
       <div className="container pt-5">
-        <h1 className="display-4">This is {this.props.user.username}'s profile</h1>
+        {/* <nav aria-label="breadcrumb">
+          <ol className="breadcrumb bg-light">
+            <li className="breadcrumb-item"><a href="/">Home</a></li>
+            <li className="breadcrumb-item active" aria-current="page">Profile</li>
+          </ol>
+        </nav> */}
+        <h1 className="display-4">Hi, {this.props.user.username}</h1>
         <nav>
           <div className="nav nav-tabs" id="nav-tab" role="tablist">
             <a className="nav-item nav-link active" id="nav-pantry-tab" data-toggle="tab" href="#nav-pantry" role="tab" aria-controls="nav-pantry" aria-selected="false">Pantry</a>
@@ -35,31 +41,51 @@ class Profile extends Component {
           </div>
         </nav>
         <div className="tab-content" id="nav-tabContent">
-        <div className="tab-pane fade show active" id="nav-pantry" role="tabpanel" aria-labelledby="nav-pantry-tab">
+          <div className="tab-pane fade show active pt-3" id="nav-pantry" role="tabpanel" aria-labelledby="nav-pantry-tab">
             <Pantry />
           </div>
-          <div className="tab-pane fade" id="nav-created" role="tabpanel" aria-labelledby="nav-created-tab">
-            <h2>Created recipes</h2>
+          <div className="tab-pane fade pt-3" id="nav-created" role="tabpanel" aria-labelledby="nav-created-tab">
             {this.state.createdRecipes.map((recipe) =>
-              <Link key={recipe._id} to={{
-                pathname: `/recipes/${recipe._id}`,
-                state: { selectedRecipe: recipe }
-              }}>
-                <h3>{recipe.name}</h3>
-                <p>{recipe.description}</p>
-              </Link>
+              <div key={recipe._id} className="card mb-3">
+                <div className="row no-gutters">
+                  <div className="col-md-4">
+                    <img src={`https://source.unsplash.com/1600x1200/?${recipe.name}`} className="card-img" alt="..." />
+                  </div>
+                  <div className="col-md-8">
+                    <div className="card-body">
+                      <h5 className="card-title">
+                        <Link to={{
+                          pathname: `/recipes/${recipe._id}`,
+                          state: { selectedRecipe: recipe }
+                        }}>{recipe.name}</Link>
+                      </h5>
+                      <p className="card-text">{recipe.description}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
-          <div className="tab-pane fade" id="nav-saved" role="tabpanel" aria-labelledby="nav-saved-tab">
-            <h2>Saved recipes</h2>
+          <div className="tab-pane fade pt-3" id="nav-saved" role="tabpanel" aria-labelledby="nav-saved-tab">
             {this.state.savedRecipes.map((recipe) =>
-              <Link key={recipe._id} to={{
-                pathname: `/recipes/${recipe._id}`,
-                state: { selectedRecipe: recipe }
-              }}>
-                <h3>{recipe.name}</h3>
-                <p>{recipe.description}</p>
-              </Link>
+              <div key={recipe._id} className="card mb-3">
+                <div className="row no-gutters">
+                  <div className="col-md-4">
+                    <img src={`https://source.unsplash.com/1600x1200/?${recipe.name}`} className="card-img" alt="..." />
+                  </div>
+                  <div className="col-md-8">
+                    <div className="card-body">
+                      <h5 className="card-title">
+                        <Link to={{
+                          pathname: `/recipes/${recipe._id}`,
+                          state: { selectedRecipe: recipe }
+                        }}>{recipe.name}</Link>
+                      </h5>
+                      <p className="card-text">{recipe.description}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>
