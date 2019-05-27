@@ -27,7 +27,6 @@ class Home extends Component {
   render() {
     return (
       <div>
-
         <div className="jumbotron bg-light vw-100 d-flex align-items-center">
           <div className="container">
             <h1 className="display-4">Recipease</h1>

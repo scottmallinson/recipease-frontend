@@ -125,10 +125,10 @@ class Pantry extends Component {
             return (
               <div className="form-row" key={index}>
                 <div className="col">
-                  <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={item.item} name="item" placeholder="Item name" />
+                  <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={item.item} name="item" placeholder="Item name" autoComplete="off" />
                 </div>
                 <div className="col">
-                  <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={item.quantity} name="quantity" placeholder="Quantity" />
+                  <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={item.quantity} name="quantity" placeholder="Quantity" autoComplete="off" />
                 </div>
                 <div className="col">
                   <input className="form-control" type="checkbox" name={item.item} onChange={(e) => this.handleCheckChange(e, index)} />

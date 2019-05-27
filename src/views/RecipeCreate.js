@@ -83,7 +83,7 @@ class Recipes extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { creatorId, name, description, photoUrl, duration, ingredients, instructions, servings } = this.state;
-    recipe.create({
+    recipe.createRecipe({
       creatorId,
       name,
       description,
@@ -104,7 +104,7 @@ class Recipes extends Component {
         <form>
           <div className="form-group">
             <label htmlFor="name">Name</label>
-            <input id="name" name="name" placeholder="Recipe name" type="text" required="required" className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} />
+            <input id="name" name="name" placeholder="Recipe name" type="text" required="required" className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} autoComplete="off" />
           </div>
           <div className="form-group">
             <label htmlFor="description">Description</label>
@@ -114,11 +114,11 @@ class Recipes extends Component {
           <div className="form-row">
             <div className="col">
               <label htmlFor="duration">Duration</label>
-              <input id="duration" name="duration" type="text" required="required" className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} placeholder="Enter a value in minutes" />
+              <input id="duration" name="duration" type="text" required="required" className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} placeholder="Enter a value in minutes" autoComplete="off" />
             </div>
             <div className="col">
               <label htmlFor="servings">Servings</label>
-              <input id="servings" name="servings" type="text" required="required" className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} placeholder="E.g. number of people this would serve" />
+              <input id="servings" name="servings" type="text" required="required" className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} placeholder="E.g. number of people this would serve" autoComplete="off" />
             </div>
           </div>
           <div className="form-group">
@@ -128,10 +128,10 @@ class Recipes extends Component {
                 return (
                   <div className="form-row" key={index}>
                     <div className="col">
-                      <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" placeholder="Ingredient name" />
+                      <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" placeholder="Ingredient name" autoComplete="off" />
                     </div>
                     <div className="col">
-                      <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" placeholder="Quantity required" />
+                      <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" placeholder="Quantity required" autoComplete="off" />
                     </div>
                     <div className="col">
                       <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i className="far fa-trash-alt"></i></button>

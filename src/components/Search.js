@@ -12,10 +12,6 @@ class Search extends Component {
     }
   }
 
-  handleFocus = (e) => {
-
-  }
-
   handleSearch = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -30,7 +26,7 @@ class Search extends Component {
     return (
       <div>
         <form>
-          <input className="form-control" type="text" autoFocus name="searchTerm" value={this.state.searchTerm} placeholder="Find a recipe" onChange={(e) => this.handleSearch(e)} />
+          <input className="form-control" type="text" autoFocus autoComplete="off" name="searchTerm" value={this.state.searchTerm} placeholder="Find a recipe" onChange={(e) => this.handleSearch(e)} />
         </form>
 
         <ul className="list-unstyled">

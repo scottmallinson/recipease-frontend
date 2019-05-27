@@ -147,7 +147,7 @@ class RecipeDetail extends Component {
               <h1 className="card-title">{this.state.name}</h1>
               <p className="lead card-text">{this.state.description}</p>
               <div className="d-flex justify-content-between mb-3">
-                {this.state.editable ? <button className="btn btn-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
+                {this.state.editable ? <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
                 {this.props.isLoggedIn ? <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}>Save recipe</button> : null}
               </div>
               {!this.state.editing ?
@@ -176,7 +176,7 @@ class RecipeDetail extends Component {
                 <form>
                   <div className="form-group">
                     <label htmlFor="name">Name</label>
-                    <input id="name" name="name" placeholder="Recipe name" type="text" required="required" className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} />
+                    <input id="name" name="name" placeholder="Recipe name" type="text" required="required" className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} autoComplete="off" />
                   </div>
                   <div className="form-group">
                     <label htmlFor="description">Description</label>
@@ -185,11 +185,11 @@ class RecipeDetail extends Component {
                   </div>
                   <div className="form-group">
                     <label htmlFor="duration">Duration</label>
-                    <input id="duration" name="duration" type="text" required="required" className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} />
+                    <input id="duration" name="duration" type="text" required="required" className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} autoComplete="off" />
                   </div>
                   <div className="form-group">
                     <label htmlFor="servings">Servings</label>
-                    <input id="servings" name="servings" type="text" required="required" className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} />
+                    <input id="servings" name="servings" type="text" required="required" className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} autoComplete="off" />
                   </div>
                   <div className="form-group">
                     <label htmlFor="ingredients_1">Ingredients</label>
@@ -198,10 +198,10 @@ class RecipeDetail extends Component {
                         return (
                           <div className="form-row" key={index}>
                             <div className="col">
-                              <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" />
+                              <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" autoComplete="off" />
                             </div>
                             <div className="col">
-                              <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" />
+                              <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" autoComplete="off" />
                             </div>
                             <div className="col">
                               <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i className="far fa-trash-alt"></i></button>
