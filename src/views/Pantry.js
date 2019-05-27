@@ -134,7 +134,7 @@ class Pantry extends Component {
                   <input className="form-control" type="checkbox" name={item.item} onChange={(e) => this.handleCheckChange(e, index)} />
                 </div>
                 <div className="col">
-                  <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i class="far fa-trash-alt"></i></button>
+                  <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i className="far fa-trash-alt"></i></button>
                 </div>
               </div>
             )
@@ -142,10 +142,10 @@ class Pantry extends Component {
         }
         <div className="form-row">
           <div className="col-auto">
-            <button className="btn btn-outline-primary" type="submit" onClick={(e) => this.addItem(e)}><i class="fas fa-plus"></i> Add item</button>
+            <button className="btn btn-outline-primary" type="submit" onClick={(e) => this.addItem(e)}><i className="fas fa-plus"></i> Add item</button>
           </div>
           <div className="col-auto">
-            <button className="btn btn-success" type="submit" onClick={(e) => this.handleSubmit(e)}><i class="fas fa-cloud"></i> Save items</button>
+            <button className="btn btn-success" type="submit" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud"></i> Save items</button>
           </div>
         </div>
         <div className="form-row">
@@ -156,9 +156,6 @@ class Pantry extends Component {
         {this.state.performSearch ?
           <h2>{this.state.recipes.length} recipes uses the selected ingredients</h2>
           : null}
-
-        {console.log(this.state.recipes)}
-
         {this.state.recipes.map((recipe) =>
           <div className="card mb-3" key={recipe._id._id}>
             <div className="row no-gutters">

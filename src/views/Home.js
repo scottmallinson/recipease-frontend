@@ -38,25 +38,25 @@ class Home extends Component {
           </div>
         </div>
         <div className="container pb-5">
-        <h2>Freshest recipes</h2>
+          <h2>Freshest recipes</h2>
 
           <div className="card-deck">
-        {this.state.recipes.slice(0, 3).reverse().map((recipe) =>
-  <div className="card" key={recipe._id}>
-    <img src={`https://source.unsplash.com/1600x1200/?${recipe.name}`} className="card-img-top" alt="..." />
-    <div className="card-body">
-    <h5 className="card-title">
+            {this.state.recipes.slice(0, 3).reverse().map((recipe) =>
+              <div className="card" key={recipe._id}>
+                <img src={`https://source.unsplash.com/1600x1200/?${recipe.name}`} className="card-img-top" alt="..." />
+                <div className="card-body">
+                  <h5 className="card-title">
                     <Link to={{
                       pathname: `/recipes/${recipe._id}`,
                       state: { selectedRecipe: recipe }
                     }}>{recipe.name}</Link>
                   </h5>
                   <p className="card-text">{recipe.description}</p>
-      <p className="card-text"><small className="text-muted">Last updated {moment(recipe.updated_at).fromNow()}</small></p>
-    </div>
-  </div>
-        )}
-</div>
+                  <p className="card-text"><small className="text-muted">Last updated {moment(recipe.updated_at).fromNow()}</small></p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );

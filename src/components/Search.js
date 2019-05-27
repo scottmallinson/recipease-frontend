@@ -13,7 +13,7 @@ class Search extends Component {
   }
 
   handleFocus = (e) => {
-    
+
   }
 
   handleSearch = (e) => {
@@ -34,18 +34,18 @@ class Search extends Component {
         </form>
 
         <ul className="list-unstyled">
-        {this.state.recipes.map((recipe) =>
-          <li className="media mt-2" key={recipe._id}>
-            <img src={`https://source.unsplash.com/64x64/?${recipe.name}`} className="mr-3" alt="..." />
-            <div className="media-body">
-              <h5 className="mt-0 mb-1"><Link to={{
-            pathname: `/recipes/${recipe._id}`,
-            state: { selectedRecipe: recipe }
-          }}>{recipe.name}</Link></h5>
-              {recipe.description}
-            </div>
-          </li>
-        )}
+          {this.state.recipes.map((recipe) =>
+            <li className="media mt-2" key={recipe._id}>
+              <img src={`https://source.unsplash.com/64x64/?${recipe.name}`} className="mr-3" alt="..." />
+              <div className="media-body">
+                <h5 className="mt-0 mb-1"><Link to={{
+                  pathname: `/recipes/${recipe._id}`,
+                  state: { selectedRecipe: recipe }
+                }}>{recipe.name}</Link></h5>
+                {recipe.description}
+              </div>
+            </li>
+          )}
         </ul>
       </div>
     )

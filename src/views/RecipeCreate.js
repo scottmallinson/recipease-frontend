@@ -134,7 +134,7 @@ class Recipes extends Component {
                       <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" placeholder="Quantity required" />
                     </div>
                     <div className="col">
-                      <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i class="far fa-trash-alt"></i></button>
+                      <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i className="far fa-trash-alt"></i></button>
                     </div>
                   </div>
                 )
@@ -142,7 +142,7 @@ class Recipes extends Component {
             }
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary" onClick={(e) => this.addItem(e)}><i class="fas fa-plus"></i> Add ingredient</button>
+            <button type="submit" className="btn btn-primary" onClick={(e) => this.addItem(e)}><i className="fas fa-plus"></i> Add ingredient</button>
           </div>
           <div className="form-group">
             <label htmlFor="instructions_!">Instructions</label>
@@ -154,7 +154,7 @@ class Recipes extends Component {
                       <textarea className="form-control" onChange={(e) => this.handleInstructionChange(e, index)} value={instruction}></textarea>
                     </div>
                     <div className="col">
-                      <button className="btn btn-warning" onClick={(e) => this.handleInstructionRemove(e, index)}><i class="far fa-trash-alt"></i></button>
+                      <button className="btn btn-warning" onClick={(e) => this.handleInstructionRemove(e, index)}><i className="far fa-trash-alt"></i></button>
                     </div>
                   </div>
                 )
@@ -162,10 +162,10 @@ class Recipes extends Component {
             }
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}><i class="fas fa-plus"></i> Add instruction</button>
+            <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}><i className="fas fa-plus"></i> Add instruction</button>
           </div>
           <div className="form-group">
-            <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i class="fas fa-cloud"></i> Save recipe</button>
+            <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud"></i> Save recipe</button>
           </div>
         </form>
       </div>

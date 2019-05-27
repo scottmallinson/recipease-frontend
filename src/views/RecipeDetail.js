@@ -142,112 +142,112 @@ class RecipeDetail extends Component {
       !this.state.hasRecipe ? null :
         <div className="container p-0 pt-5">
           <div className="card mb-3">
-          <img src={`https://source.unsplash.com/1600x900/?${this.state.name}`} className="card-img" alt="..." />
+            <img src={`https://source.unsplash.com/1600x900/?${this.state.name}`} className="card-img" alt="..." />
             <div className="card-body">
               <h1 className="card-title">{this.state.name}</h1>
               <p className="lead card-text">{this.state.description}</p>
-              
-            
-          
-          <div className="d-flex justify-content-between mb-3">
-            {this.state.editable ? <button className="btn btn-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
-            <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}>Save recipe</button>
-          </div>
-          {!this.state.editing ?
-            <>
-              <p>Duration: {this.state.duration} minutes</p>
-              <p>Servings: {this.state.servings}</p>
-              <h2>Ingredients</h2>
-              <ul className="list-unstyled">
-                {this.state.ingredients.map((item, index) => {
-                  return (
-                    <li key={index}><strong>{item.quantity}</strong> {item.name}</li>
-                  )
-                })}
-              </ul>
-              <h2>Instructions</h2>
-              <ol className="pl-3">
-                {this.state.instructions.map((item, index) => {
-                  return (
-                    <li key={index}>{item}</li>
-                  )
-                })}
-              </ol>
-              <p className="card-text"><small className="text-muted">Last updated at {this.state.updated_at}</small></p>
-            </>
-            :
-            <form>
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input id="name" name="name" placeholder="Recipe name" type="text" required="required" className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} />
+
+
+
+              <div className="d-flex justify-content-between mb-3">
+                {this.state.editable ? <button className="btn btn-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
+                <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}>Save recipe</button>
               </div>
-              <div className="form-group">
-                <label htmlFor="description">Description</label>
-                <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required="required" className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
-                <span id="descriptionHelpBlock" className="form-text text-muted">Provide a description of the recipe.</span>
-              </div>
-              <div className="form-group">
-                <label htmlFor="duration">Duration</label>
-                <input id="duration" name="duration" type="text" required="required" className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="servings">Servings</label>
-                <input id="servings" name="servings" type="text" required="required" className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="ingredients_1">Ingredients</label>
-                {
-                  this.state.ingredients.map((ingredient, index) => {
-                    return (
-                      <div className="form-row" key={index}>
-                        <div className="col">
-                          <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" />
-                        </div>
-                        <div className="col">
-                          <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" />
-                        </div>
-                        <div className="col">
-                          <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i class="far fa-trash-alt"></i></button>
-                        </div>
-                      </div>
-                    )
-                  })
-                }
-              </div>
-              <div className="form-group">
-                <button type="submit" className="btn btn-primary" onClick={(e) => this.addItem(e)}><i class="fas fa-plus"></i> Add ingredient</button>
-              </div>
-              <div className="form-group">
-                <label htmlFor="instructions_!">Instructions</label>
-                {
-                  this.state.instructions.map((instruction, index) => {
-                    return (
-                      <div className="form-row" key={index}>
-                        <div className="col">
-                          <textarea className="form-control" onChange={(e) => this.handleInstructionChange(e, index)} value={instruction}></textarea>
-                        </div>
-                        <div className="col">
-                          <button className="btn btn-warning" onClick={(e) => this.handleInstructionRemove(e, index)}><i class="far fa-trash-alt"></i></button>
-                        </div>
-                      </div>
-                    )
-                  })
-                }
-              </div>
-              <div className="form-group">
-                <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}><i class="fas fa-plus"></i> Add instruction</button>
-              </div>
-              <div className="form-row">
-                <div className="col">
-                  <button type="submit" className="btn btn-danger" onClick={(e) => this.handleEditRecipe(e)}>Cancel changes</button>
-                </div>
-                <div className="col">
-                  <button type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i class="fas fa-cloud"></i> Save recipe</button>
-                </div>
-              </div>
-            </form>
-          }
-          </div>
+              {!this.state.editing ?
+                <>
+                  <p>Duration: {this.state.duration} minutes</p>
+                  <p>Servings: {this.state.servings}</p>
+                  <h2>Ingredients</h2>
+                  <ul className="list-unstyled">
+                    {this.state.ingredients.map((item, index) => {
+                      return (
+                        <li key={index}><strong>{item.quantity}</strong> {item.name}</li>
+                      )
+                    })}
+                  </ul>
+                  <h2>Instructions</h2>
+                  <ol className="pl-3">
+                    {this.state.instructions.map((item, index) => {
+                      return (
+                        <li key={index}>{item}</li>
+                      )
+                    })}
+                  </ol>
+                  <p className="card-text"><small className="text-muted">Last updated at {this.state.updated_at}</small></p>
+                </>
+                :
+                <form>
+                  <div className="form-group">
+                    <label htmlFor="name">Name</label>
+                    <input id="name" name="name" placeholder="Recipe name" type="text" required="required" className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="description">Description</label>
+                    <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required="required" className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
+                    <span id="descriptionHelpBlock" className="form-text text-muted">Provide a description of the recipe.</span>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="duration">Duration</label>
+                    <input id="duration" name="duration" type="text" required="required" className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="servings">Servings</label>
+                    <input id="servings" name="servings" type="text" required="required" className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="ingredients_1">Ingredients</label>
+                    {
+                      this.state.ingredients.map((ingredient, index) => {
+                        return (
+                          <div className="form-row" key={index}>
+                            <div className="col">
+                              <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" />
+                            </div>
+                            <div className="col">
+                              <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" />
+                            </div>
+                            <div className="col">
+                              <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i className="far fa-trash-alt"></i></button>
+                            </div>
+                          </div>
+                        )
+                      })
+                    }
+                  </div>
+                  <div className="form-group">
+                    <button type="submit" className="btn btn-primary" onClick={(e) => this.addItem(e)}><i className="fas fa-plus"></i> Add ingredient</button>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="instructions_!">Instructions</label>
+                    {
+                      this.state.instructions.map((instruction, index) => {
+                        return (
+                          <div className="form-row" key={index}>
+                            <div className="col">
+                              <textarea className="form-control" onChange={(e) => this.handleInstructionChange(e, index)} value={instruction}></textarea>
+                            </div>
+                            <div className="col">
+                              <button className="btn btn-warning" onClick={(e) => this.handleInstructionRemove(e, index)}><i className="far fa-trash-alt"></i></button>
+                            </div>
+                          </div>
+                        )
+                      })
+                    }
+                  </div>
+                  <div className="form-group">
+                    <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}><i className="fas fa-plus"></i> Add instruction</button>
+                  </div>
+                  <div className="form-row">
+                    <div className="col">
+                      <button type="submit" className="btn btn-danger" onClick={(e) => this.handleEditRecipe(e)}>Cancel changes</button>
+                    </div>
+                    <div className="col">
+                      <button type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud"></i> Save recipe</button>
+                    </div>
+                  </div>
+                </form>
+              }
+            </div>
           </div>
         </div>
     );

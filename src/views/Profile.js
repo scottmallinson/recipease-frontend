@@ -14,8 +14,6 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    console.log('user ID', this.props.user._id)
-    console.log('this.state', this.state)
     user.getUser(this.props.user._id)
       .then((data) => {
         this.setState({ createdRecipes: data.createdRecipes, savedRecipes: data.savedRecipes })
@@ -26,12 +24,6 @@ class Profile extends Component {
   render() {
     return (
       <div className="container pt-5">
-        {/* <nav aria-label="breadcrumb">
-          <ol className="breadcrumb bg-light">
-            <li className="breadcrumb-item"><a href="/">Home</a></li>
-            <li className="breadcrumb-item active" aria-current="page">Profile</li>
-          </ol>
-        </nav> */}
         <h1 className="display-4">Hi, {this.props.user.username}</h1>
         <nav>
           <div className="nav nav-tabs" id="nav-tab" role="tablist">

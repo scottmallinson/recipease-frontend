@@ -23,12 +23,6 @@ class Recipes extends Component {
   render() {
     return (
       <div className="container pt-5">
-        {/* <nav aria-label="breadcrumb">
-          <ol className="breadcrumb bg-light">
-            <li className="breadcrumb-item"><a href="/">Home</a></li>
-            <li className="breadcrumb-item active" aria-current="page">Recipes</li>
-          </ol>
-        </nav> */}
         <h1 className="display-4">Recipes</h1>
         <div className="jumbotron bg-light d-flex align-items-center">
           <div className="container">
