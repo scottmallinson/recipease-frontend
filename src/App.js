@@ -18,11 +18,8 @@ class App extends Component {
   render() {
     return (
       <AuthProvider>
-        <div className="container">
-          <header>
-            <h1>Recipease</h1>
-          </header>
-          <Navbar />
+        <Navbar />
+        {/* <div className="container pt-5"> */}
           <Switch>
             <PrivateRoute exact path="/recipes/create" component={RecipeCreate} />
             <Route exact path="/recipes/:id" component={RecipeDetail} />
@@ -34,7 +31,7 @@ class App extends Component {
             <Route exact path="/search" component={Search} />
             <Route exact path="/" component={Home} />
           </Switch>
-        </div>
+        {/* </div> */}
       </AuthProvider>
     );
   }

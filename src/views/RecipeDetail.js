@@ -138,14 +138,16 @@ class RecipeDetail extends Component {
     console.log(this.state);
     return (
       !this.state.hasRecipe ? null :
-        <div>
-          <h1>{this.state.name}</h1>
-          {this.state.editable ? <button onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
-          <button onClick={(e) => this.handleSaveRecipe(e)}>Save recipe</button>
+        <div className="container pt-5">
+          <h1 className="display-4">{this.state.name}</h1>
+          <div className="form-row">
+          {this.state.editable ? <button className="btn btn-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
+          <button className="btn btn-secondary" type="submit" onClick={(e) => this.handleSaveRecipe(e)}>Save recipe</button>
+          </div>
           {!this.state.editing ?
             <>
-              <p>{this.state.description}</p>
-              <p>Duration: {this.state.duration}</p>
+              <p className="lead">{this.state.description}</p>
+              <p>Duration: {this.state.duration} minutes</p>
               <p>Servings: {this.state.servings}</p>
               <ul>
                 {this.state.ingredients.map((item, index) => {
@@ -164,37 +166,74 @@ class RecipeDetail extends Component {
             </>
             :
             <form>
-              <input type="text" name="name" placeholder="name" value={this.state.name} onChange={(e) => this.handleChange(e)} required />
-              <textarea name="description" placeholder="description" value={this.state.description} onChange={(e) => this.handleChange(e)} required></textarea>
-              <input type="text" name="duration" placeholder="duration" value={this.state.duration} onChange={(e) => this.handleChange(e)} required />
-              <input type="text" name="servings" placeholder="servings" value={this.state.servings} onChange={(e) => this.handleChange(e)} required />
-              <h3>Ingredients</h3>
-              {
-                this.state.ingredients.map((ingredient, index) => {
-                  return (
-                    <div key={index}>
-                      <input onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" />
-                      <input onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" />
-                      <button onClick={(e) => this.handleItemRemove(e, index)}>Remove</button>
+            <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input id="name" name="name" placeholder="Recipe name" type="text" required="required" className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required="required" className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
+            <span id="descriptionHelpBlock" className="form-text text-muted">Provide a description of the recipe.</span>
+          </div>
+          <div className="form-group">
+            <label htmlFor="duration">Duration</label>
+            <input id="duration" name="duration" type="text" required="required" className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="servings">Servings</label>
+            <input id="servings" name="servings" type="text" required="required" className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="ingredients_1">Ingredients</label>
+            {
+              this.state.ingredients.map((ingredient, index) => {
+                return (
+                  <div className="form-row" key={index}>
+                    <div className="col">
+                      <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" />
                     </div>
-                  )
-                })
-              }
-              <button onClick={(e) => this.addItem(e)}>Add ingredient</button>
-              <h3>Instructions</h3>
-              {
-                this.state.instructions.map((instruction, index) => {
-                  return (
-                    <div key={index}>
-                      <input onChange={(e) => this.handleInstructionChange(e, index)} value={instruction} />
-                      <button onClick={(e) => this.handleInstructionRemove(e, index)}>Remove</button>
+                    <div className="col">
+                      <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" />
                     </div>
-                  )
-                })
-              }
-              <button onClick={(e) => this.addInstruction(e)}>Add instruction</button>
-              <button onClick={(e) => this.handleEditRecipe(e)}>Cancel changes</button>
-              <button onClick={(e) => this.handleSubmit(e)}>Save recipe</button>
+                    <div className="col">
+                      <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}>Remove</button>
+                    </div>
+                  </div>
+                )
+              })
+            }
+            </div>
+          <div className="form-group">
+            <button type="submit" className="btn btn-primary" onClick={(e) => this.addItem(e)}>Add ingredient</button>
+          </div>
+          <div className="form-group">
+            <label htmlFor="instructions_!">Instructions</label>
+            {
+              this.state.instructions.map((instruction, index) => {
+                return (
+                  <div className="form-row" key={index}>
+                    <div className="col">
+                      <textarea className="form-control" onChange={(e) => this.handleInstructionChange(e, index)} value={instruction}></textarea>
+                    </div>
+                    <div className="col">
+                      <button className="btn btn-warning" onClick={(e) => this.handleInstructionRemove(e, index)}>Remove</button>
+                    </div>
+                  </div>
+                )
+              })
+            }
+          </div>
+              <div className="form-group">
+                <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}>Add instruction</button>
+              </div>
+              <div className="form-row">
+                <div className="col">
+                  <button type="submit" className="btn btn-danger" onClick={(e) => this.handleEditRecipe(e)}>Cancel changes</button>
+                </div>
+                <div className="col">
+                  <button type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}>Save recipe</button>
+                </div>
+              </div>
             </form>
           }
         </div>

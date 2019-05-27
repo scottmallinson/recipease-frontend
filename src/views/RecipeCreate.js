@@ -100,8 +100,8 @@ class Recipes extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Add your recipe</h1>
+      <div className="container pt-5">
+        <h1 className="display-4">Add your recipe</h1>
         <form>
           <div className="form-group">
             <label htmlFor="name">Name</label>
