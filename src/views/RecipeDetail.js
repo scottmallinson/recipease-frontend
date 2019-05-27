@@ -128,7 +128,7 @@ class RecipeDetail extends Component {
           updated_at: moment(updated_at).format("h:mma on D MMMM YYYY"),
           hasRecipe: true
         })
-        if (this.props.user._id === this.state.creatorId) {
+        if (this.props.user && this.props.user._id === this.state.creatorId) {
           this.setState({
             editable: true
           })
@@ -146,12 +146,9 @@ class RecipeDetail extends Component {
             <div className="card-body">
               <h1 className="card-title">{this.state.name}</h1>
               <p className="lead card-text">{this.state.description}</p>
-
-
-
               <div className="d-flex justify-content-between mb-3">
                 {this.state.editable ? <button className="btn btn-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
-                <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}>Save recipe</button>
+                {this.props.isLoggedIn ? <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}>Save recipe</button> : null}
               </div>
               {!this.state.editing ?
                 <>
