@@ -5,15 +5,15 @@ import recipe from '../lib/recipe-service';
 
 class Search extends Component {
   constructor(props) {
-    const pantryContents = (pantryItems) => {
-      return pantryItems.map((item) => item.item)
-    }
     super(props)
     this.state = {
       searchTerm: '',
-      pantry: pantryContents(this.props.pantry),
       recipes: []
     }
+  }
+
+  handleFocus = (e) => {
+
   }
 
   handleSearch = (e) => {
@@ -30,17 +30,23 @@ class Search extends Component {
     return (
       <div>
         <form>
-          <input type="text" autoFocus name="searchTerm" value={this.state.searchTerm} placeholder="Find a recipe" onChange={(e) => this.handleSearch(e)} />
+          <input className="form-control" type="text" autoFocus name="searchTerm" value={this.state.searchTerm} placeholder="Find a recipe" onChange={(e) => this.handleSearch(e)} />
         </form>
-        {this.state.recipes.map((recipe) =>
-          <Link key={recipe._id} to={{
-            pathname: `/recipes/${recipe._id}`,
-            state: { selectedRecipe: recipe }
-          }}>
-            <h1>{recipe.name}</h1>
-            <p>{recipe.description}</p>
-          </Link>
-        )}
+
+        <ul className="list-unstyled">
+          {this.state.recipes.map((recipe) =>
+            <li className="media mt-2" key={recipe._id}>
+              <img src={`https://source.unsplash.com/64x64/?${recipe.name}`} className="mr-3" alt="..." />
+              <div className="media-body">
+                <h5 className="mt-0 mb-1"><Link to={{
+                  pathname: `/recipes/${recipe._id}`,
+                  state: { selectedRecipe: recipe }
+                }}>{recipe.name}</Link></h5>
+                {recipe.description}
+              </div>
+            </li>
+          )}
+        </ul>
       </div>
     )
   }

@@ -11,11 +11,11 @@ class RecipeService {
   getAllRecipes() {
     return this.recipe
       .get('/')
-      .then(({ data }) => data )
+      .then(({ data }) => data)
   }
 
   createRecipe(recipe) {
-    return this.recipe 
+    return this.recipe
       .post('/create', recipe)
       .then(({ data }) => data)
   }
@@ -42,7 +42,7 @@ class RecipeService {
     return this.recipe
       .get(`/${id}`)
       .then(({ data }) => data)
-  } 
+  }
 
   search(query) {
     return this.recipe

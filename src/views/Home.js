@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Search from "./..//components/Search";
 import { withAuth } from './../lib/AuthProvider';
 import recipe from '../lib/recipe-service';
+const moment = require('moment');
 
 class Home extends Component {
   constructor(props) {
@@ -26,17 +27,37 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <Search pantry={this.state.pantry} />
-        <h1>Home</h1>
-        {this.state.recipes.map((recipe) =>
-          <Link key={recipe._id} to={{
-            pathname: `/recipes/${recipe._id}`,
-            state: { selectedRecipe: recipe }
-          }}>
-            <h1>{recipe.name}</h1>
-            <p>{recipe.description}</p>
-          </Link>
-        )}
+
+        <div className="jumbotron bg-light vw-100 d-flex align-items-center">
+          <div className="container">
+            <h1 className="display-4">Recipease</h1>
+            <p className="lead">Recipes for the time conscious.</p>
+            <hr className="my-4" />
+            <p>Search our vast database of <strong>{this.state.recipes.length}</strong> recipes by name or ingredient.</p>
+            <Search pantry={this.state.pantry} />
+          </div>
+        </div>
+        <div className="container pb-5">
+          <h2>Freshest recipes</h2>
+
+          <div className="card-deck">
+            {this.state.recipes.slice(0, 3).reverse().map((recipe) =>
+              <div className="card" key={recipe._id}>
+                <img src={`https://source.unsplash.com/1600x1200/?${recipe.name}`} className="card-img-top" alt="..." />
+                <div className="card-body">
+                  <h5 className="card-title">
+                    <Link to={{
+                      pathname: `/recipes/${recipe._id}`,
+                      state: { selectedRecipe: recipe }
+                    }}>{recipe.name}</Link>
+                  </h5>
+                  <p className="card-text">{recipe.description}</p>
+                  <p className="card-text"><small className="text-muted">Last updated {moment(recipe.updated_at).fromNow()}</small></p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     );
   }
