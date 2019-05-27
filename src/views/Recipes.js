@@ -29,7 +29,7 @@ class Recipes extends Component {
             <p className="lead">Search our database by recipe name or ingredient.</p>
             <Search pantry={this.state.pantry} />
             <hr className="my-4" />
-            <a className="form-control btn btn-outline-secondary" href="/recipes/create">Contribute a recipe</a>
+            <Link className="form-control btn btn-outline-secondary" to="/recipes/create">Contribute a recipe</Link>
           </div>
         </div>
         {this.state.recipes.map((recipe) =>
