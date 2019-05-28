@@ -31,7 +31,7 @@ class Navbar extends Component {
             <img src="/logo.svg" width="30" height="30" className="d-inline-block align-top pr-1" alt="" />
             Recipease
         </Link>
-          <button data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" className='navbar-toggle collapsed' onClick={this.handleToggleNav} type="button">
+          <button data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" className='navbar-toggler collapsed' onClick={this.handleToggleNav} type="button">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className={(navCollapsed ? 'collapse' : '') + ' navbar-collapse'}>
