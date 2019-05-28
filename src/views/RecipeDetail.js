@@ -154,6 +154,7 @@ class RecipeDetail extends Component {
 
   render() {
     const { disable } = this.state
+    console.log(this.props);
     return (
       !this.state.hasRecipe ? null :
         <div className="container p-0 py-5">
@@ -164,7 +165,7 @@ class RecipeDetail extends Component {
               <p className="lead card-text">{this.state.description}</p>
               <div className="d-flex justify-content-between mb-3">
                 {this.state.editable ? <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
-                {this.props.isLoggedIn ? <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}>Save recipe</button> : null}
+                {this.props.isLoggedin ? <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}>Save recipe</button> : null}
               </div>
               {!this.state.editing ?
                 <>
