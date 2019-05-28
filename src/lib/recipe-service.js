@@ -20,6 +20,12 @@ class RecipeService {
       .then(({ data }) => data)
   }
 
+  uploadRecipeImage(file) {
+    return this.recipe
+      .post('/create/image', file)
+      .then(({ data }) => data)
+  }
+
   updateRecipe(recipe) {
     return this.recipe
       .put('/update', recipe)

@@ -16,7 +16,8 @@ class Recipes extends Component {
         quantity: ''
       }],
       instructions: [],
-      servings: ''
+      servings: '',
+      disable: true
     }
   }
 
@@ -97,7 +98,22 @@ class Recipes extends Component {
       .catch((error) => console.log(error));
   }
 
+  fileOnchange = (e) => {
+    const file = e.target.files[0];
+    const uploadData = new FormData()
+    uploadData.append('recipease', file)
+    recipe.uploadRecipeImage(uploadData)
+    .then((photoUrl) => {
+      this.setState({
+        photoUrl,
+        disable: false,
+      })
+    })
+    .catch((error) => console.log(error))
+  }
+
   render() {
+    const { disable } = this.state
     return (
       <div className="container py-5">
         <h1 className="display-4">Add your recipe</h1>
@@ -110,6 +126,10 @@ class Recipes extends Component {
             <label htmlFor="description">Description</label>
             <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required="required" className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
             <span id="descriptionHelpBlock" className="form-text text-muted">Provide a description of the recipe.</span>
+          </div>
+          <div className="form-group">
+            <label htmlFor="photo">Upload recipe photo</label>
+            <input type="file" className="form-control-file" id="photo" onChange={this.fileOnchange} />
           </div>
           <div className="form-row">
             <div className="col">
@@ -165,7 +185,7 @@ class Recipes extends Component {
             <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}><i className="fas fa-plus"></i> Add instruction</button>
           </div>
           <div className="form-group">
-            <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud"></i> Save recipe</button>
+            {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i className="fas fa-cloud"></i> Save recipe</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud"></i> Save recipe</button>}
           </div>
         </form>
       </div>

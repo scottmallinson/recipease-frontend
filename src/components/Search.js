@@ -32,7 +32,7 @@ class Search extends Component {
         <ul className="list-unstyled">
           {this.state.recipes.map((recipe) =>
             <li className="media mt-2" key={recipe._id}>
-              <img src={`https://source.unsplash.com/64x64/?${recipe.name}`} className="mr-3" alt="..." />
+              <img src={recipe.photoUrl} className="mr-3" width="100" alt="..." />
               <div className="media-body">
                 <h5 className="mt-0 mb-1"><Link to={{
                   pathname: `/recipes/${recipe._id}`,

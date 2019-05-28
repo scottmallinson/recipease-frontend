@@ -10,7 +10,8 @@ class RecipeDetail extends Component {
       _id: this.props.match.params.id,
       hasRecipe: false,
       editable: false,
-      editing: false
+      editing: false,
+      disable: true
     }
   }
 
@@ -137,12 +138,27 @@ class RecipeDetail extends Component {
       .catch((error) => console.log(error))
   }
 
+  fileOnchange = (e) => {
+    const file = e.target.files[0];
+    const uploadData = new FormData()
+    uploadData.append('recipease', file)
+    recipe.uploadRecipeImage(uploadData)
+    .then((photoUrl) => {
+      this.setState({
+        photoUrl,
+        disable: false,
+      })
+    })
+    .catch((error) => console.log(error))
+  }
+
   render() {
+    const { disable } = this.state
     return (
       !this.state.hasRecipe ? null :
         <div className="container p-0 py-5">
           <div className="card mb-3">
-            <img src={`https://source.unsplash.com/1600x900/?${this.state.name}`} className="card-img" alt="..." />
+            <img src={this.state.photoUrl} className="card-img" alt="..." />
             <div className="card-body">
               <h1 className="card-title">{this.state.name}</h1>
               <p className="lead card-text">{this.state.description}</p>
@@ -182,6 +198,10 @@ class RecipeDetail extends Component {
                     <label htmlFor="description">Description</label>
                     <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required="required" className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
                     <span id="descriptionHelpBlock" className="form-text text-muted">Provide a description of the recipe.</span>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="photo">Upload recipe photo</label>
+                    <input type="file" className="form-control-file" id="photo" onChange={this.fileOnchange} />
                   </div>
                   <div className="form-group">
                     <label htmlFor="duration">Duration</label>
@@ -239,7 +259,7 @@ class RecipeDetail extends Component {
                       <button type="submit" className="btn btn-danger" onClick={(e) => this.handleEditRecipe(e)}>Cancel changes</button>
                     </div>
                     <div className="col">
-                      <button type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud"></i> Save recipe</button>
+                    {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i className="fas fa-cloud"></i> Save recipe</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud"></i> Save recipe</button>}
                     </div>
                   </div>
                 </form>
