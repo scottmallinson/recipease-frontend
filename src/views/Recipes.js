@@ -22,7 +22,7 @@ class Recipes extends Component {
 
   render() {
     return (
-      <div className="container pt-5">
+      <div className="container py-5">
         <h1 className="display-4">Recipes</h1>
         <div className="jumbotron bg-light d-flex align-items-center">
           <div className="container">

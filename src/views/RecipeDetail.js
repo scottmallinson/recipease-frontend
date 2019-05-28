@@ -140,7 +140,7 @@ class RecipeDetail extends Component {
   render() {
     return (
       !this.state.hasRecipe ? null :
-        <div className="container p-0 pt-5">
+        <div className="container p-0 py-5">
           <div className="card mb-3">
             <img src={`https://source.unsplash.com/1600x900/?${this.state.name}`} className="card-img" alt="..." />
             <div className="card-body">

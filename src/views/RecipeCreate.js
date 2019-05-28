@@ -99,7 +99,7 @@ class Recipes extends Component {
 
   render() {
     return (
-      <div className="container pt-5">
+      <div className="container py-5">
         <h1 className="display-4">Add your recipe</h1>
         <form>
           <div className="form-group">

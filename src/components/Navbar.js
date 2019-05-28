@@ -16,9 +16,14 @@ class Navbar extends Component {
     this.setState({ navCollapsed: !this.state.navCollapsed })
   }
 
+  handleLogout = () => {
+    this.handleToggleNav()
+    this.props.logout()
+  }
+
   render() {
-    const {navCollapsed} = this.state
-    const { logout, isLoggedin } = this.props;
+    const { navCollapsed } = this.state
+    const { isLoggedin } = this.props;
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <div className="container">
@@ -26,19 +31,9 @@ class Navbar extends Component {
             <img src="/logo.svg" width="30" height="30" className="d-inline-block align-top pr-1" alt="" />
             Recipease
         </Link>
-          <button
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            className='navbar-toggle collapsed'
-            onClick={this.handleToggleNav}
-            type='button'
-            >
+          <button data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" className='navbar-toggle collapsed' onClick={this.handleToggleNav} type="button">
             <span className="navbar-toggler-icon"></span>
           </button>
-
           <div className={(navCollapsed ? 'collapse' : '') + ' navbar-collapse'}>
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
@@ -47,22 +42,15 @@ class Navbar extends Component {
               <li className="nav-item">
                 <Link className="nav-link" to="/recipes" onClick={this.handleToggleNav}>Recipes</Link>
               </li>
-
               {isLoggedin ? (
-
                 <li className="nav-item">
                   <Link className="nav-link" to="/profile" onClick={this.handleToggleNav}>Profile</Link>
                 </li>
-
-              ) : (
-                  null
-                )}
+              ) : (null)}
             </ul>
 
             {isLoggedin ? (
-
-              <button className="btn btn-outline-primary my-2 my-sm-0" type="submit" onClick={logout}>Logout</button>
-
+              <button className="btn btn-outline-primary my-2 my-sm-0" type="submit" onClick={this.handleLogout}>Logout</button>
             ) :
               <ul className="navbar-nav">
                 <li className="nav-item">

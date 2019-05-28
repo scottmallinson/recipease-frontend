@@ -40,7 +40,7 @@ class Home extends Component {
           <h2>Freshest recipes</h2>
 
           <div className="card-deck">
-            {this.state.recipes.slice(0, 3).reverse().map((recipe) =>
+            {this.state.recipes.reverse().slice(0, 3).map((recipe) =>
               <div className="card" key={recipe._id}>
                 <img src={`https://source.unsplash.com/1600x1200/?${recipe.name}`} className="card-img-top" alt="..." />
                 <div className="card-body">

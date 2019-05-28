@@ -21,7 +21,7 @@ class Login extends Component {
   render() {
     const { username, password } = this.state;
     return (
-      <div className="container pt-5">
+      <div className="container py-5">
         <h1 className="display-4">Login</h1>
         <form onSubmit={this.handleFormSubmit}>
           <div className="form-group">

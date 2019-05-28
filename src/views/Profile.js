@@ -23,7 +23,7 @@ class Profile extends Component {
 
   render() {
     return (
-      <div className="container pt-5">
+      <div className="container py-5">
         <h1 className="display-4">Hi, {this.props.user.username}</h1>
         <nav>
           <div className="nav nav-tabs" id="nav-tab" role="tablist">
