@@ -179,7 +179,7 @@ class RecipeDetail extends Component {
                     })}
                   </ul>
                   <h2>Instructions</h2>
-                  <ol className="pl-3">
+                  <ol className="px-3">
                     {this.state.instructions.map((item, index) => {
                       return (
                         <li key={index}>{item}</li>
