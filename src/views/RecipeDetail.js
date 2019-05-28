@@ -17,7 +17,7 @@ class RecipeDetail extends Component {
 
   handleSaveRecipe(e) {
     e.preventDefault();
-    const recipeId = this.state.recipe._id;
+    const recipeId = this.state._id;
     const userId = this.props.user._id;
     recipe.saveRecipe({
       recipeId,
@@ -154,7 +154,6 @@ class RecipeDetail extends Component {
 
   render() {
     const { disable } = this.state
-    console.log(this.props);
     return (
       !this.state.hasRecipe ? null :
         <div className="container p-0 py-5">
