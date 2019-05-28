@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Search from "./components/Search";
 import Recipes from "./views/Recipes";
 import RecipeCreate from "./views/RecipeCreate";
@@ -30,11 +31,7 @@ class App extends Component {
           <Route exact path="/search" component={Search} />
           <Route exact path="/" component={Home} />
         </Switch>
-        <nav className="navbar navbar-light bg-light">
-          <div className="container">
-            <span className="navbar-text" href="/">&copy; Recipease - Scott Mallinson 2019.</span>
-          </div>
-        </nav>
+        <Footer />
       </AuthProvider>
     );
   }
