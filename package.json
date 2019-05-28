@@ -13,6 +13,8 @@
     "redux": "^4.0.1"
   },
   "scripts": {
+    "build-dev": "dotenv -e .env.development react-scripts build",
+    "build-prod": "dotenv -e .env.production react-scripts build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
