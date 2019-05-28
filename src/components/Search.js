@@ -29,7 +29,7 @@ class Search extends Component {
           <input className="form-control" type="text" autoFocus autoComplete="off" name="searchTerm" value={this.state.searchTerm} placeholder="Find a recipe" onChange={(e) => this.handleSearch(e)} />
         </form>
 
-        <ul className="list-unstyled">
+        <ul className="list-unstyled pt-2">
           {this.state.recipes.map((recipe) =>
             <li className="media mt-2" key={recipe._id}>
               <img src={recipe.photoUrl} className="mr-3" width="100" alt="..." />

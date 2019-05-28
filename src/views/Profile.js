@@ -41,7 +41,7 @@ class Profile extends Component {
               <div key={recipe._id} className="card mb-3">
                 <div className="row no-gutters">
                   <div className="col-md-4">
-                    <img src={`https://source.unsplash.com/1600x1200/?${recipe.name}`} className="card-img" alt="..." />
+                    <img src={recipe.photoUrl} className="card-img" alt="..." />
                   </div>
                   <div className="col-md-8">
                     <div className="card-body">
@@ -63,7 +63,7 @@ class Profile extends Component {
               <div key={recipe._id} className="card mb-3">
                 <div className="row no-gutters">
                   <div className="col-md-4">
-                    <img src={`https://source.unsplash.com/1600x1200/?${recipe.name}`} className="card-img" alt="..." />
+                    <img src={recipe.photoUrl} className="card-img" alt="..." />
                   </div>
                   <div className="col-md-8">
                     <div className="card-body">
