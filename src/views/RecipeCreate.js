@@ -120,11 +120,11 @@ class Recipes extends Component {
         <form>
           <div className="form-group">
             <label htmlFor="name">Name</label>
-            <input id="name" name="name" placeholder="Recipe name" type="text" required="required" className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} autoComplete="off" />
+            <input id="name" name="name" placeholder="Recipe name" type="text" className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} autoComplete="off" required />
           </div>
           <div className="form-group">
             <label htmlFor="description">Description</label>
-            <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required="required" className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
+            <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
             <span id="descriptionHelpBlock" className="form-text text-muted">Provide a description of the recipe.</span>
           </div>
           <div className="form-group">
@@ -134,11 +134,11 @@ class Recipes extends Component {
           <div className="form-row">
             <div className="col">
               <label htmlFor="duration">Duration</label>
-              <input id="duration" name="duration" type="text" required="required" className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} placeholder="Enter a value in minutes" autoComplete="off" />
+              <input id="duration" name="duration" type="text" required className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} placeholder="Enter a value in minutes" autoComplete="off" />
             </div>
             <div className="col">
               <label htmlFor="servings">Servings</label>
-              <input id="servings" name="servings" type="text" required="required" className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} placeholder="E.g. number of people this would serve" autoComplete="off" />
+              <input id="servings" name="servings" type="text" required className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} placeholder="E.g. number of people this would serve" autoComplete="off" />
             </div>
           </div>
           <div className="form-group">

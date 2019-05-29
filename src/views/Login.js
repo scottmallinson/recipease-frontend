@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { withAuth } from "../lib/AuthProvider";
 
 class Login extends Component {
@@ -26,13 +27,19 @@ class Login extends Component {
         <form onSubmit={this.handleFormSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
-            <input type="text" className="form-control" id="username" placeholder="Enter username" name="username" value={username} onChange={this.handleChange} autoComplete="off" />
+            <input type="text" className="form-control" id="username" placeholder="Enter username" name="username" value={username} onChange={this.handleChange} autoComplete="off" required />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input type="password" className="form-control" id="password" placeholder="Password" name="password" value={password} onChange={this.handleChange} autoComplete="off" />
+            <input type="password" className="form-control" id="password" placeholder="Password" name="password" value={password} onChange={this.handleChange} autoComplete="off" required />
           </div>
-          <button type="submit" className="btn btn-primary">Login</button>
+          <div className="form-group">
+            <button type="submit" className="btn btn-primary">Login</button>
+          </div>
+          <div className="form-group">
+            <p>Don't have an account?
+            <Link to={"/signup"}> Sign up</Link></p>
+          </div>
         </form>
       </div>
     );

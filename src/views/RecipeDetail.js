@@ -165,13 +165,15 @@ class RecipeDetail extends Component {
         }
       })
       .catch((error) => console.log(error))
-      user.getSavedRecipes(this.props.user._id)
-      .then((data) => {
-        this.setState({ savedRecipes: data.savedRecipes })
-        this.isSaved()
-      })
-      .catch((error) => console.log(error))
 
+      if (this.props.user) {
+        user.getSavedRecipes(this.props.user._id)
+        .then((data) => {
+          this.setState({ savedRecipes: data.savedRecipes })
+          this.isSaved()
+        })
+        .catch((error) => console.log(error))
+      }
   }
 
   fileOnchange = (e) => {
@@ -229,11 +231,11 @@ class RecipeDetail extends Component {
                 <form>
                   <div className="form-group">
                     <label htmlFor="name">Name</label>
-                    <input id="name" name="name" placeholder="Recipe name" type="text" required="required" className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} autoComplete="off" />
+                    <input id="name" name="name" placeholder="Recipe name" type="text" required className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} autoComplete="off" />
                   </div>
                   <div className="form-group">
                     <label htmlFor="description">Description</label>
-                    <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required="required" className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
+                    <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
                     <span id="descriptionHelpBlock" className="form-text text-muted">Provide a description of the recipe.</span>
                   </div>
                   <div className="form-group">
@@ -243,11 +245,11 @@ class RecipeDetail extends Component {
                   <div className="form-row">
                     <div className="col">
                       <label htmlFor="duration">Duration</label>
-                      <input id="duration" name="duration" type="text" required="required" className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} autoComplete="off" />
+                      <input id="duration" name="duration" type="text" required className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} autoComplete="off" />
                     </div>
                     <div className="col">
                       <label htmlFor="servings">Servings</label>
-                      <input id="servings" name="servings" type="text" required="required" className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} autoComplete="off" />
+                      <input id="servings" name="servings" type="text" required className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} autoComplete="off" />
                     </div>
                   </div>
                   <div className="form-group">
