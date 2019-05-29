@@ -201,8 +201,6 @@ class RecipeDetail extends Component {
   }
 
   render() {
-    console.log('creatorId', this.state.creatorId._id);
-    console.log('_id', this.props.user._id);
     const { disable } = this.state
     return (
       !this.state.hasRecipe ? null :
