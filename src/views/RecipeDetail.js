@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { withAuth } from './../lib/AuthProvider';
 import user from '../lib/user-service';
 import recipe from '../lib/recipe-service';
@@ -10,6 +11,7 @@ class RecipeDetail extends Component {
 
     this.state = {
       _id: this.props.match.params.id,
+      creatorId: {},
       hasRecipe: false,
       editable: false,
       editing: false,
@@ -158,7 +160,7 @@ class RecipeDetail extends Component {
           updated_at: moment(updated_at).format("h:mma on D MMMM YYYY"),
           hasRecipe: true
         })
-        if (this.props.user && this.props.user._id === this.state.creatorId) {
+        if (this.props.user && this.props.user._id === this.state.creatorId._id) {
           this.setState({
             editable: true
           })
@@ -200,6 +202,7 @@ class RecipeDetail extends Component {
             <div className="card-body">
               <h1 className="card-title">{this.state.name}</h1>
               <p className="lead card-text">{this.state.description}</p>
+              <p className="text-muted small">Contributed by {this.state.creatorId.username}</p>
               <div className="d-flex justify-content-between mb-3">
                 {this.state.editable && !this.state.editing ? <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
                 {this.props.isLoggedin && !this.state.saved && !this.state.editing && !this.state.editable ? <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}><i className="fas fa-cloud"></i> Save recipe</button> : null}
