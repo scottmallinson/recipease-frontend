@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { withAuth } from './../lib/AuthProvider';
 import user from '../lib/user-service';
 import recipe from '../lib/recipe-service';
