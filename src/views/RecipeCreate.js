@@ -94,7 +94,7 @@ class Recipes extends Component {
       instructions,
       servings
     })
-      .then((response) => console.log(response))
+      .then((response) => this.props.history.push('/recipes'))
       .catch((error) => console.log(error));
   }
 
