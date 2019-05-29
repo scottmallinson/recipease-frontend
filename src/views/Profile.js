@@ -24,7 +24,7 @@ class Profile extends Component {
   render() {
     return (
       <div className="container py-5">
-        <h1 className="display-4">Hi, {this.props.user.username}</h1>
+        <h1 className="display-4 text-wrap text-break">Hi, {this.props.user.username}</h1>
         <nav>
           <div className="nav nav-tabs" id="nav-tab" role="tablist">
             <a className="nav-item nav-link active" id="nav-pantry-tab" data-toggle="tab" href="#nav-pantry" role="tab" aria-controls="nav-pantry" aria-selected="false">Pantry</a>
