@@ -7,12 +7,13 @@ import recipe from '../lib/recipe-service';
 class Pantry extends Component {
   constructor(props) {
     super(props)
+    this.myRef = React.createRef()
     this.state = {
       pantry: [],
       recipes: [],
       selectedIngredients: [],
       performSearch: false,
-      searchIngredients: true
+      disabled: true
     }
   }
 
@@ -87,8 +88,8 @@ class Pantry extends Component {
   }
 
   componentDidUpdate(_, prevState) {
-    if (this.state.recipes.length > prevState.recipes.length) {
-      window.scroll(0, document.body.clientHeight);
+    if (this.state.recipes !== prevState.recipes) {
+      window.scroll(0, this.myRef.current.offsetTop);
     }
   }
 
@@ -101,9 +102,9 @@ class Pantry extends Component {
       this.state.selectedIngredients.splice(positionInArray, 1)
     }
     if (this.state.selectedIngredients.length > 0) {
-      this.setState({ searchIngredients: false })
+      this.setState({ disabled: false })
     } else {
-      this.setState({ searchIngredients: true })
+      this.setState({ disabled: true })
     }
   }
 
@@ -123,7 +124,7 @@ class Pantry extends Component {
         {
           this.state.pantry.map((item, index) => {
             return (
-              <div className="form-row" key={index}>
+              <div className="form-row" key={index} ref={this.myRef}>
                 <div className="col col-md-8">
                   <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={item.item} name="item" placeholder="Item name" autoComplete="off" />
                 </div>
@@ -150,7 +151,7 @@ class Pantry extends Component {
         </div>
         <div className="form-row">
           <div className="col">
-            <button className="btn btn-primary" type="submit" onClick={(e) => this.handleSearchByIngredients(e)} disabled={this.state.searchIngredients}><span className="badge badge-light">{this.state.selectedIngredients.length}</span> ingredients selected</button>
+            <button className="btn btn-primary" type="submit" onClick={(e) => this.handleSearchByIngredients(e)} disabled={this.state.disabled}><span className="badge badge-light">{this.state.selectedIngredients.length}</span> ingredients selected</button>
           </div>
         </div>
         {this.state.performSearch ?
