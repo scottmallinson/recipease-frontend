@@ -147,13 +147,13 @@ class Recipes extends Component {
               this.state.ingredients.map((ingredient, index) => {
                 return (
                   <div className="form-row" key={index}>
-                    <div className="col">
+                    <div className="col col-md-9">
                       <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" placeholder="Ingredient name" autoComplete="off" />
                     </div>
                     <div className="col">
                       <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" placeholder="Quantity required" autoComplete="off" />
                     </div>
-                    <div className="col">
+                    <div className="col-auto">
                       <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i className="far fa-trash-alt"></i></button>
                     </div>
                   </div>
@@ -173,7 +173,7 @@ class Recipes extends Component {
                     <div className="col">
                       <textarea className="form-control" onChange={(e) => this.handleInstructionChange(e, index)} value={instruction}></textarea>
                     </div>
-                    <div className="col">
+                    <div className="col-auto">
                       <button className="btn btn-warning" onClick={(e) => this.handleInstructionRemove(e, index)}><i className="far fa-trash-alt"></i></button>
                     </div>
                   </div>
@@ -185,7 +185,7 @@ class Recipes extends Component {
             <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}><i className="fas fa-plus"></i> Add instruction</button>
           </div>
           <div className="form-group">
-            {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i class="fas fa-cloud-upload-alt"></i> Save recipe</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i class="fas fa-cloud-upload-alt"></i> Save recipe</button>}
+            {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i className="fas fa-cloud-upload-alt"></i> Save recipe</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud-upload-alt"></i> Save recipe</button>}
           </div>
         </form>
       </div>

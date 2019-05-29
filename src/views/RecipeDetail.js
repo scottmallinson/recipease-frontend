@@ -58,7 +58,8 @@ class RecipeDetail extends Component {
   handleEditRecipe(e) {
     e.preventDefault();
     this.setState({
-      editing: !this.state.editing
+      editing: !this.state.editing,
+      disable: false
     })
   }
 
@@ -198,9 +199,9 @@ class RecipeDetail extends Component {
               <h1 className="card-title">{this.state.name}</h1>
               <p className="lead card-text">{this.state.description}</p>
               <div className="d-flex justify-content-between mb-3">
-                {this.state.editable ? <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
-                {this.props.isLoggedin && !this.state.saved ? <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}><i class="fas fa-cloud"></i> Save recipe</button> : null}
-                {this.props.isLoggedin && this.state.saved ? <button className="btn btn-secondary" type="submit" onClick={(e) => this.handleUnsaveRecipe(e)}><i class="fas fa-cloud"></i> Unsave recipe</button> : null}
+                {this.state.editable && !this.state.editing ? <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
+                {this.props.isLoggedin && !this.state.saved && !this.state.editing ? <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}><i className="fas fa-cloud"></i> Save recipe</button> : null}
+                {this.props.isLoggedin && this.state.saved && !this.state.editing ? <button className="btn btn-secondary" type="submit" onClick={(e) => this.handleUnsaveRecipe(e)}><i className="fas fa-cloud"></i> Unsave recipe</button> : null}
               </div>
               {!this.state.editing ?
                 <>
@@ -239,13 +240,15 @@ class RecipeDetail extends Component {
                     <label htmlFor="photo">Upload recipe photo</label>
                     <input type="file" className="form-control-file" id="photo" onChange={this.fileOnchange} />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="duration">Duration</label>
-                    <input id="duration" name="duration" type="text" required="required" className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} autoComplete="off" />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="servings">Servings</label>
-                    <input id="servings" name="servings" type="text" required="required" className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} autoComplete="off" />
+                  <div className="form-row">
+                    <div className="col">
+                      <label htmlFor="duration">Duration</label>
+                      <input id="duration" name="duration" type="text" required="required" className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} autoComplete="off" />
+                    </div>
+                    <div className="col">
+                      <label htmlFor="servings">Servings</label>
+                      <input id="servings" name="servings" type="text" required="required" className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} autoComplete="off" />
+                    </div>
                   </div>
                   <div className="form-group">
                     <label htmlFor="ingredients_1">Ingredients</label>
@@ -253,13 +256,13 @@ class RecipeDetail extends Component {
                       this.state.ingredients.map((ingredient, index) => {
                         return (
                           <div className="form-row" key={index}>
-                            <div className="col">
+                            <div className="col col-md-9">
                               <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" autoComplete="off" />
                             </div>
                             <div className="col">
                               <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" autoComplete="off" />
                             </div>
-                            <div className="col">
+                            <div className="col-auto">
                               <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i className="far fa-trash-alt"></i></button>
                             </div>
                           </div>
@@ -279,7 +282,7 @@ class RecipeDetail extends Component {
                             <div className="col">
                               <textarea className="form-control" onChange={(e) => this.handleInstructionChange(e, index)} value={instruction}></textarea>
                             </div>
-                            <div className="col">
+                            <div className="col-auto">
                               <button className="btn btn-warning" onClick={(e) => this.handleInstructionRemove(e, index)}><i className="far fa-trash-alt"></i></button>
                             </div>
                           </div>
@@ -291,11 +294,11 @@ class RecipeDetail extends Component {
                     <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}><i className="fas fa-plus"></i> Add instruction</button>
                   </div>
                   <div className="form-row">
-                    <div className="col">
+                    <div className="col-auto">
                       <button type="submit" className="btn btn-danger" onClick={(e) => this.handleEditRecipe(e)}>Cancel changes</button>
                     </div>
-                    <div className="col">
-                    {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i class="fas fa-cloud-upload-alt"></i> Save recipe</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i class="fas fa-cloud-upload-alt"></i> Save recipe</button>}
+                    <div className="col-auto">
+                    {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i className="fas fa-cloud-upload-alt"></i> Save changes</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud-upload-alt"></i> Save changes</button>}
                     </div>
                   </div>
                 </form>

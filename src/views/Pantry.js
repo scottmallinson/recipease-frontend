@@ -124,16 +124,16 @@ class Pantry extends Component {
           this.state.pantry.map((item, index) => {
             return (
               <div className="form-row" key={index}>
-                <div className="col">
+                <div className="col col-md-8">
                   <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={item.item} name="item" placeholder="Item name" autoComplete="off" />
                 </div>
                 <div className="col">
                   <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={item.quantity} name="quantity" placeholder="Quantity" autoComplete="off" />
                 </div>
-                <div className="col">
+                <div className="col-1">
                   <input className="form-control" type="checkbox" name={item.item} onChange={(e) => this.handleCheckChange(e, index)} />
                 </div>
-                <div className="col">
+                <div className="col-auto">
                   <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i className="far fa-trash-alt"></i></button>
                 </div>
               </div>
@@ -145,7 +145,7 @@ class Pantry extends Component {
             <button className="btn btn-outline-primary" type="submit" onClick={(e) => this.addItem(e)}><i className="fas fa-plus"></i> Add item</button>
           </div>
           <div className="col-auto">
-            <button className="btn btn-success" type="submit" onClick={(e) => this.handleSubmit(e)}><i class="fas fa-cloud-upload-alt"></i> Save items</button>
+            <button className="btn btn-success" type="submit" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud-upload-alt"></i> Save items</button>
           </div>
         </div>
         <div className="form-row">
