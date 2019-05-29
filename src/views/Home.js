@@ -36,7 +36,7 @@ class Home extends Component {
             <Search pantry={this.state.pantry} />
           </div>
         </div>
-        <div className="container pb-5">
+        <div className="container pb-5 mb-3">
           <h2>Freshest recipes</h2>
           <div className="card-deck">
             {this.state.recipes.reverse().slice(0, 3).map((recipe) =>

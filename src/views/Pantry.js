@@ -145,7 +145,7 @@ class Pantry extends Component {
             <button className="btn btn-outline-primary" type="submit" onClick={(e) => this.addItem(e)}><i className="fas fa-plus"></i> Add item</button>
           </div>
           <div className="col-auto">
-            <button className="btn btn-success" type="submit" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud"></i> Save items</button>
+            <button className="btn btn-success" type="submit" onClick={(e) => this.handleSubmit(e)}><i class="fas fa-cloud-upload-alt"></i> Save items</button>
           </div>
         </div>
         <div className="form-row">

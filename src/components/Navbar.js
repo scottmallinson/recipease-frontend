@@ -25,7 +25,7 @@ class Navbar extends Component {
     const { navCollapsed } = this.state
     const { isLoggedin } = this.props;
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      <nav className="navbar navbar-expand-md navbar-light bg-light sticky-top">
         <div className="container">
           <Link className="navbar-brand" to="/" onClick={this.handleToggleNav}>
             <img src="/logo.svg" width="30" height="30" className="d-inline-block align-top pr-1" alt="" />

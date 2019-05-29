@@ -185,7 +185,7 @@ class Recipes extends Component {
             <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}><i className="fas fa-plus"></i> Add instruction</button>
           </div>
           <div className="form-group">
-            {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i className="fas fa-cloud"></i> Save recipe</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud"></i> Save recipe</button>}
+            {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i class="fas fa-cloud-upload-alt"></i> Save recipe</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i class="fas fa-cloud-upload-alt"></i> Save recipe</button>}
           </div>
         </form>
       </div>

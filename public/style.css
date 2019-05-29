@@ -31,7 +31,7 @@ ol li:nth-child(even):before {
   margin-left: -20px;
   position: absolute;
   border-radius: 50%;
-  padding: 9px;
+  padding: 8px;
   height: 40px;
   width: 40px;
   background-color: #212529;
@@ -47,7 +47,7 @@ ol li:nth-child(odd):before {
   margin-right: -20px;
   position: absolute;
   border-radius: 50%;
-  padding: 9px;
+  padding: 8px;
   height: 40px;
   width: 40px;
   background-color: #212529;
