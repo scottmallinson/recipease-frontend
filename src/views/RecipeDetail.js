@@ -214,6 +214,11 @@ class RecipeDetail extends Component {
                 {this.state.editable && !this.state.editing ? <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
                 {this.props.isLoggedin && !this.state.saved && !this.state.editing && !this.state.editable ? <button className="btn btn-success favourite" type="submit" onClick={(e) => this.handleSaveRecipe(e)}><i className="fas fa-heart"></i> Favourite recipe</button> : null}
                 {this.props.isLoggedin && this.state.saved && !this.state.editing ? <button className="btn btn-secondary unfavourite" type="submit" onClick={(e) => this.handleUnsaveRecipe(e)}><i className="fas fa-heart"></i> Unfavourite recipe</button> : null}
+                <div>
+                  <a className="text-reset pl-1" style={{fontSize: '150%'}} href={`https://twitter.com/intent/tweet?source=webclient&text=${this.state.name}+-+${this.state.description}+via+Recipease+-+https://recipease-ironhack.herokuapp.com${this.props.location.pathname}`} target="_blank" rel="noopener noreferrer"><i className="fab fa-twitter"></i></a>
+                  <a className="text-reset pl-1" style={{fontSize: '150%'}} href={`https://www.pinterest.com/pin/create/button/?url=https://recipease-ironhack.herokuapp.com${this.props.location.pathname}&media=${this.state.photoUrl}&description=${this.state.name}+-+${this.state.description}+via+Recipease`} target="_blank" rel="noopener noreferrer"><i className="fab fa-pinterest"></i></a>
+                  <a className="text-reset pl-1" style={{fontSize: '150%'}} href={`https://www.facebook.com/sharer/sharer.php?u=https://recipease-ironhack.herokuapp.com${this.props.location.pathname}&t=${this.state.name}+-+${this.state.description}+via+Recipease`} target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook"></i></a>
+                </div>
               </div>
               {!this.state.editing ?
                 <>
