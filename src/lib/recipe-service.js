@@ -38,6 +38,12 @@ class RecipeService {
       .then(({ data }) => data)
   }
 
+  unsaveRecipe(recipe) {
+    return this.recipe
+      .put('/unsave', recipe)
+      .then(({ data }) => data)
+  }
+
   recipesByAllIngredients(pantry) {
     return this.recipe
       .post('/search', pantry)

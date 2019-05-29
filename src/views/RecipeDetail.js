@@ -1,17 +1,33 @@
 import React, { Component } from "react";
 import { withAuth } from './../lib/AuthProvider';
+import user from '../lib/user-service';
 import recipe from '../lib/recipe-service';
 const moment = require('moment');
 
 class RecipeDetail extends Component {
   constructor(props) {
     super(props)
+
     this.state = {
       _id: this.props.match.params.id,
       hasRecipe: false,
       editable: false,
       editing: false,
-      disable: true
+      disable: true,
+      savedRecipes: [],
+      saved: null
+    }
+  }
+
+  isSaved() {
+    if (this.state.savedRecipes.includes(this.state._id)) {
+      this.setState({
+        saved: true
+      })
+    } else {
+      this.setState({
+        saved: false
+      })
     }
   }
 
@@ -23,8 +39,20 @@ class RecipeDetail extends Component {
       recipeId,
       userId
     })
-      .then((response) => this.props.user.savedRecipes = response.data.savedRecipes)
+      .then((response) => this.setState({ saved: true }))
       .catch((error) => console.log(error));
+  }
+
+  handleUnsaveRecipe(e) {
+    e.preventDefault();
+    const recipeId = this.state._id;
+    const userId = this.props.user._id;
+    recipe.unsaveRecipe({
+      recipeId,
+      userId
+    })
+      .then((response) => this.setState({ saved: false }))
+      .catch((error) => console.log(error))
   }
 
   handleEditRecipe(e) {
@@ -41,7 +69,7 @@ class RecipeDetail extends Component {
       return index === inputIndex ? newIngredients[index][e.target.name] = e.target.value : null;
     })
     this.setState({
-      ingredients: newIngredients,
+      ingredients: newIngredients
     })
   }
 
@@ -136,6 +164,13 @@ class RecipeDetail extends Component {
         }
       })
       .catch((error) => console.log(error))
+      user.getSavedRecipes(this.props.user._id)
+      .then((data) => {
+        this.setState({ savedRecipes: data.savedRecipes })
+        this.isSaved()
+      })
+      .catch((error) => console.log(error))
+
   }
 
   fileOnchange = (e) => {
@@ -164,7 +199,8 @@ class RecipeDetail extends Component {
               <p className="lead card-text">{this.state.description}</p>
               <div className="d-flex justify-content-between mb-3">
                 {this.state.editable ? <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
-                {this.props.isLoggedin ? <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}>Save recipe</button> : null}
+                {this.props.isLoggedin && !this.state.saved ? <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}><i class="fas fa-cloud-upload-alt"></i> Save recipe</button> : null}
+                {this.props.isLoggedin && this.state.saved ? <button className="btn btn-secondary" type="submit" onClick={(e) => this.handleUnsaveRecipe(e)}><i class="fas fa-cloud-upload-alt"></i> Unsave recipe</button> : null}
               </div>
               {!this.state.editing ?
                 <>
@@ -259,7 +295,7 @@ class RecipeDetail extends Component {
                       <button type="submit" className="btn btn-danger" onClick={(e) => this.handleEditRecipe(e)}>Cancel changes</button>
                     </div>
                     <div className="col">
-                    {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i className="fas fa-cloud"></i> Save recipe</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud"></i> Save recipe</button>}
+                    {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i class="fas fa-cloud-upload-alt"></i> Save recipe</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i class="fas fa-cloud-upload-alt"></i> Save recipe</button>}
                     </div>
                   </div>
                 </form>

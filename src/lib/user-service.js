@@ -14,6 +14,12 @@ class UserService {
       .then(({ data }) => data)
   }
 
+  getSavedRecipes(id) {
+    return this.user
+      .get(`/${id}`)
+      .then(({ data }) => data)
+  }
+
   updatePantry(pantry) {
     return this.user
       .put('/pantry', pantry)
