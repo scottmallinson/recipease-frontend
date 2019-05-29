@@ -200,7 +200,7 @@ class RecipeDetail extends Component {
               <p className="lead card-text">{this.state.description}</p>
               <div className="d-flex justify-content-between mb-3">
                 {this.state.editable && !this.state.editing ? <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
-                {this.props.isLoggedin && !this.state.saved && !this.state.editing ? <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}><i className="fas fa-cloud"></i> Save recipe</button> : null}
+                {this.props.isLoggedin && !this.state.saved && !this.state.editing && !this.state.editable ? <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}><i className="fas fa-cloud"></i> Save recipe</button> : null}
                 {this.props.isLoggedin && this.state.saved && !this.state.editing ? <button className="btn btn-secondary" type="submit" onClick={(e) => this.handleUnsaveRecipe(e)}><i className="fas fa-cloud"></i> Unsave recipe</button> : null}
               </div>
               {!this.state.editing ?
