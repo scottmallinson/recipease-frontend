@@ -192,7 +192,17 @@ class RecipeDetail extends Component {
     .catch((error) => console.log(error))
   }
 
+  checkContributor() {
+    if (this.state.creatorId._id === this.props.user._id) {
+      return ('you')
+    } else {
+      return (this.state.creatorId.username);
+    }
+  }
+
   render() {
+    console.log('creatorId', this.state.creatorId._id);
+    console.log('_id', this.props.user._id);
     const { disable } = this.state
     return (
       !this.state.hasRecipe ? null :
@@ -202,7 +212,7 @@ class RecipeDetail extends Component {
             <div className="card-body">
               <h1 className="card-title">{this.state.name}</h1>
               <p className="lead card-text">{this.state.description}</p>
-              <p className="text-muted small">Contributed by {this.state.creatorId.username}</p>
+              <p className="text-muted small">Contributed by {this.checkContributor()}</p>
               <div className="d-flex justify-content-between mb-3">
                 {this.state.editable && !this.state.editing ? <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
                 {this.props.isLoggedin && !this.state.saved && !this.state.editing && !this.state.editable ? <button className="btn btn-success" type="submit" onClick={(e) => this.handleSaveRecipe(e)}><i className="fas fa-cloud"></i> Save recipe</button> : null}
