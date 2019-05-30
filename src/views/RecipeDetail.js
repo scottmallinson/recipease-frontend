@@ -192,7 +192,7 @@ class RecipeDetail extends Component {
   }
 
   checkContributor() {
-    if (this.props.user && this.props.user === this.state.creatorId._id) {
+    if (this.props.user && this.props.user._id === this.state.creatorId._id) {
       return ('you')
     } else {
       return (this.state.creatorId.username);
