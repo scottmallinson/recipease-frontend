@@ -1,9 +1,9 @@
 # Project Name
-Recipe website
+Recipease
 
 ## Description
 
-A recipe website for people who are time-conscious but want to prepare food with items in their pantry at home.
+A recipe website for people who want to find recupes that they can prepare with items in their pantry.
 
 ## User stories
 
@@ -11,10 +11,9 @@ A recipe website for people who are time-conscious but want to prepare food with
 
 -  **404:** As an anonymous user I will see a 404 page if I try to reach a page that does not exist
 -  **Signup:** As an anonymous user I can sign up so that I can start interacting with the platform
--  **Search recipes:** As an anonymous user I want to search recipes by name, ingredients, and/or dietary requirements to identify one to prepare
+-  **Search recipes:** As an anonymous user I want to search recipes by name and/or ingredients to identify one to prepare
 -  **List recipes:** As an anonymous user I want to see recipes so that I can choose one to prepare
 -  **View recipe:** As an anonymous user I want to read a recipe to prepare
--  **View profile:** As an anonymous user I want to view the profile of a registered user to see their recipes and discover more about them
 
 
 ### Registered user
@@ -25,10 +24,8 @@ A recipe website for people who are time-conscious but want to prepare food with
 -  **List recipes:** As a registered user I want to see recipes so that I can choose one to prepare
 -  **Create recipe:** As a registered user I can add a recipe so that I can share it with the community
 -  **View saved recipes:** As a registered user I want to view my saved recipes so that I can see the ones I liked the most
--  **Edit profile:** As a registered user I want to edit my photo, display name, and biography for anonymous and registered users to see
--  **Search recipes:** As a registered user I want to search recipes by name, ingredients, items in my pantry, and/or dietary requirements to identify one to prepare
--  **View recipe:** As a registered user I want to read a recipe to prepare, add notes, save the recipe, and leave feedback
--  **View profile:** As a registered user I want to view the profile of a registered user to see their recipes and discover more about them
+-  **Search recipes:** As a registered user I want to search recipes by name, ingredients, and items in my pantry, to identify one to prepare
+-  **View recipe:** As a registered user I want to read a recipe to prepare, save the recipe, and share it on social media
 
 ## Backlog
 
@@ -38,16 +35,14 @@ A recipe website for people who are time-conscious but want to prepare food with
 - view saved recipes
 
 **Create recipes**:
-- upload a recipe photo
 - adding nutritional information
 
 **Search recipes**:
-- filters other than searching by ingredients in pantry
+- filters other than searching by name, ingredients or items in the pantry
 
 **View recipes**
 - add notes
 - add feedback
-- save recipe
 
 **Skills assessments:**
 - e.g. knife skills, skinning and filleting fish, kneading dough
@@ -68,27 +63,22 @@ A recipe website for people who are time-conscious but want to prepare food with
 | `get` | `/recipes/:id` | RecipeDetailPageComponent  | registered user | details of one recipe, if logged in - button to save recipe, show indicator if already saved, ability to add notes, ability to add feedback
 | `put` | `/recipes/:id` | RecipeDetailPageComponent  | registered user | details of one recipe, if logged in - button to save recipe, show indicator if already saved, ability to add notes, ability to add feedback
 | `delete` | `/recipes/:id` | na | registered user only | delete recipe
-| `get` | `/profile/:id` | ProfilePageComponent | registered user only | user details, created recipes, saved recipes
-| `put` | `/profile/:id` | ProfilePageComponent | registered user only | update display name, biography, and password
-| `delete` | `/profile/:id` | na | registered user only | delete user
-| `post` | `/profile/:id/pantry` | PantryPageComponent | registered user only | adds ingredients and their quantities
-| `put` | `/profile/:id/pantry` | PantryPageComponent | registered user only | updates ingredients and their quantities
-| `delete` | `/profile/:id/pantry` | PantryPageComponent | registered user only | deletes ingredients and their quantities
+| `get` | `/profile/` | ProfilePageComponent | registered user only | user details, pantry items, created recipes, saved recipes
+| `put` | `/profile/` | ProfilePageComponent | registered user only | update pantry items
+| `delete` | `/profile/` | PantryPageComponent | registered user only | delete ingredients and their quantities
 | `get` | `**` | NotFoundPageComponent | all | 
-
-
-
 
 ## Components
 
 ### Page-level
 
 - Homepage
-- Recipe Create Page
-- Recipe Detail Page
-- Recipe List Page
-- Pantry Page
+- Recipe Create page
+- Recipe Detail page
+- Recipe List page
 - Profile page
+- Signup page
+- Login page
 
 ### Block-level
 
@@ -97,8 +87,6 @@ A recipe website for people who are time-conscious but want to prepare food with
 - Search form
 - Navigation
 - Header
-
-
 
 ## Services
 
@@ -117,7 +105,6 @@ A recipe website for people who are time-conscious but want to prepare food with
   - recipe.detail(id)
   - recipe.save(id)
   - recipe.unsave(id) 
-  - recipe.delete(id)
   - recipe.update(id)
 - Pantry Service
   - pantry.detail(id)
@@ -133,45 +120,23 @@ User model
 ```
 username: String // required & unique
 password: String // required
-displayName: String
-biography: String
-photoUrl: String
+pantry: [{ingredient: String, quantity: String}]
 createdRecipes: [ObjectID<Recipe>]
 savedRecipes: [ObjectID<Recipe>]
-measurements: Enum["Imperial", "Metric"]
-ability: [ObjectID<Skills Assessment>]
 ```
 
 Recipe model
 
 ```
-creator: ObjectID<User> // required
+creatorId: ObjectID<User> // required
 name: String // required
 description: String // required
 photoUrl: String
 duration: Number // required
-ingredients: [] // required
+ingredients: [{name: String, quantity: String}] // required
 instructions: [] // required
 creationDate: Date.now // required
 yield: Number // required
-nutritionalInfo: {name: value}
-```
-
-Pantry model
-
-```
-creator: ObjectID<User> // required
-contents: {[name, quantity]}
-```
-// Backlog
-Skills Assessment model
-
-```
-assessmentId: ObjectID // required
-name: String // required
-description: String // required
-instructions: String // required
-levels: {[name, duration]}
 ```
 
 ## API Endpoints (backend routes)
@@ -225,9 +190,6 @@ levels: {[name, duration]}
     - ingredient is valid (400)
     - quantity is valid (400)
   - remove from pantry
-- DELETE /user/me/delete
-  - removes user
-  - destroys sessions
 - POST /user/me/save
   - body:
     - recipeId
@@ -262,33 +224,20 @@ levels: {[name, duration]}
   - create recipe
   - add to createdRecipes
   - 200 with recipe object
-- DELETE /recipes/:id
-  - validation
-    - id is valid (404)
-    - id exists (404)
-  - body: (empty - the user is already stored in the session)
-  - remove from createdRecipes
-
-
-  
 
 ## Links
 
-### Trello/Kanban
+### Trello
 
-[Recipe website project Trello kanban board](https://trello.com/b/poACWtC6)
+[Recipease Trello kanban board](https://trello.com/b/poACWtC6)
 
 ### Git
 
-The url to your repository and to your deployed project
+[Client repository](https://github.com/scottmallinson/module-3-frontend)
+[Server repository](https://github.com/scottmallinson/module-3-backend)
 
-[Client repository Link](http://github.com)
-[Server repository Link](http://github.com)
+[Deployed app](https://recipease-ironhack.herokuapp.com/)
 
-[Deploy Link](http://heroku.com)
+### Presentation
 
-### Slides
-
-The url to your presentation slides
-
-[Slides Link](http://slides.com)
+[Recipease presentation](https://docs.google.com/presentation/d/141Tn6iJ1eh0fU-KzVgZl4jGuRb0XKB-GpNaf3ZNGIE4/edit?usp=sharing)
