@@ -3,7 +3,7 @@ Recipease
 
 ## Description
 
-A recipe website for people who want to find recupes that they can prepare with items in their pantry.
+A recipe website for people who want to find recipes that they can prepare with items in their pantry.
 
 ## User stories
 
