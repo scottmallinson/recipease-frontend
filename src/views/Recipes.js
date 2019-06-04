@@ -41,22 +41,24 @@ class Recipes extends Component {
           </div>
           {this.state.recipes.map((recipe) =>
             <div key={recipe._id} className="card mb-3">
-              <div className="row no-gutters">
-                <div className="col-md-4">
-                  <img src={recipe.photoUrl} className="card-img" alt="..." />
-                </div>
-                <div className="col-md-8">
-                  <div className="card-body">
-                    <h5 className="card-title">
-                      <Link to={{
-                        pathname: `/recipes/${recipe._id}`,
-                        state: { selectedRecipe: recipe }
-                      }}>{recipe.name}</Link>
-                    </h5>
-                    <p className="card-text">{recipe.description}</p>
+              <Link to={{
+                pathname: `/recipes/${recipe._id}`,
+                state: { selectedRecipe: recipe }
+              }}>
+                <div className="row no-gutters">
+                  <div className="col-md-4">
+                    <img src={recipe.photoUrl} className="card-img" alt="..." />
+                  </div>
+                  <div className="col-md-8">
+                    <div className="card-body">
+                      <h5 className="card-title">
+                        {recipe.name}
+                      </h5>
+                      <p className="card-text text-body">{recipe.description}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
           )}
         </div>
