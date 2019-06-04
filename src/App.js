@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
+import { Helmet } from 'react-helmet';
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Search from "./components/Search";
@@ -19,6 +20,14 @@ class App extends Component {
   render() {
     return (
       <AuthProvider>
+        <Helmet>
+          <title>Recipease &middot; Recipes for the time conscious</title>
+          <meta name="description" content="Recipes for the time conscious" />
+          <meta name="theme-color" content="#E00B0B"></meta>
+          <meta property="og:title" content="Recipease" />
+          <meta property="og:type" content="website" />
+          <meta property="og:image" content="http://recipease-ironhack.herokuapp.com/recipease.png" />
+        </Helmet>
         <Navbar />
         <Switch>
           <PrivateRoute exact path="/recipes/create" component={RecipeCreate} />

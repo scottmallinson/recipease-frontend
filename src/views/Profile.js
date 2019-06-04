@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "../lib/AuthProvider";
+import { Helmet } from 'react-helmet';
 import user from '../lib/user-service';
 import Pantry from "./Pantry";
 
@@ -23,65 +24,72 @@ class Profile extends Component {
 
   render() {
     return (
-      <div className="container py-5">
-        <h1 className="display-4 text-wrap text-break">Hi, {this.props.user.username}</h1>
-        <nav>
-          <div className="nav nav-tabs" id="nav-tab" role="tablist">
-            <a className="nav-item nav-link active" id="nav-pantry-tab" data-toggle="tab" href="#nav-pantry" role="tab" aria-controls="nav-pantry" aria-selected="false">Pantry</a>
-            <a className="nav-item nav-link" id="nav-created-tab" data-toggle="tab" href="#nav-created" role="tab" aria-controls="nav-created" aria-selected="true">Created recipes</a>
-            <a className="nav-item nav-link" id="nav-saved-tab" data-toggle="tab" href="#nav-saved" role="tab" aria-controls="nav-saved" aria-selected="false">Saved recipes</a>
-          </div>
-        </nav>
-        <div className="tab-content" id="nav-tabContent">
-          <div className="tab-pane fade show active pt-3" id="nav-pantry" role="tabpanel" aria-labelledby="nav-pantry-tab">
-            <Pantry />
-          </div>
-          <div className="tab-pane fade pt-3" id="nav-created" role="tabpanel" aria-labelledby="nav-created-tab">
-            {this.state.createdRecipes.map((recipe) =>
-              <div key={recipe._id} className="card mb-3">
-                <div className="row no-gutters">
-                  <div className="col-md-4">
-                    <img src={recipe.photoUrl} className="card-img" alt="..." />
-                  </div>
-                  <div className="col-md-8">
-                    <div className="card-body">
-                      <h5 className="card-title">
-                        <Link to={{
-                          pathname: `/recipes/${recipe._id}`,
-                          state: { selectedRecipe: recipe }
-                        }}>{recipe.name}</Link>
-                      </h5>
-                      <p className="card-text">{recipe.description}</p>
+      <>
+        <Helmet>
+          <title>Your profile &middot; Recipease</title>
+          <meta name="description" content="View your pantry, created, and saved recipes" />
+          <meta property="og:type" content="article" />
+        </Helmet>
+        <div className="container py-5">
+          <h1 className="display-4 text-wrap text-break">Hi, {this.props.user.username}</h1>
+          <nav>
+            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+              <a className="nav-item nav-link active" id="nav-pantry-tab" data-toggle="tab" href="#nav-pantry" role="tab" aria-controls="nav-pantry" aria-selected="false">Pantry</a>
+              <a className="nav-item nav-link" id="nav-created-tab" data-toggle="tab" href="#nav-created" role="tab" aria-controls="nav-created" aria-selected="true">Created recipes</a>
+              <a className="nav-item nav-link" id="nav-saved-tab" data-toggle="tab" href="#nav-saved" role="tab" aria-controls="nav-saved" aria-selected="false">Saved recipes</a>
+            </div>
+          </nav>
+          <div className="tab-content" id="nav-tabContent">
+            <div className="tab-pane fade show active pt-3" id="nav-pantry" role="tabpanel" aria-labelledby="nav-pantry-tab">
+              <Pantry />
+            </div>
+            <div className="tab-pane fade pt-3" id="nav-created" role="tabpanel" aria-labelledby="nav-created-tab">
+              {this.state.createdRecipes.map((recipe) =>
+                <div key={recipe._id} className="card mb-3">
+                  <div className="row no-gutters">
+                    <div className="col-md-4">
+                      <img src={recipe.photoUrl} className="card-img" alt="..." />
+                    </div>
+                    <div className="col-md-8">
+                      <div className="card-body">
+                        <h5 className="card-title">
+                          <Link to={{
+                            pathname: `/recipes/${recipe._id}`,
+                            state: { selectedRecipe: recipe }
+                          }}>{recipe.name}</Link>
+                        </h5>
+                        <p className="card-text">{recipe.description}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-          <div className="tab-pane fade pt-3" id="nav-saved" role="tabpanel" aria-labelledby="nav-saved-tab">
-            {this.state.savedRecipes.map((recipe) =>
-              <div key={recipe._id} className="card mb-3">
-                <div className="row no-gutters">
-                  <div className="col-md-4">
-                    <img src={recipe.photoUrl} className="card-img" alt="..." />
-                  </div>
-                  <div className="col-md-8">
-                    <div className="card-body">
-                      <h5 className="card-title">
-                        <Link to={{
-                          pathname: `/recipes/${recipe._id}`,
-                          state: { selectedRecipe: recipe }
-                        }}>{recipe.name}</Link>
-                      </h5>
-                      <p className="card-text">{recipe.description}</p>
+              )}
+            </div>
+            <div className="tab-pane fade pt-3" id="nav-saved" role="tabpanel" aria-labelledby="nav-saved-tab">
+              {this.state.savedRecipes.map((recipe) =>
+                <div key={recipe._id} className="card mb-3">
+                  <div className="row no-gutters">
+                    <div className="col-md-4">
+                      <img src={recipe.photoUrl} className="card-img" alt="..." />
+                    </div>
+                    <div className="col-md-8">
+                      <div className="card-body">
+                        <h5 className="card-title">
+                          <Link to={{
+                            pathname: `/recipes/${recipe._id}`,
+                            state: { selectedRecipe: recipe }
+                          }}>{recipe.name}</Link>
+                        </h5>
+                        <p className="card-text">{recipe.description}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

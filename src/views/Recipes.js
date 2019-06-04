@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { withAuth } from './../lib/AuthProvider';
+import { Helmet } from 'react-helmet';
 import recipe from '../lib/recipe-service';
 import Search from "./../components/Search";
 
@@ -22,38 +23,44 @@ class Recipes extends Component {
 
   render() {
     return (
-      <div className="container py-5">
-        <h1 className="display-4">Recipes</h1>
-        <div className="jumbotron bg-light d-flex align-items-center">
-          <div className="container">
-            <p className="lead">Search our database by recipe name or ingredient.</p>
-            <Search pantry={this.state.pantry} />
-            <hr className="my-4" />
-            <Link className="form-control btn btn-outline-secondary" to="/recipes/create">Contribute a recipe</Link>
+      <>
+        <Helmet>
+          <title>Recipes &middot; Recipease</title>
+          <meta name="description" content="Search our database by recipe name or ingredient" />
+          <meta property="og:type" content="article" />
+        </Helmet>
+        <div className="container py-5">
+          <h1 className="display-4">Recipes</h1>
+          <div className="jumbotron bg-light d-flex align-items-center">
+            <div className="container">
+              <p className="lead">Search our database by recipe name or ingredient.</p>
+              <Search pantry={this.state.pantry} />
+              <hr className="my-4" />
+              <Link className="form-control btn btn-outline-secondary" to="/recipes/create">Contribute a recipe</Link>
+            </div>
           </div>
-        </div>
-        {this.state.recipes.map((recipe) =>
-          <div key={recipe._id} className="card mb-3">
-            <div className="row no-gutters">
-              <div className="col-md-4">
-                <img src={recipe.photoUrl} className="card-img" alt="..." />
-              </div>
-              <div className="col-md-8">
-                <div className="card-body">
-                  <h5 className="card-title">
-                    <Link to={{
-                      pathname: `/recipes/${recipe._id}`,
-                      state: { selectedRecipe: recipe }
-                    }}>{recipe.name}</Link>
-                  </h5>
-                  <p className="card-text">{recipe.description}</p>
+          {this.state.recipes.map((recipe) =>
+            <div key={recipe._id} className="card mb-3">
+              <div className="row no-gutters">
+                <div className="col-md-4">
+                  <img src={recipe.photoUrl} className="card-img" alt="..." />
+                </div>
+                <div className="col-md-8">
+                  <div className="card-body">
+                    <h5 className="card-title">
+                      <Link to={{
+                        pathname: `/recipes/${recipe._id}`,
+                        state: { selectedRecipe: recipe }
+                      }}>{recipe.name}</Link>
+                    </h5>
+                    <p className="card-text">{recipe.description}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-
-      </div>
+          )}
+        </div>
+      </>
     );
   }
 }
