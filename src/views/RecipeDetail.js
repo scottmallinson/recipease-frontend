@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withAuth } from './../lib/AuthProvider';
+import { Helmet } from 'react-helmet';
 import user from '../lib/user-service';
 import recipe from '../lib/recipe-service';
 const moment = require('moment');
@@ -155,8 +156,8 @@ class RecipeDetail extends Component {
           ingredients,
           instructions,
           servings,
-          created_at: moment(created_at).format("h:mma on Do MMMM YYYY"),
-          updated_at: moment(updated_at).format("h:mma on D MMMM YYYY"),
+          created_at: created_at,
+          updated_at: updated_at,
           hasRecipe: true
         })
         if (this.props.user && this.props.user._id === this.state.creatorId._id) {
@@ -167,14 +168,14 @@ class RecipeDetail extends Component {
       })
       .catch((error) => console.log(error))
 
-      if (this.props.user) {
-        user.getSavedRecipes(this.props.user._id)
+    if (this.props.user) {
+      user.getSavedRecipes(this.props.user._id)
         .then((data) => {
           this.setState({ savedRecipes: data.savedRecipes })
           this.isSaved()
         })
         .catch((error) => console.log(error))
-      }
+    }
   }
 
   fileOnchange = (e) => {
@@ -182,13 +183,13 @@ class RecipeDetail extends Component {
     const uploadData = new FormData()
     uploadData.append('recipease', file)
     recipe.uploadRecipeImage(uploadData)
-    .then((photoUrl) => {
-      this.setState({
-        photoUrl,
-        disable: false,
+      .then((photoUrl) => {
+        this.setState({
+          photoUrl,
+          disable: false,
+        })
       })
-    })
-    .catch((error) => console.log(error))
+      .catch((error) => console.log(error))
   }
 
   checkContributor() {
@@ -203,126 +204,137 @@ class RecipeDetail extends Component {
     const { disable } = this.state
     return (
       !this.state.hasRecipe ? null :
-        <div className="container p-0 py-5">
-          <div className="card mb-3">
-            <img src={this.state.photoUrl} className="card-img" alt="..." />
-            <div className="card-body">
-              <h1 className="card-title">{this.state.name}</h1>
-              <p className="lead card-text">{this.state.description}</p>
-              <p className="text-muted small">Contributed by {this.checkContributor()}</p>
-              <div className="d-flex justify-content-between mb-3">
-                {this.state.editable && !this.state.editing ? <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
-                {this.props.isLoggedin && !this.state.saved && !this.state.editing && !this.state.editable ? <button className="btn btn-success favourite" type="submit" onClick={(e) => this.handleSaveRecipe(e)}><i className="fas fa-heart"></i> Favourite recipe</button> : null}
-                {this.props.isLoggedin && this.state.saved && !this.state.editing ? <button className="btn btn-secondary unfavourite" type="submit" onClick={(e) => this.handleUnsaveRecipe(e)}><i className="fas fa-heart"></i> Unfavourite recipe</button> : null}
-                <div>
-                  <a className="text-reset pl-1" style={{fontSize: '150%'}} href={`https://twitter.com/intent/tweet?source=webclient&text=${this.state.name}+-+${this.state.description}+via+Recipease+-+https://recipease-ironhack.herokuapp.com${this.props.location.pathname}`} target="_blank" rel="noopener noreferrer"><i className="fab fa-twitter"></i></a>
-                  <a className="text-reset pl-1" style={{fontSize: '150%'}} href={`https://www.pinterest.com/pin/create/button/?url=https://recipease-ironhack.herokuapp.com${this.props.location.pathname}&media=${this.state.photoUrl}&description=${this.state.name}+-+${this.state.description}+via+Recipease`} target="_blank" rel="noopener noreferrer"><i className="fab fa-pinterest"></i></a>
-                  <a className="text-reset pl-1" style={{fontSize: '150%'}} href={`https://www.facebook.com/sharer/sharer.php?u=https://recipease-ironhack.herokuapp.com${this.props.location.pathname}&t=${this.state.name}+-+${this.state.description}+via+Recipease`} target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook"></i></a>
+        <>
+          <Helmet>
+            <title>{this.state.name} &middot; Recipease</title>
+            <meta name="description" content={this.state.description} />
+            <meta property="og:type" content="article" />
+            <meta property="og:image" content={this.state.photoUrl} />
+            <meta property="article:author" content={this.state.creatorId.username} />
+            <meta property="article:published_time" content={this.state.created_at} />
+            <meta property="article:modified_time" content={this.state.updated_at} />
+          </Helmet>
+          <div className="container p-0 py-5">
+            <div className="card mb-3">
+              <img src={this.state.photoUrl} className="card-img" alt="..." />
+              <div className="card-body">
+                <h1 className="card-title">{this.state.name}</h1>
+                <p className="lead card-text">{this.state.description}</p>
+                <p className="text-muted small">Contributed by {this.checkContributor()}</p>
+                <div className="d-flex justify-content-between mb-3">
+                  {this.state.editable && !this.state.editing ? <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
+                  {this.props.isLoggedin && !this.state.saved && !this.state.editing && !this.state.editable ? <button className="btn btn-success favourite" type="submit" onClick={(e) => this.handleSaveRecipe(e)}><i className="fas fa-heart"></i> Favourite recipe</button> : null}
+                  {this.props.isLoggedin && this.state.saved && !this.state.editing ? <button className="btn btn-secondary unfavourite" type="submit" onClick={(e) => this.handleUnsaveRecipe(e)}><i className="fas fa-heart"></i> Unfavourite recipe</button> : null}
+                  <div>
+                    <a className="text-reset pl-1" style={{ fontSize: '150%' }} href={`https://twitter.com/intent/tweet?source=webclient&text=${this.state.name}+-+${this.state.description}+via+Recipease+-+https://recipease-ironhack.herokuapp.com${this.props.location.pathname}`} target="_blank" rel="noopener noreferrer"><i className="fab fa-twitter"></i></a>
+                    <a className="text-reset pl-1" style={{ fontSize: '150%' }} href={`https://www.pinterest.com/pin/create/button/?url=https://recipease-ironhack.herokuapp.com${this.props.location.pathname}&media=${this.state.photoUrl}&description=${this.state.name}+-+${this.state.description}+via+Recipease`} target="_blank" rel="noopener noreferrer"><i className="fab fa-pinterest"></i></a>
+                    <a className="text-reset pl-1" style={{ fontSize: '150%' }} href={`https://www.facebook.com/sharer/sharer.php?u=https://recipease-ironhack.herokuapp.com${this.props.location.pathname}&t=${this.state.name}+-+${this.state.description}+via+Recipease`} target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook"></i></a>
+                  </div>
                 </div>
+                {!this.state.editing ?
+                  <>
+                    <p>Duration: {this.state.duration} minutes</p>
+                    <p>Servings: {this.state.servings}</p>
+                    <h2>Ingredients</h2>
+                    <ul className="list-unstyled">
+                      {this.state.ingredients.map((item, index) => {
+                        return (
+                          <li key={index}><strong>{item.quantity}</strong> {item.name}</li>
+                        )
+                      })}
+                    </ul>
+                    <h2>Instructions</h2>
+                    <ol className="px-3">
+                      {this.state.instructions.map((item, index) => {
+                        return (
+                          <li key={index}>{item}</li>
+                        )
+                      })}
+                    </ol>
+                    <p className="card-text"><small className="text-muted">Last updated at {moment(this.state.updated_at).format("h:mma on Do MMMM YYYY")}</small></p>
+                  </>
+                  :
+                  <form>
+                    <div className="form-group">
+                      <label htmlFor="name">Name</label>
+                      <input id="name" name="name" placeholder="Recipe name" type="text" required className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} autoComplete="off" />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="description">Description</label>
+                      <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
+                      <span id="descriptionHelpBlock" className="form-text text-muted">Provide a description of the recipe.</span>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="photo">Upload recipe photo</label>
+                      <input type="file" className="form-control-file" id="photo" onChange={this.fileOnchange} />
+                    </div>
+                    <div className="form-row">
+                      <div className="col">
+                        <label htmlFor="duration">Duration</label>
+                        <input id="duration" name="duration" type="text" required className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} autoComplete="off" />
+                      </div>
+                      <div className="col">
+                        <label htmlFor="servings">Servings</label>
+                        <input id="servings" name="servings" type="text" required className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} autoComplete="off" />
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="ingredients_1">Ingredients</label>
+                      {
+                        this.state.ingredients.map((ingredient, index) => {
+                          return (
+                            <div className="form-row" key={index}>
+                              <div className="col col-md-9">
+                                <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" autoComplete="off" />
+                              </div>
+                              <div className="col">
+                                <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" autoComplete="off" />
+                              </div>
+                              <div className="col-auto">
+                                <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i className="far fa-trash-alt"></i></button>
+                              </div>
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
+                    <div className="form-group">
+                      <button type="submit" className="btn btn-primary" onClick={(e) => this.addItem(e)}><i className="fas fa-plus"></i> Add ingredient</button>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="instructions_!">Instructions</label>
+                      {
+                        this.state.instructions.map((instruction, index) => {
+                          return (
+                            <div className="form-row" key={index}>
+                              <div className="col">
+                                <textarea className="form-control" onChange={(e) => this.handleInstructionChange(e, index)} value={instruction}></textarea>
+                              </div>
+                              <div className="col-auto">
+                                <button className="btn btn-warning" onClick={(e) => this.handleInstructionRemove(e, index)}><i className="far fa-trash-alt"></i></button>
+                              </div>
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
+                    <div className="form-group">
+                      <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}><i className="fas fa-plus"></i> Add instruction</button>
+                    </div>
+                    <div className="form-row">
+                      <div className="col-auto">
+                        <button type="submit" className="btn btn-danger" onClick={(e) => this.handleEditRecipe(e)}>Cancel changes</button>
+                      </div>
+                      <div className="col-auto">
+                        {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i className="fas fa-cloud-upload-alt"></i> Save changes</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud-upload-alt"></i> Save changes</button>}
+                      </div>
+                    </div>
+                  </form>
+                }
               </div>
-              {!this.state.editing ?
-                <>
-                  <p>Duration: {this.state.duration} minutes</p>
-                  <p>Servings: {this.state.servings}</p>
-                  <h2>Ingredients</h2>
-                  <ul className="list-unstyled">
-                    {this.state.ingredients.map((item, index) => {
-                      return (
-                        <li key={index}><strong>{item.quantity}</strong> {item.name}</li>
-                      )
-                    })}
-                  </ul>
-                  <h2>Instructions</h2>
-                  <ol className="px-3">
-                    {this.state.instructions.map((item, index) => {
-                      return (
-                        <li key={index}>{item}</li>
-                      )
-                    })}
-                  </ol>
-                  <p className="card-text"><small className="text-muted">Last updated at {this.state.updated_at}</small></p>
-                </>
-                :
-                <form>
-                  <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input id="name" name="name" placeholder="Recipe name" type="text" required className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} autoComplete="off" />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="description">Description</label>
-                    <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
-                    <span id="descriptionHelpBlock" className="form-text text-muted">Provide a description of the recipe.</span>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="photo">Upload recipe photo</label>
-                    <input type="file" className="form-control-file" id="photo" onChange={this.fileOnchange} />
-                  </div>
-                  <div className="form-row">
-                    <div className="col">
-                      <label htmlFor="duration">Duration</label>
-                      <input id="duration" name="duration" type="text" required className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} autoComplete="off" />
-                    </div>
-                    <div className="col">
-                      <label htmlFor="servings">Servings</label>
-                      <input id="servings" name="servings" type="text" required className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} autoComplete="off" />
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="ingredients_1">Ingredients</label>
-                    {
-                      this.state.ingredients.map((ingredient, index) => {
-                        return (
-                          <div className="form-row" key={index}>
-                            <div className="col col-md-9">
-                              <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.name} name="name" autoComplete="off" />
-                            </div>
-                            <div className="col">
-                              <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={ingredient.quantity} name="quantity" autoComplete="off" />
-                            </div>
-                            <div className="col-auto">
-                              <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i className="far fa-trash-alt"></i></button>
-                            </div>
-                          </div>
-                        )
-                      })
-                    }
-                  </div>
-                  <div className="form-group">
-                    <button type="submit" className="btn btn-primary" onClick={(e) => this.addItem(e)}><i className="fas fa-plus"></i> Add ingredient</button>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="instructions_!">Instructions</label>
-                    {
-                      this.state.instructions.map((instruction, index) => {
-                        return (
-                          <div className="form-row" key={index}>
-                            <div className="col">
-                              <textarea className="form-control" onChange={(e) => this.handleInstructionChange(e, index)} value={instruction}></textarea>
-                            </div>
-                            <div className="col-auto">
-                              <button className="btn btn-warning" onClick={(e) => this.handleInstructionRemove(e, index)}><i className="far fa-trash-alt"></i></button>
-                            </div>
-                          </div>
-                        )
-                      })
-                    }
-                  </div>
-                  <div className="form-group">
-                    <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}><i className="fas fa-plus"></i> Add instruction</button>
-                  </div>
-                  <div className="form-row">
-                    <div className="col-auto">
-                      <button type="submit" className="btn btn-danger" onClick={(e) => this.handleEditRecipe(e)}>Cancel changes</button>
-                    </div>
-                    <div className="col-auto">
-                    {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i className="fas fa-cloud-upload-alt"></i> Save changes</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud-upload-alt"></i> Save changes</button>}
-                    </div>
-                  </div>
-                </form>
-              }
             </div>
           </div>
-        </div>
+        </>
     );
   }
 }
