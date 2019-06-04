@@ -19,6 +19,10 @@ h1, h2, h3, h4, h5, .navbar-brand {
   line-height: 1;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 .favourite, .unfavourite {
   transition: all .2s ease-in-out;
 }

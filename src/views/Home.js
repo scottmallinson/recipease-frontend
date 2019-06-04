@@ -25,6 +25,7 @@ class Home extends Component {
   }
 
   render() {
+    console.log(this.state.recipes);
     return (
       <div>
         <div className="jumbotron bg-light vw-100 d-flex align-items-center">
@@ -41,17 +42,19 @@ class Home extends Component {
           <div className="card-deck">
             {this.state.recipes.reverse().slice(0, 3).map((recipe) =>
               <div className="card" key={recipe._id}>
-                <img src={recipe.photoUrl} className="card-img-top" alt="..." />
-                <div className="card-body">
-                  <h5 className="card-title">
-                    <Link to={{
-                      pathname: `/recipes/${recipe._id}`,
-                      state: { selectedRecipe: recipe }
-                    }}>{recipe.name}</Link>
-                  </h5>
-                  <p className="card-text">{recipe.description}</p>
-                  <p className="card-text"><small className="text-muted">Last updated {moment(recipe.updated_at).fromNow()}</small></p>
-                </div>
+                <Link to={{
+                  pathname: `/recipes/${recipe._id}`,
+                  state: { selectedRecipe: recipe }
+                }}>
+                  <img src={recipe.photoUrl} className="card-img-top" alt="..." />
+                  <div className="card-body">
+                    <h5 className="card-title">
+                      {recipe.name}
+                    </h5>
+                    <p className="card-text text-body">{recipe.description}</p>
+                    <p className="card-text"><small className="text-muted">Last updated {moment(recipe.updated_at).fromNow()}</small></p>
+                  </div>
+                </Link>
               </div>
             )}
           </div>
