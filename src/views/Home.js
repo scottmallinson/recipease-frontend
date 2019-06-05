@@ -18,7 +18,7 @@ class Home extends Component {
     recipe.getAllRecipes()
       .then((data) => {
         this.setState({
-          recipes: data
+          recipes: data.reverse().slice(0, 3)
         })
       })
       .catch((error) => console.log(error))
@@ -40,7 +40,7 @@ class Home extends Component {
         <div className="container pb-5 mb-3">
           <h2>Freshest recipes</h2>
           <div className="card-deck">
-            {this.state.recipes.reverse().slice(0, 3).map((recipe) =>
+            {this.state.recipes.map((recipe) =>
               <div className="card" key={recipe._id}>
                 <Link to={{
                   pathname: `/recipes/${recipe._id}`,
