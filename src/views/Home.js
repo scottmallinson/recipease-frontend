@@ -18,6 +18,7 @@ class Home extends Component {
     recipe.getAllRecipes()
       .then((data) => {
         this.setState({
+          numRecipes: data.length,
           recipes: data.reverse().slice(0, 3)
         })
       })
@@ -33,7 +34,7 @@ class Home extends Component {
             <h1 className="display-4">Recipease</h1>
             <p className="lead">Recipes for the time conscious.</p>
             <hr className="my-4" />
-            <p>Search our vast database of <strong>{this.state.recipes.length}</strong> recipes by name or ingredient.</p>
+            <p>Search our vast database of <strong>{this.state.numRecipes}</strong> recipes by name or ingredient.</p>
             <Search pantry={this.state.pantry} />
           </div>
         </div>
