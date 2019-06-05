@@ -9,6 +9,7 @@ class Home extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      numRecipes: 0,
       recipes: [],
       pantry: []
     }
