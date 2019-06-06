@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from 'react-router';
 import { Link } from "react-router-dom";
 import { withAuth } from "../lib/AuthProvider";
+import logo from './../assets/logo.svg';
 
 class Navbar extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class Navbar extends Component {
       <nav className="navbar navbar-expand-md navbar-light bg-light sticky-top border-bottom">
         <div className="container">
           <Link className="navbar-brand" to="/" onClick={this.handleToggleNav}>
-            <img src="/logo.svg" width="30" height="30" className="d-inline-block align-top pr-1" alt="" />
+            <img src={logo} width="30" height="30" className="d-inline-block align-top pr-1" alt="" />
             Recipease
         </Link>
           <button data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" className='navbar-toggler collapsed' onClick={this.handleToggleNav} type="button">
