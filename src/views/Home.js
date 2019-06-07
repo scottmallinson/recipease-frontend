@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
-import Search from "./..//components/Search";
+import Search from "./../components/Search";
+import FeaturedRecipeCard from "./../components/FeaturedRecipeCard";
 import { withAuth } from './../lib/AuthProvider';
 import recipe from '../lib/recipe-service';
-const moment = require('moment');
 
 class Home extends Component {
   constructor(props) {
@@ -42,21 +41,7 @@ class Home extends Component {
           <h2>Freshest recipes</h2>
           <div className="card-deck">
             {this.state.recipes.map((recipe) =>
-              <div className="card" key={recipe._id}>
-                <Link to={{
-                  pathname: `/recipes/${recipe._id}`,
-                  state: { selectedRecipe: recipe }
-                }}>
-                  <img src={recipe.photoUrl} className="card-img-top" alt="..." />
-                  <div className="card-body">
-                    <h5 className="card-title">
-                      {recipe.name}
-                    </h5>
-                    <p className="card-text text-body">{recipe.description}</p>
-                    <p className="card-text"><small className="text-muted">Last updated {moment(recipe.updated_at).fromNow()}</small></p>
-                  </div>
-                </Link>
-              </div>
+              <FeaturedRecipeCard key={recipe._id} recipe={recipe} />
             )}
           </div>
         </div>

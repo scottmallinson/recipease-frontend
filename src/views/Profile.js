@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { withAuth } from "../lib/AuthProvider";
 import { Helmet } from 'react-helmet';
 import user from '../lib/user-service';
 import Pantry from "./Pantry";
+import RecipeCard from "./../components/RecipeCard";
 
 class Profile extends Component {
   constructor(props) {
@@ -45,46 +45,12 @@ class Profile extends Component {
             </div>
             <div className="tab-pane fade pt-3" id="nav-created" role="tabpanel" aria-labelledby="nav-created-tab">
               {this.state.createdRecipes.map((recipe) =>
-                <div key={recipe._id} className="card mb-3">
-                  <div className="row no-gutters">
-                    <div className="col-md-4">
-                      <img src={recipe.photoUrl} className="card-img" alt="..." />
-                    </div>
-                    <div className="col-md-8">
-                      <div className="card-body">
-                        <h5 className="card-title">
-                          <Link to={{
-                            pathname: `/recipes/${recipe._id}`,
-                            state: { selectedRecipe: recipe }
-                          }}>{recipe.name}</Link>
-                        </h5>
-                        <p className="card-text">{recipe.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <RecipeCard key={recipe._id} recipe={recipe} />
               )}
             </div>
             <div className="tab-pane fade pt-3" id="nav-saved" role="tabpanel" aria-labelledby="nav-saved-tab">
               {this.state.savedRecipes.map((recipe) =>
-                <div key={recipe._id} className="card mb-3">
-                  <div className="row no-gutters">
-                    <div className="col-md-4">
-                      <img src={recipe.photoUrl} className="card-img" alt="..." />
-                    </div>
-                    <div className="col-md-8">
-                      <div className="card-body">
-                        <h5 className="card-title">
-                          <Link to={{
-                            pathname: `/recipes/${recipe._id}`,
-                            state: { selectedRecipe: recipe }
-                          }}>{recipe.name}</Link>
-                        </h5>
-                        <p className="card-text">{recipe.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <RecipeCard key={recipe._id} recipe={recipe} />
               )}
             </div>
           </div>
