@@ -40,7 +40,7 @@ class Recipes extends Component {
     })
   }
 
-  addItem(e, items) {
+  addItem(e) {
     e.preventDefault();
     this.setState({
       ingredients: [...this.state.ingredients, {
@@ -61,8 +61,8 @@ class Recipes extends Component {
     })
   }
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
+  handleChange = (e) => {
+    const { name, value } = e.target;
     this.setState({ [name]: value });
   }
 
@@ -74,7 +74,7 @@ class Recipes extends Component {
     })
   }
 
-  addInstruction(e, items) {
+  addInstruction(e) {
     e.preventDefault();
     this.setState({
       instructions: [...this.state.instructions, '']
@@ -94,7 +94,7 @@ class Recipes extends Component {
       instructions,
       servings
     })
-      .then((response) => this.props.history.push('/recipes'))
+      .then(() => this.props.history.push('/recipes'))
       .catch((error) => console.log(error));
   }
 
