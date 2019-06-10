@@ -49,19 +49,25 @@ class Navbar extends Component {
                 </li>
               ) : (null)}
             </ul>
-
+            
+            <ul className="navbar-nav">
             {isLoggedin ? (
-              <button className="btn btn-outline-primary my-2 my-sm-0" type="submit" onClick={this.handleLogout}>Logout</button>
+            <>
+              <li className="nav-item">
+                <Link className="nav-link" to="/"><button className="btn btn-outline-primary" type="submit" onClick={this.handleLogout}>Logout</button></Link>
+              </li>
+            </>
             ) :
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login"><button className="btn btn-outline-primary" type="submit" onClick={this.handleToggleNav}>Login</button></Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/signup"><button className="btn btn-primary" type="submit" onClick={this.handleToggleNav}>Sign up</button></Link>
-                </li>
-              </ul>
+            <>
+              <li className="nav-item">
+                <Link className="nav-link" to="/login"><button className="btn btn-outline-primary" type="submit" onClick={this.handleToggleNav}>Login</button></Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/signup"><button className="btn btn-primary" type="submit" onClick={this.handleToggleNav}>Sign up</button></Link>
+              </li>
+            </>
             }
+            </ul>
           </div>
         </div>
       </nav>
