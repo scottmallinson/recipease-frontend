@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { withAuth } from './../lib/AuthProvider';
 import { Helmet } from 'react-helmet';
 import recipe from '../lib/recipe-service';
 import Search from "./../components/Search";
 import RecipeCard from "./../components/RecipeCard";
-import { useState, useEffect } from "react";
 
 function Recipes() {
   const [recipes, setRecipes] = useState([]);

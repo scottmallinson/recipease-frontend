@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withAuth } from "../lib/AuthProvider";
 import { Helmet } from 'react-helmet';
 import user from '../lib/user-service';
 import Pantry from "./Pantry";
 import RecipeCard from "./../components/RecipeCard";
-import { useState, useEffect } from "react";
 
 function Profile(props) {
   const [createdRecipes, setCreatedRecipes] = useState([]);

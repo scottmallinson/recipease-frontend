@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { withAuth } from "../lib/AuthProvider";
 import recipe from '../lib/recipe-service';
-import { useState } from "react";
 
 function Search() {
   const [searchTerm, setSearchTerm] = useState('');

@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Search from "./../components/Search";
 import FeaturedRecipeCard from "./../components/FeaturedRecipeCard";
 import { withAuth } from './../lib/AuthProvider';
 import recipe from '../lib/recipe-service';
-import { useState, useEffect } from "react";
 
 function Home() {
   const [numRecipes, setNumRecipes] = useState(0);

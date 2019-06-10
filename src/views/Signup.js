@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "../lib/AuthProvider";
 import { Helmet } from 'react-helmet';
-import { useState } from "react";
 
 function Signup(props) {
   const [state, setState] = useState({ username: "", password: "" });
