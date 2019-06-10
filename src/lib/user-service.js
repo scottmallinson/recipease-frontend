@@ -8,22 +8,22 @@ class UserService {
     });
   }
 
-  getUser(id) {
-    return this.user
-      .get(`/profile/${id}`)
-      .then(({ data }) => data)
+  async getUser(id) {
+    const { data } = await this.user
+      .get(`/profile/${id}`);
+    return data;
   }
 
-  getSavedRecipes(id) {
-    return this.user
-      .get(`/${id}`)
-      .then(({ data }) => data)
+  async getSavedRecipes(id) {
+    const { data } = await this.user
+      .get(`/${id}`);
+    return data;
   }
 
-  updatePantry(pantry) {
-    return this.user
-      .put('/pantry', pantry)
-      .then(({ data }) => data)
+  async updatePantry(pantry) {
+    const { data } = await this.user
+      .put('/pantry', pantry);
+    return data;
   }
 }
 

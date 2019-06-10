@@ -8,14 +8,14 @@ class Signup extends Component {
     password: ""
   };
 
-  handleFormSubmit = event => {
-    event.preventDefault();
+  handleFormSubmit = e => {
+    e.preventDefault();
     const { username, password } = this.state;
     this.props.signup({ username, password });
   };
 
-  handleChange = event => {
-    const { name, value } = event.target;
+  handleChange = e => {
+    const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 

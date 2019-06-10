@@ -8,58 +8,58 @@ class RecipeService {
     });
   }
 
-  getAllRecipes() {
-    return this.recipe
-      .get('/')
-      .then(({ data }) => data)
+  async getAllRecipes() {
+    const { data } = await this.recipe
+      .get('/');
+    return data;
   }
 
-  createRecipe(recipe) {
-    return this.recipe
-      .post('/create', recipe)
-      .then(({ data }) => data)
+  async createRecipe(recipe) {
+    const { data } = await this.recipe
+      .post('/create', recipe);
+    return data;
   }
 
-  uploadRecipeImage(file) {
-    return this.recipe
-      .post('/create/image', file)
-      .then(({ data }) => data)
+  async uploadRecipeImage(file) {
+    const { data } = await this.recipe
+      .post('/create/image', file);
+    return data;
   }
 
-  updateRecipe(recipe) {
-    return this.recipe
-      .put('/update', recipe)
-      .then(({ data }) => data)
+  async updateRecipe(recipe) {
+    const { data } = await this.recipe
+      .put('/update', recipe);
+    return data;
   }
 
-  saveRecipe(recipe) {
-    return this.recipe
-      .put('/save', recipe)
-      .then(({ data }) => data)
+  async saveRecipe(recipe) {
+    const { data } = await this.recipe
+      .put('/save', recipe);
+    return data;
   }
 
-  unsaveRecipe(recipe) {
-    return this.recipe
-      .put('/unsave', recipe)
-      .then(({ data }) => data)
+  async unsaveRecipe(recipe) {
+    const { data } = await this.recipe
+      .put('/unsave', recipe);
+    return data;
   }
 
-  recipesByAllIngredients(pantry) {
-    return this.recipe
-      .post('/search', pantry)
-      .then(({ data }) => data)
+  async recipesByAllIngredients(pantry) {
+    const { data } = await this.recipe
+      .post('/search', pantry);
+    return data;
   }
 
-  getRecipeById(id) {
-    return this.recipe
-      .get(`/${id}`)
-      .then(({ data }) => data)
+  async getRecipeById(id) {
+    const { data } = await this.recipe
+      .get(`/${id}`);
+    return data;
   }
 
-  search(query) {
-    return this.recipe
-      .get(`/search?s=${query}`)
-      .then(({ data }) => data)
+  async search(query) {
+    const { data } = await this.recipe
+      .get(`/search?s=${query}`);
+    return data;
   }
 }
 

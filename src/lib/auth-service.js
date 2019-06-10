@@ -8,26 +8,28 @@ class Auth {
     });
   }
 
-  signup(user) {
+  async signup(user) {
     const { username, password } = user;
-    return this.auth
-      .post("/auth/signup", { username, password })
-      .then(({ data }) => data);
+    const { data } = await this.auth
+      .post("/auth/signup", { username, password });
+    return data;
   }
 
-  login(user) {
+  async login(user) {
     const { username, password } = user;
-    return this.auth
-      .post("/auth/login", { username, password })
-      .then(({ data }) => data);
+    const { data } = await this.auth
+      .post("/auth/login", { username, password });
+    return data;
   }
 
-  logout() {
-    return this.auth.post("/auth/logout", {}).then(response => response.data);
+  async logout() {
+    const response = await this.auth.post("/auth/logout", {});
+    return response.data;
   }
 
-  me() {
-    return this.auth.get("/auth/me").then(response => response.data);
+  async me() {
+    const response = await this.auth.get("/auth/me");
+    return response.data;
   }
 }
 
