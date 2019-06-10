@@ -16,7 +16,7 @@ function Home() {
         setRecipes(data.reverse().slice(0, 3))
       })
       .catch((error) => console.log(error))
-  })
+  }, [])
 
   return (
     <div>

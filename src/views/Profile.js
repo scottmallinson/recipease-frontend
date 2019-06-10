@@ -17,7 +17,7 @@ function Profile(props) {
         setSavedRecipes(data.savedRecipes)
       })
       .catch((error) => console.log(error))
-  })
+  }, [])
 
   return (
     <>

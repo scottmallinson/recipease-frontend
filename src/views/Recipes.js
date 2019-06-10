@@ -16,7 +16,7 @@ function Recipes() {
         setRecipes(data)
       })
       .catch((error) => console.log(error))
-  })
+  }, [])
 
   return (
     <>
