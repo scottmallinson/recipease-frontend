@@ -21,7 +21,7 @@ class Recipes extends Component {
     }
   }
 
-  handleItemChange(e, inputIndex) {
+  handleItemChange = (e, inputIndex) => {
     const { ingredients } = this.state;
     let newIngredients = [...ingredients];
     newIngredients.map((_, index, newIngredients) => {
@@ -32,7 +32,7 @@ class Recipes extends Component {
     })
   }
 
-  handleItemRemove(e, index) {
+  handleItemRemove = (e, index) => {
     e.preventDefault();
     this.state.ingredients.splice(index, 1);
     this.setState({
@@ -40,7 +40,7 @@ class Recipes extends Component {
     })
   }
 
-  addItem(e, items) {
+  addItem = e => {
     e.preventDefault();
     this.setState({
       ingredients: [...this.state.ingredients, {
@@ -50,7 +50,7 @@ class Recipes extends Component {
     })
   }
 
-  handleInstructionChange(e, inputIndex) {
+  handleInstructionChange = (e, inputIndex) => {
     const { instructions } = this.state;
     let newInstructions = [...instructions];
     newInstructions.map((_, index, newInstructions) => {
@@ -61,12 +61,12 @@ class Recipes extends Component {
     })
   }
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
+  handleChange = e => {
+    const { name, value } = e.target;
     this.setState({ [name]: value });
   }
 
-  handleInstructionRemove(e, index) {
+  handleInstructionRemove = (e, index) => {
     e.preventDefault();
     this.state.instructions.splice(index, 1);
     this.setState({
@@ -74,14 +74,14 @@ class Recipes extends Component {
     })
   }
 
-  addInstruction(e, items) {
+  addInstruction = e => {
     e.preventDefault();
     this.setState({
       instructions: [...this.state.instructions, '']
     })
   }
 
-  handleSubmit(e) {
+  handleSubmit = e => {
     e.preventDefault();
     const { creatorId, name, description, photoUrl, duration, ingredients, instructions, servings } = this.state;
     recipe.createRecipe({
@@ -94,11 +94,11 @@ class Recipes extends Component {
       instructions,
       servings
     })
-      .then((response) => this.props.history.push('/recipes'))
+      .then(() => this.props.history.push('/recipes'))
       .catch((error) => console.log(error));
   }
 
-  fileOnchange = (e) => {
+  fileOnchange = e => {
     const file = e.target.files[0];
     const uploadData = new FormData()
     uploadData.append('recipease', file)
@@ -120,11 +120,11 @@ class Recipes extends Component {
         <form>
           <div className="form-group">
             <label htmlFor="name">Name</label>
-            <input id="name" name="name" placeholder="Recipe name" type="text" className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} autoComplete="off" required />
+            <input id="name" name="name" placeholder="Recipe name" type="text" className="form-control" value={this.state.name} onChange={this.handleChange} autoComplete="off" required />
           </div>
           <div className="form-group">
             <label htmlFor="description">Description</label>
-            <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
+            <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required className="form-control" value={this.state.description} onChange={this.handleChange}></textarea>
             <span id="descriptionHelpBlock" className="form-text text-muted">Provide a description of the recipe.</span>
           </div>
           <div className="form-group">
@@ -134,11 +134,11 @@ class Recipes extends Component {
           <div className="form-row">
             <div className="col">
               <label htmlFor="duration">Duration</label>
-              <input id="duration" name="duration" type="text" required className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} placeholder="Enter a value in minutes" autoComplete="off" />
+              <input id="duration" name="duration" type="text" required className="form-control" value={this.state.duration} onChange={this.handleChange} placeholder="Enter a value in minutes" autoComplete="off" />
             </div>
             <div className="col">
               <label htmlFor="servings">Servings</label>
-              <input id="servings" name="servings" type="text" required className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} placeholder="E.g. number of people this would serve" autoComplete="off" />
+              <input id="servings" name="servings" type="text" required className="form-control" value={this.state.servings} onChange={this.handleChange} placeholder="E.g. number of people this would serve" autoComplete="off" />
             </div>
           </div>
           <div className="form-group">
@@ -162,7 +162,7 @@ class Recipes extends Component {
             }
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary" onClick={(e) => this.addItem(e)}><i className="fas fa-plus"></i> Add ingredient</button>
+            <button type="submit" className="btn btn-primary" onClick={this.addItem}><i className="fas fa-plus"></i> Add ingredient</button>
           </div>
           <div className="form-group">
             <label htmlFor="instructions_!">Instructions</label>
@@ -182,10 +182,10 @@ class Recipes extends Component {
             }
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}><i className="fas fa-plus"></i> Add instruction</button>
+            <button type="submit" className="btn btn-primary" onClick={this.addInstruction}><i className="fas fa-plus"></i> Add instruction</button>
           </div>
           <div className="form-group">
-            {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i className="fas fa-cloud-upload-alt"></i> Save recipe</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud-upload-alt"></i> Save recipe</button>}
+            {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i className="fas fa-cloud-upload-alt"></i> Save recipe</button> : <button name="submit" type="submit" className="btn btn-success" onClick={this.handleSubmit}><i className="fas fa-cloud-upload-alt"></i> Save recipe</button>}
           </div>
         </form>
       </div>

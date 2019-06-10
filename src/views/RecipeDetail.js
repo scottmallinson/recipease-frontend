@@ -33,7 +33,7 @@ class RecipeDetail extends Component {
     }
   }
 
-  handleSaveRecipe(e) {
+  handleSaveRecipe = e => {
     e.preventDefault();
     const recipeId = this.state._id;
     const userId = this.props.user._id;
@@ -45,7 +45,7 @@ class RecipeDetail extends Component {
       .catch((error) => console.log(error));
   }
 
-  handleUnsaveRecipe(e) {
+  handleUnsaveRecipe = e => {
     e.preventDefault();
     const recipeId = this.state._id;
     const userId = this.props.user._id;
@@ -53,11 +53,11 @@ class RecipeDetail extends Component {
       recipeId,
       userId
     })
-      .then((response) => this.setState({ saved: false }))
+      .then(() => this.setState({ saved: false }))
       .catch((error) => console.log(error))
   }
 
-  handleEditRecipe(e) {
+  handleEditRecipe = e => {
     e.preventDefault();
     this.setState({
       editing: !this.state.editing,
@@ -65,7 +65,7 @@ class RecipeDetail extends Component {
     })
   }
 
-  handleItemChange(e, inputIndex) {
+  handleItemChange = (e, inputIndex) => {
     const { ingredients } = this.state;
     let newIngredients = [...ingredients];
     newIngredients.map((_, index, newIngredients) => {
@@ -76,7 +76,7 @@ class RecipeDetail extends Component {
     })
   }
 
-  handleItemRemove(e, index) {
+  handleItemRemove = (e, index) => {
     e.preventDefault();
     this.state.ingredients.splice(index, 1);
     this.setState({
@@ -84,7 +84,7 @@ class RecipeDetail extends Component {
     })
   }
 
-  addItem(e, items) {
+  addItem = e => {
     e.preventDefault();
     this.setState({
       ingredients: [...this.state.ingredients, {
@@ -94,7 +94,7 @@ class RecipeDetail extends Component {
     })
   }
 
-  handleInstructionChange(e, inputIndex) {
+  handleInstructionChange = (e, inputIndex) => {
     const { instructions } = this.state;
     let newInstructions = [...instructions];
     newInstructions.map((_, index, newInstructions) => {
@@ -105,12 +105,12 @@ class RecipeDetail extends Component {
     })
   }
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
+  handleChange = e => {
+    const { name, value } = e.target;
     this.setState({ [name]: value });
   }
 
-  handleInstructionRemove(e, index) {
+  handleInstructionRemove = (e, index) => {
     e.preventDefault();
     this.state.instructions.splice(index, 1);
     this.setState({
@@ -118,14 +118,14 @@ class RecipeDetail extends Component {
     })
   }
 
-  addInstruction(e, items) {
+  addInstruction = e => {
     e.preventDefault();
     this.setState({
       instructions: [...this.state.instructions, '']
     })
   }
 
-  handleSubmit(e) {
+  handleSubmit = e => {
     e.preventDefault();
     const { _id, creatorId, name, description, photoUrl, duration, ingredients, instructions, servings } = this.state;
     recipe.updateRecipe({
@@ -139,7 +139,7 @@ class RecipeDetail extends Component {
       instructions,
       servings
     })
-      .then((response) => this.setState({ editing: false }))
+      .then(() => this.setState({ editing: false }))
       .catch((error) => console.log(error));
   }
 
@@ -178,7 +178,7 @@ class RecipeDetail extends Component {
     }
   }
 
-  fileOnchange = (e) => {
+  fileOnchange = e => {
     const file = e.target.files[0];
     const uploadData = new FormData()
     uploadData.append('recipease', file)
@@ -222,9 +222,9 @@ class RecipeDetail extends Component {
                 <p className="lead card-text">{this.state.description}</p>
                 <p className="text-muted small">Contributed by {this.checkContributor()}</p>
                 <div className="d-flex justify-content-between mb-3">
-                  {this.state.editable && !this.state.editing ? <button className="btn btn-outline-secondary" type="submit" onClick={(e) => this.handleEditRecipe(e)}>Edit recipe</button> : null}
-                  {this.props.isLoggedin && !this.state.saved && !this.state.editing && !this.state.editable ? <button className="btn btn-success favourite" type="submit" onClick={(e) => this.handleSaveRecipe(e)}><i className="fas fa-heart"></i> Favourite recipe</button> : null}
-                  {this.props.isLoggedin && this.state.saved && !this.state.editing ? <button className="btn btn-secondary unfavourite" type="submit" onClick={(e) => this.handleUnsaveRecipe(e)}><i className="fas fa-heart"></i> Unfavourite recipe</button> : null}
+                  {this.state.editable && !this.state.editing ? <button className="btn btn-outline-secondary" type="submit" onClick={this.handleEditRecipe}>Edit recipe</button> : null}
+                  {this.props.isLoggedin && !this.state.saved && !this.state.editing && !this.state.editable ? <button className="btn btn-success favourite" type="submit" onClick={this.handleSaveRecipe}><i className="fas fa-heart"></i> Favourite recipe</button> : null}
+                  {this.props.isLoggedin && this.state.saved && !this.state.editing ? <button className="btn btn-secondary unfavourite" type="submit" onClick={this.handleUnsaveRecipe}><i className="fas fa-heart"></i> Unfavourite recipe</button> : null}
                   <div>
                     <a className="text-reset pl-1" style={{ fontSize: '150%' }} href={`https://twitter.com/intent/tweet?source=webclient&text=${this.state.name}+-+${this.state.description}+via+Recipease+-+https://recipease-ironhack.herokuapp.com${this.props.location.pathname}`} target="_blank" rel="noopener noreferrer"><i className="fab fa-twitter"></i></a>
                     <a className="text-reset pl-1" style={{ fontSize: '150%' }} href={`https://www.pinterest.com/pin/create/button/?url=https://recipease-ironhack.herokuapp.com${this.props.location.pathname}&media=${this.state.photoUrl}&description=${this.state.name}+-+${this.state.description}+via+Recipease`} target="_blank" rel="noopener noreferrer"><i className="fab fa-pinterest"></i></a>
@@ -257,11 +257,11 @@ class RecipeDetail extends Component {
                   <form>
                     <div className="form-group">
                       <label htmlFor="name">Name</label>
-                      <input id="name" name="name" placeholder="Recipe name" type="text" required className="form-control" value={this.state.name} onChange={(e) => this.handleChange(e)} autoComplete="off" />
+                      <input id="name" name="name" placeholder="Recipe name" type="text" required className="form-control" value={this.state.name} onChange={this.handleChange} autoComplete="off" />
                     </div>
                     <div className="form-group">
                       <label htmlFor="description">Description</label>
-                      <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required className="form-control" value={this.state.description} onChange={(e) => this.handleChange(e)}></textarea>
+                      <textarea id="description" name="description" cols="40" rows="5" aria-describedby="descriptionHelpBlock" required className="form-control" value={this.state.description} onChange={this.handleChange}></textarea>
                       <span id="descriptionHelpBlock" className="form-text text-muted">Provide a description of the recipe.</span>
                     </div>
                     <div className="form-group">
@@ -271,11 +271,11 @@ class RecipeDetail extends Component {
                     <div className="form-row">
                       <div className="col">
                         <label htmlFor="duration">Duration</label>
-                        <input id="duration" name="duration" type="text" required className="form-control" value={this.state.duration} onChange={(e) => this.handleChange(e)} autoComplete="off" />
+                        <input id="duration" name="duration" type="text" required className="form-control" value={this.state.duration} onChange={this.handleChange} autoComplete="off" />
                       </div>
                       <div className="col">
                         <label htmlFor="servings">Servings</label>
-                        <input id="servings" name="servings" type="text" required className="form-control" value={this.state.servings} onChange={(e) => this.handleChange(e)} autoComplete="off" />
+                        <input id="servings" name="servings" type="text" required className="form-control" value={this.state.servings} onChange={this.handleChange} autoComplete="off" />
                       </div>
                     </div>
                     <div className="form-group">
@@ -299,7 +299,7 @@ class RecipeDetail extends Component {
                       }
                     </div>
                     <div className="form-group">
-                      <button type="submit" className="btn btn-primary" onClick={(e) => this.addItem(e)}><i className="fas fa-plus"></i> Add ingredient</button>
+                      <button type="submit" className="btn btn-primary" onClick={this.addItem}><i className="fas fa-plus"></i> Add ingredient</button>
                     </div>
                     <div className="form-group">
                       <label htmlFor="instructions_!">Instructions</label>
@@ -319,14 +319,14 @@ class RecipeDetail extends Component {
                       }
                     </div>
                     <div className="form-group">
-                      <button type="submit" className="btn btn-primary" onClick={(e) => this.addInstruction(e)}><i className="fas fa-plus"></i> Add instruction</button>
+                      <button type="submit" className="btn btn-primary" onClick={this.addInstruction}><i className="fas fa-plus"></i> Add instruction</button>
                     </div>
                     <div className="form-row">
                       <div className="col-auto">
-                        <button type="submit" className="btn btn-danger" onClick={(e) => this.handleEditRecipe(e)}>Cancel changes</button>
+                        <button type="submit" className="btn btn-danger" onClick={this.handleEditRecipe}>Cancel changes</button>
                       </div>
                       <div className="col-auto">
-                        {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i className="fas fa-cloud-upload-alt"></i> Save changes</button> : <button name="submit" type="submit" className="btn btn-success" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud-upload-alt"></i> Save changes</button>}
+                        {disable ? <button name="submit" type="submit" className="btn btn-success" disabled><i className="fas fa-cloud-upload-alt"></i> Save changes</button> : <button name="submit" type="submit" className="btn btn-success" onClick={this.handleSubmit}><i className="fas fa-cloud-upload-alt"></i> Save changes</button>}
                       </div>
                     </div>
                   </form>
