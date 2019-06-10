@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function RecipeCard(props) {
   const [recipe] = useState(props.recipe)

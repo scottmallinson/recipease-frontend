@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 const moment = require('moment');
 
 function FeaturedRecipeCard(props) {
