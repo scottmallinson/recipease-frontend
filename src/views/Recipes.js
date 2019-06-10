@@ -4,6 +4,7 @@ import { withAuth } from './../lib/AuthProvider';
 import { Helmet } from 'react-helmet';
 import recipe from '../lib/recipe-service';
 import Search from "./../components/Search";
+import RecipeCard from "./../components/RecipeCard";
 
 class Recipes extends Component {
   constructor() {
@@ -40,26 +41,7 @@ class Recipes extends Component {
             </div>
           </div>
           {this.state.recipes.map((recipe) =>
-            <div key={recipe._id} className="card mb-3">
-              <Link to={{
-                pathname: `/recipes/${recipe._id}`,
-                state: { selectedRecipe: recipe }
-              }}>
-                <div className="row no-gutters">
-                  <div className="col-md-4">
-                    <img src={recipe.photoUrl} className="card-img" alt="..." />
-                  </div>
-                  <div className="col-md-8">
-                    <div className="card-body">
-                      <h5 className="card-title">
-                        {recipe.name}
-                      </h5>
-                      <p className="card-text text-body">{recipe.description}</p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </div>
+            <RecipeCard key={recipe._id} recipe={recipe} />
           )}
         </div>
       </>
