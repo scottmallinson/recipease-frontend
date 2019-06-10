@@ -62,19 +62,6 @@ class Pantry extends Component {
       .catch((error) => console.log(error));
   }
 
-  handleLucky = (e) => {
-    e.preventDefault();
-    const searchForItems = this.state.pantry;
-    const ingredients = searchForItems.map((items) => items.item);
-    recipe.recipesByAllIngredients({
-      ingredients
-    })
-      .then((data) => {
-        this.setState({ recipes: data })
-      })
-      .catch((error) => console.log(error));
-  }
-
   handleSearchByIngredients = (e) => {
     e.preventDefault();
     const searchForItems = this.state.selectedIngredients
