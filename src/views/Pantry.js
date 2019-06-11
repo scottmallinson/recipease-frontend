@@ -68,14 +68,15 @@ function Pantry(props) {
     let positionInArray = null;
     if (!selectedIngredients.includes(e.target.name)) {
       setSelectedIngredients([...selectedIngredients, e.target.name])
+      setDisabled(false);
     } else {
       positionInArray = selectedIngredients.indexOf(e.target.name)
-      setSelectedIngredients(selectedIngredients.splice(positionInArray, 1))
-    }
-    if (selectedIngredients.length > 0) {
-      setDisabled(false)
-    } else {
-      setDisabled(true)
+      let newSelectedIngredients = [...selectedIngredients];
+      newSelectedIngredients.splice(positionInArray, 1);
+      setSelectedIngredients(newSelectedIngredients)
+      if (newSelectedIngredients.length === 0) {
+        setDisabled(true)
+      }
     }
   }
 
