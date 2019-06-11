@@ -46,7 +46,7 @@ function Navbar(props) {
             {isLoggedin ? (
               <>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/"><button className="btn btn-outline-primary" type="submit" onClick={handleLogout}>Logout</button></Link>
+                  <Link className="nav-link" to="#"><button className="btn btn-outline-primary" type="submit" onClick={handleLogout}>Logout</button></Link>
                 </li>
               </>
             ) :
