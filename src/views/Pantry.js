@@ -1,171 +1,158 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from 'react-router-dom';
 import { withAuth } from "../lib/AuthProvider";
 import user from '../lib/user-service';
 import recipe from '../lib/recipe-service';
 
-class Pantry extends Component {
-  constructor(props) {
-    super(props)
-    this.myRef = React.createRef()
-    this.state = {
-      pantry: [],
-      recipes: [],
-      selectedIngredients: [],
-      performSearch: false,
-      disabled: true
-    }
-  }
+function Pantry(props) {
+  const [pantry, setPantry] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [performSearch, setPerformSearch] = useState(false);
+  const [disabled, setDisabled] = useState(true);
+  const myRef = useRef();
 
-  handleItemChange(e, inputIndex) {
-    const { pantry } = this.state;
+  function handleItemChange(e, inputIndex) {
     let newPantry = [...pantry];
     newPantry.map((_, index, newPantry) => {
       return index === inputIndex ? newPantry[index][e.target.name] = e.target.value : null;
     })
-    this.setState({
-      pantry: newPantry,
-    })
+    setPantry(newPantry)
   }
 
-  handleItemRemove(e, index) {
+  function handleItemRemove(e, index) {
     e.preventDefault();
-    this.state.pantry.splice(index, 1);
-    this.setState({
-      pantry: this.state.pantry
-    })
+    let newPantry = [...pantry];
+    newPantry.splice(index, 1);
+    setPantry(newPantry)
   }
 
-  addItem(e, items) {
+  function addItem(e) {
     e.preventDefault();
-    this.setState({
-      pantry: [...this.state.pantry, {
+    setPantry(
+      [...pantry, {
         item: '',
         quantity: ''
       }]
-    })
+    )
   }
 
-  handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    const { _id } = this.props.user;
-    const { pantry } = this.state;
+    const { _id } = props.user;
     user.updatePantry({
       _id,
       pantry
     })
       .then((response) => {
-        this.setState({
-          pantry: response.pantry
-        })
+        setPantry(
+          response.pantry
+        )
       })
       .catch((error) => console.log(error));
   }
 
-  handleSearchByIngredients = (e) => {
+  function handleSearchByIngredients(e) {
     e.preventDefault();
-    const searchForItems = this.state.selectedIngredients
     recipe.recipesByAllIngredients({
-      searchForItems
+      selectedIngredients
     })
       .then((data) => {
-        this.setState({ recipes: data, performSearch: true })
+        setRecipes(data)
+        setPerformSearch(true)
       })
       .catch((error) => console.log(error));
   }
 
-  componentDidUpdate(_, prevState) {
-    if (this.state.recipes !== prevState.recipes) {
-      window.scroll(0, this.myRef.current.offsetTop);
-    }
-  }
-
-  handleCheckChange = (e) => {
+  function handleCheckChange(e) {
     let positionInArray = null;
-    if (!this.state.selectedIngredients.includes(e.target.name)) {
-      this.state.selectedIngredients.push(e.target.name)
+    if (!selectedIngredients.includes(e.target.name)) {
+      setSelectedIngredients([...selectedIngredients, e.target.name])
     } else {
-      positionInArray = this.state.selectedIngredients.indexOf(e.target.name)
-      this.state.selectedIngredients.splice(positionInArray, 1)
+      positionInArray = selectedIngredients.indexOf(e.target.name)
+      setSelectedIngredients(selectedIngredients.splice(positionInArray, 1))
     }
-    if (this.state.selectedIngredients.length > 0) {
-      this.setState({ disabled: false })
+    if (selectedIngredients.length > 0) {
+      setDisabled(false)
     } else {
-      this.setState({ disabled: true })
+      setDisabled(true)
     }
   }
 
-  componentDidMount() {
-    user.getUser(this.props.user._id)
+  useEffect(() => {
+    user.getUser(props.user._id)
       .then((data) => {
-        this.setState({
-          pantry: data.pantry
-        })
+        setPantry(data.pantry)
       })
       .catch((error) => console.log(error))
-  }
 
-  render() {
-    return (
-      <div className="container p-0">
-        {
-          this.state.pantry.map((item, index) => {
-            return (
-              <div className="form-row" key={index} ref={this.myRef}>
-                <div className="col col-md-8">
-                  <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={item.item} name="item" placeholder="Item name" autoComplete="off" />
-                </div>
-                <div className="col">
-                  <input className="form-control" onChange={(e) => this.handleItemChange(e, index)} value={item.quantity} name="quantity" placeholder="Quantity" autoComplete="off" />
-                </div>
-                <div className="col-1">
-                  <input className="form-control" type="checkbox" name={item.item} onChange={(e) => this.handleCheckChange(e, index)} />
-                </div>
-                <div className="col-auto">
-                  <button className="btn btn-warning" onClick={(e) => this.handleItemRemove(e, index)}><i className="far fa-trash-alt"></i></button>
-                </div>
+  }, [])
+
+  useEffect(() => {
+    if (myRef.current) {
+      window.scrollTo(0, myRef.current.offsetTop);
+    }
+  }, [recipes])
+
+  return (
+    <div className="container p-0">
+      {
+        pantry.map((item, index) => {
+          return (
+            <div className="form-row" key={index} ref={myRef}>
+              <div className="col col-md-8">
+                <input className="form-control" onChange={(e) => handleItemChange(e, index)} value={item.item} name="item" placeholder="Item name" autoComplete="off" />
               </div>
-            )
-          })
-        }
-        <div className="form-row">
-          <div className="col-auto">
-            <button className="btn btn-outline-primary" type="submit" onClick={(e) => this.addItem(e)}><i className="fas fa-plus"></i> Add item</button>
-          </div>
-          <div className="col-auto">
-            <button className="btn btn-success" type="submit" onClick={(e) => this.handleSubmit(e)}><i className="fas fa-cloud-upload-alt"></i> Save items</button>
-          </div>
-        </div>
-        <div className="form-row">
-          <div className="col">
-            <button className="btn btn-primary" type="submit" onClick={(e) => this.handleSearchByIngredients(e)} disabled={this.state.disabled}><span className="badge badge-light">{this.state.selectedIngredients.length}</span> ingredients selected</button>
-          </div>
-        </div>
-        {this.state.performSearch ?
-          <h2>{this.state.recipes.length} recipes uses the selected ingredients</h2>
-          : null}
-        {this.state.recipes.map((recipe) =>
-          <div className="card mb-3" key={recipe._id._id}>
-            <div className="row no-gutters">
-              <div className="col-md-4">
-                <img src={recipe._id.photoUrl} className="card-img" alt="..." />
+              <div className="col">
+                <input className="form-control" onChange={(e) => handleItemChange(e, index)} value={item.quantity} name="quantity" placeholder="Quantity" autoComplete="off" />
               </div>
-              <div className="col-md-8">
-                <div className="card-body">
-                  <h5 className="card-title">
-                    <Link to={{
-                      pathname: `/recipes/${recipe._id._id}`
-                    }}>{recipe._id.name}</Link> <span className="badge badge-info">{recipe.matches} ingredients matched</span>
-                  </h5>
-                  <p className="card-text">{recipe._id.description}</p>
-                </div>
+              <div className="col-1">
+                <input className="form-control" type="checkbox" name={item.item} onChange={(e) => handleCheckChange(e, index)} />
+              </div>
+              <div className="col-auto">
+                <button className="btn btn-warning" onClick={(e) => handleItemRemove(e, index)}><i className="far fa-trash-alt"></i></button>
+              </div>
+            </div>
+          )
+        })
+      }
+      <div className="form-row">
+        <div className="col-auto">
+          <button className="btn btn-outline-primary" type="submit" onClick={addItem}><i className="fas fa-plus"></i> Add item</button>
+        </div>
+        <div className="col-auto">
+          <button className="btn btn-success" type="submit" onClick={handleSubmit}><i className="fas fa-cloud-upload-alt"></i> Save items</button>
+        </div>
+      </div>
+      <div className="form-row">
+        <div className="col">
+          <button className="btn btn-primary" type="submit" onClick={handleSearchByIngredients} disabled={disabled}><span className="badge badge-light">{selectedIngredients.length}</span> ingredients selected</button>
+        </div>
+      </div>
+      {performSearch ?
+        <h2>{recipes.length} recipes uses the selected ingredients</h2>
+        : null}
+      {recipes.map((recipe) =>
+        <div className="card mb-3" key={recipe._id._id}>
+          <div className="row no-gutters">
+            <div className="col-md-4">
+              <img src={recipe._id.photoUrl} className="card-img" alt="..." />
+            </div>
+            <div className="col-md-8">
+              <div className="card-body">
+                <h5 className="card-title">
+                  <Link to={{
+                    pathname: `/recipes/${recipe._id._id}`
+                  }}>{recipe._id.name}</Link> <span className="badge badge-info">{recipe.matches} ingredients matched</span>
+                </h5>
+                <p className="card-text">{recipe._id.description}</p>
               </div>
             </div>
           </div>
-        )}
-      </div>
-    );
-  }
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default withAuth(Pantry);
