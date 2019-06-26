@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -15,26 +15,24 @@ import PrivateRoute from "./components/PrivateRoute";
 import AnonRoute from "./components/AnonRoute";
 import AuthProvider from "./lib/AuthProvider";
 
-class App extends Component {
-  render() {
-    return (
-      <AuthProvider>
-        <Navbar />
-        <Switch>
-          <PrivateRoute exact path="/recipes/create" component={RecipeCreate} />
-          <Route exact path="/recipes/:id" component={RecipeDetail} />
-          <AnonRoute path="/signup" component={Signup} />
-          <AnonRoute path="/login" component={Login} />
-          <PrivateRoute path="/profile" component={Profile} />
-          <PrivateRoute path="/pantry" component={Pantry} />
-          <Route exact path="/recipes" component={Recipes} />
-          <Route exact path="/search" component={Search} />
-          <Route exact path="/" component={Home} />
-        </Switch>
-        <Footer />
-      </AuthProvider>
-    );
-  }
+function App() {
+  return (
+    <AuthProvider>
+      <Navbar />
+      <Switch>
+        <PrivateRoute exact path="/recipes/create" component={RecipeCreate} />
+        <Route exact path="/recipes/:id" component={RecipeDetail} />
+        <AnonRoute path="/signup" component={Signup} />
+        <AnonRoute path="/login" component={Login} />
+        <PrivateRoute path="/profile" component={Profile} />
+        <PrivateRoute path="/pantry" component={Pantry} />
+        <Route exact path="/recipes" component={Recipes} />
+        <Route exact path="/search" component={Search} />
+        <Route exact path="/" component={Home} />
+      </Switch>
+      <Footer />
+    </AuthProvider>
+  );
 }
 
 export default App;
