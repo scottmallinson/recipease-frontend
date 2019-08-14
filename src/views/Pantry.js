@@ -127,24 +127,24 @@ function Pantry(props) {
       </div>
       <div className="form-row">
         <div className="col">
-          <button className="btn btn-primary" type="submit" onClick={handleSearchByIngredients} disabled={disabled}><span className="badge badge-light">{selectedIngredients.length}</span> ingredients selected</button>
+          <button className="btn btn-primary" type="submit" onClick={handleSearchByIngredients} disabled={disabled}><span className="badge badge-light">{selectedIngredients.length}</span> ingredient{selectedIngredients.length !== 1 ? 's' : null } selected</button>
         </div>
       </div>
       {performSearch ?
-        <h2>{recipes.length} recipes uses the selected ingredients</h2>
+        <h2>{recipes.length} recipe{recipes.length !== 1 ? 's use the selected ingredients' : ' uses the selected ingredient' }</h2>
         : null}
       {recipes.map((recipe) =>
         <div className="card mb-3" key={recipe._id._id}>
           <div className="row no-gutters">
             <div className="col-md-4">
-              <img src={recipe._id.photoUrl} className="card-img" alt="..." />
+              <img src={recipe._id.photoUrl} className="card-img" alt={recipe._id.name} loading="lazy" />
             </div>
             <div className="col-md-8">
               <div className="card-body">
                 <h5 className="card-title">
                   <Link to={{
                     pathname: `/recipes/${recipe._id._id}`
-                  }}>{recipe._id.name}</Link> <span className="badge badge-info">{recipe.matches} ingredients matched</span>
+                  }}>{recipe._id.name}</Link> <span className="badge badge-info">{recipe.matches} ingredient{recipe.matches > 1 ? 's' : null } matched</span>
                 </h5>
                 <p className="card-text">{recipe._id.description}</p>
               </div>

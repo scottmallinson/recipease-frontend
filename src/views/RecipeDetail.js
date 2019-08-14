@@ -216,7 +216,7 @@ class RecipeDetail extends Component {
           </Helmet>
           <div className="container p-0 py-5">
             <div className="card mb-3">
-              <img src={this.state.photoUrl} className="card-img" alt="..." />
+              <img src={this.state.photoUrl} className="card-img" alt={this.state.name} loading="eager" />
               <div className="card-body">
                 <h1 className="card-title">{this.state.name}</h1>
                 <p className="lead card-text">{this.state.description}</p>

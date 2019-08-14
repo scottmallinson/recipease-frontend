@@ -12,7 +12,7 @@ function RecipeCard(props) {
       }}>
         <div className="row no-gutters">
           <div className="col-md-4">
-            <img src={photoUrl} className="card-img" alt="..." />
+            <img src={photoUrl} className="card-img" alt={name} loading="lazy" />
           </div>
           <div className="col-md-8">
             <div className="card-body">

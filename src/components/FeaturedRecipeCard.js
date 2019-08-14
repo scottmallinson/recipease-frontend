@@ -11,7 +11,7 @@ function FeaturedRecipeCard(props) {
         pathname: `/recipes/${_id}`,
         state: { selectedRecipe: recipe }
       }}>
-        <img src={photoUrl} className="card-img-top" alt="..." />
+        <img src={photoUrl} className="card-img-top" alt={name} loading="lazy" />
         <div className="card-body">
           <h5 className="card-title">
             {name}
