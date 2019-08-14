@@ -25,7 +25,7 @@ function Search() {
       <ul className="list-unstyled pt-2">
         {recipes.map((recipe) =>
           <li className="media mt-2" key={recipe._id}>
-            <img src={recipe.photoUrl} className="mr-3" width="100" alt="..." />
+            <img src={recipe.photoUrl} className="mr-3" width="100" alt={recipe.name} loading="eager" />
             <div className="media-body">
               <h5 className="mt-0 mb-1"><Link to={{
                 pathname: `/recipes/${recipe._id}`,

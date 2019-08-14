@@ -21,7 +21,7 @@ function Navbar(props) {
     <nav className="navbar navbar-expand-md navbar-light bg-light sticky-top border-bottom">
       <div className="container">
         <Link className="navbar-brand" to="/">
-          <img src={logo} width="30" height="30" className="d-inline-block align-top pr-1" alt="" />
+          <img src={logo} width="30" height="30" className="d-inline-block align-top pr-1" alt="Recipease" loading="eager" />
           Recipease
       </Link>
         <button data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" className='navbar-toggler collapsed' onClick={handleToggleNav} type="button">
