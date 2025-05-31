@@ -10,17 +10,18 @@
     "react-dom": "^17.0.0",
     "react-helmet": "^6.0.0",
     "react-redux": "^7.0.3",
+    "react-router": "^6.28.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "^4.0.0",
     "redux": "^4.0.1"
   },
   "scripts": {
-    "build-dev": "dotenv -e .env.development react-app-rewired build",
-    "build-prod": "dotenv -e .env.production react-app-rewired build",
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "build-dev": "NODE_OPTIONS=--openssl-legacy-provider yarn exec dotenv -e .env.development -- yarn exec react-app-rewired build",
+    "build-prod": "NODE_OPTIONS=--openssl-legacy-provider yarn exec dotenv -e .env.production -- yarn exec react-app-rewired build",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider yarn exec react-app-rewired start",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider yarn exec react-app-rewired build",
+    "test": "yarn exec react-app-rewired test",
+    "eject": "yarn exec react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +31,15 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/user-event": "^14.6.1",
+    "dotenv-cli": "^8.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-react-app": "^7.0.1",
+    "jest-environment-jsdom": "30.0.0-beta.3",
+    "workbox-webpack-plugin": "^7.3.0"
+  }
 }
