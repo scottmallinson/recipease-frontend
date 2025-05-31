@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { withRouter } from 'react-router';
 import { Link } from "react-router-dom";
 import { withAuth } from "../lib/AuthProvider";
 import logo from './../assets/logo.svg';
@@ -23,7 +22,7 @@ function Navbar(props) {
         <Link className="navbar-brand" to="/">
           <img src={logo} width="30" height="30" className="d-inline-block align-top pr-1" alt="Recipease" loading="eager" />
           Recipease
-      </Link>
+        </Link>
         <button data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" className='navbar-toggler collapsed' onClick={handleToggleNav} type="button">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -66,4 +65,4 @@ function Navbar(props) {
   );
 }
 
-export default withRouter(withAuth(Navbar));
+export default withAuth(Navbar);
