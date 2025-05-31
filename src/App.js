@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Search from "./components/Search";
@@ -19,17 +19,17 @@ function App() {
   return (
     <AuthProvider>
       <Navbar />
-      <Switch>
-        <PrivateRoute exact path="/recipes/create" component={RecipeCreate} />
-        <Route exact path="/recipes/:id" component={RecipeDetail} />
-        <AnonRoute path="/signup" component={Signup} />
-        <AnonRoute path="/login" component={Login} />
-        <PrivateRoute path="/profile" component={Profile} />
-        <PrivateRoute path="/pantry" component={Pantry} />
-        <Route exact path="/recipes" component={Recipes} />
-        <Route exact path="/search" component={Search} />
-        <Route exact path="/" component={Home} />
-      </Switch>
+      <Routes>
+        <Route path="/recipes/create" element={<PrivateRoute><RecipeCreate /></PrivateRoute>} />
+        <Route path="/recipes/:id" element={<RecipeDetail />} />
+        <Route path="/signup" element={<AnonRoute><Signup /></AnonRoute>} />
+        <Route path="/login" element={<AnonRoute><Login /></AnonRoute>} />
+        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+        <Route path="/pantry" element={<PrivateRoute><Pantry /></PrivateRoute>} />
+        <Route path="/recipes" element={<Recipes />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
       <Footer />
     </AuthProvider>
   );
