@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { withAuth } from "../lib/AuthProvider";
-import recipe from '../lib/recipe-service';
+import recipe from "../lib/recipe-service";
 
-class Recipes extends Component {
+class RecipeCreate extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -94,7 +94,10 @@ class Recipes extends Component {
       instructions,
       servings
     })
-      .then(() => this.props.history.push('/recipes'))
+      .then(() => {
+        // Navigate to recipes page after successful creation
+        window.location.href = '/recipes';
+      })
       .catch((error) => console.log(error));
   }
 
@@ -103,13 +106,13 @@ class Recipes extends Component {
     const uploadData = new FormData()
     uploadData.append('recipease', file)
     recipe.uploadRecipeImage(uploadData)
-    .then((photoUrl) => {
-      this.setState({
-        photoUrl,
-        disable: false,
+      .then((photoUrl) => {
+        this.setState({
+          photoUrl,
+          disable: false,
+        })
       })
-    })
-    .catch((error) => console.log(error))
+      .catch((error) => console.log(error))
   }
 
   render() {
@@ -193,4 +196,4 @@ class Recipes extends Component {
   }
 }
 
-export default withAuth(Recipes);
+export default withAuth(RecipeCreate);

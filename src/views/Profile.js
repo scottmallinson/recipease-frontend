@@ -16,7 +16,7 @@ function Profile(props) {
         setSavedRecipes(data.savedRecipes)
       })
       .catch((error) => console.log(error))
-  }, [])
+  }, [props.user._id])
 
   return (
     <>
