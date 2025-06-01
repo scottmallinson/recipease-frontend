@@ -1,4 +1,3 @@
-import axios, { AxiosInstance } from 'axios';
 import { User } from '../types';
 
 interface LoginData {
@@ -6,39 +5,46 @@ interface LoginData {
 	password: string;
 }
 
-class Auth {
-	private auth: AxiosInstance;
+const baseUrl = process.env.REACT_APP_API_URL || '';
 
-	constructor() {
-		this.auth = axios.create({
-			baseURL: process.env.REACT_APP_API_URL,
-			withCredentials: true
-		});
-	}
+const signup = async (user: LoginData): Promise<User> => {
+	const { username, password } = user;
+	const response = await fetch(`${baseUrl}/auth/signup`, {
+		method: 'POST',
+		credentials: 'include',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ username, password })
+	});
+	return await response.json();
+};
 
-	async signup(user: LoginData): Promise<User> {
-		const { username, password } = user;
-		const { data } = await this.auth.post('/auth/signup', { username, password });
-		return data;
-	}
+const login = async (user: LoginData): Promise<User> => {
+	const { username, password } = user;
+	const response = await fetch(`${baseUrl}/auth/login`, {
+		method: 'POST',
+		credentials: 'include',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ username, password })
+	});
+	return await response.json();
+};
 
-	async login(user: LoginData): Promise<User> {
-		const { username, password } = user;
-		const { data } = await this.auth.post('/auth/login', { username, password });
-		return data;
-	}
+const logout = async (): Promise<void> => {
+	await fetch(`${baseUrl}/auth/logout`, {
+		method: 'POST',
+		credentials: 'include',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({})
+	});
+};
 
-	async logout(): Promise<void> {
-		const response = await this.auth.post('/auth/logout', {});
-		return response.data;
-	}
+const me = async (): Promise<User> => {
+	const response = await fetch(`${baseUrl}/auth/me`, {
+		credentials: 'include'
+	});
+	return await response.json();
+};
 
-	async me(): Promise<User> {
-		const response = await this.auth.get('/auth/me');
-		return response.data;
-	}
-}
-
-const auth = new Auth();
+const auth = { signup, login, logout, me };
 
 export default auth;
