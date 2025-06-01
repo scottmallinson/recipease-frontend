@@ -1,4 +1,4 @@
-import React, { Component, createContext } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import auth from "./auth-service";
 import { User, AuthContextType } from "../types";
 
@@ -16,127 +16,99 @@ export interface WithAuthProps {
 }
 
 export const withAuth = <P extends object>(Comp: React.ComponentType<P & WithAuthProps>) => {
-	return class WithAuth extends Component<P> {
-		render() {
-			return (
-				<Consumer>
-					{(authStore) => {
-						if (!authStore) return null;
-						return (
-							<Comp
-								login={authStore.login}
-								signup={authStore.signup}
-								user={authStore.user}
-								logout={authStore.logout}
-								isLoggedin={authStore.isLoggedin}
-								{...this.props}
-							/>
-						);
-					}}
-				</Consumer>
-			);
-		}
+	return function WithAuth(props: P): React.ReactElement {
+		return (
+			<Consumer>
+				{(authStore) => {
+					if (!authStore) return null;
+					return (
+						<Comp
+							login={authStore.login}
+							signup={authStore.signup}
+							user={authStore.user}
+							logout={authStore.logout}
+							isLoggedin={authStore.isLoggedin}
+							{...props}
+						/>
+					);
+				}}
+			</Consumer>
+		);
 	};
 };
-
-interface AuthProviderState {
-	isLoggedin: boolean;
-	user: User | null;
-	isLoading: boolean;
-	message?: string;
-}
 
 interface AuthProviderProps {
 	children: React.ReactNode;
 }
 
-class AuthProvider extends Component<AuthProviderProps, AuthProviderState> {
-	state: AuthProviderState = {
-		isLoggedin: false,
-		user: null,
-		isLoading: true
-	};
+const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+	const [isLoggedin, setIsLoggedin] = useState(false);
+	const [user, setUser] = useState<User | null>(null);
+	const [isLoading, setIsLoading] = useState(true);
 
-	componentDidMount() {
+	useEffect(() => {
 		auth
 			.me()
 			.then((user: User) => {
-				this.setState({
-					isLoggedin: true,
-					user,
-					isLoading: false
-				});
+				setIsLoggedin(true);
+				setUser(user);
+				setIsLoading(false);
 			})
 			.catch(() => {
-				this.setState({
-					isLoggedin: false,
-					user: null,
-					isLoading: false
-				});
+				setIsLoggedin(false);
+				setUser(null);
+				setIsLoading(false);
 			});
-	}
+	}, []);
 
-	signup = (user: { username: string; password: string }): void => {
+	const signup = (user: { username: string; password: string }): void => {
 		const { username, password } = user;
 		auth
 			.signup({ username, password })
 			.then((user: User) => {
-				this.setState({
-					isLoggedin: true,
-					user
-				});
+				setIsLoggedin(true);
+				setUser(user);
 			})
-			.catch(({ response: { data: error } }: any) => {
-				this.setState({
-					message: error.statusMessage
-				});
-			});
+			.catch(() => {});
 	};
 
-	login = (user: { username: string; password: string }): void => {
+	const login = (user: { username: string; password: string }): void => {
 		const { username, password } = user;
 		auth
 			.login({ username, password })
 			.then((user: User) => {
-				this.setState({
-					isLoggedin: true,
-					user
-				});
+				setIsLoggedin(true);
+				setUser(user);
 			})
 			.catch(() => {});
 	};
 
-	logout = (): void => {
+	const logout = (): void => {
 		auth
 			.logout()
 			.then(() => {
-				this.setState({
-					isLoggedin: false,
-					user: null
-				});
+				setIsLoggedin(false);
+				setUser(null);
 			})
 			.catch(() => {});
 	};
 
-	render(): React.ReactElement {
-		const { isLoading, isLoggedin, user } = this.state;
-		return isLoading ? (
-			<div>Loading</div>
-		) : (
-			<Provider
-				value={{
-					isLoggedin,
-					user,
-					login: this.login,
-					logout: this.logout,
-					signup: this.signup,
-					isLoading
-				}}
-			>
-				{this.props.children}
-			</Provider>
-		);
-	}
-}
+	return isLoading ? (
+		<div>Loading</div>
+	) : (
+		<Provider
+			value={{
+				isLoggedin,
+				user,
+				login,
+				logout,
+				signup,
+				isLoading
+			}}
+		>
+			{children}
+		</Provider>
+	);
+};
 
 export default AuthProvider;

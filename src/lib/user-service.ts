@@ -1,32 +1,34 @@
-import axios, { AxiosInstance } from 'axios';
-import { User, PantryItem, ApiResponse } from '../types';
+import { User, PantryItem } from '../types';
 
-class UserService {
-	private user: AxiosInstance;
+const getUser = async (id: string): Promise<User> => {
+	const response = await fetch(`${process.env.REACT_APP_API_URL}/user/profile/${id}`, {
+		credentials: 'include'
+	});
+	const data = await response.json();
+	return data.data;
+};
 
-	constructor() {
-		this.user = axios.create({
-			baseURL: `${process.env.REACT_APP_API_URL}/user`,
-			withCredentials: true
-		});
-	}
+const getSavedRecipes = async (id: string): Promise<User> => {
+	const response = await fetch(`${process.env.REACT_APP_API_URL}/user/${id}`, {
+		credentials: 'include'
+	});
+	const data = await response.json();
+	return data.data;
+};
 
-	async getUser(id: string): Promise<User> {
-		const { data } = await this.user.get<ApiResponse<User>>(`/profile/${id}`);
-		return data.data;
-	}
+const updatePantry = async (_id: string, pantry: PantryItem[]): Promise<User> => {
+	const response = await fetch(`${process.env.REACT_APP_API_URL}/user/pantry`, {
+		method: 'PUT',
+		credentials: 'include',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(pantry)
+	});
+	const data = await response.json();
+	return data.data;
+};
 
-	async getSavedRecipes(id: string): Promise<User> {
-		const { data } = await this.user.get<ApiResponse<User>>(`/${id}`);
-		return data.data;
-	}
-
-	async updatePantry(_id: string, pantry: PantryItem[]): Promise<User> {
-		const { data } = await this.user.put<ApiResponse<User>>('/pantry', pantry);
-		return data.data;
-	}
-}
-
-const user = new UserService();
+const user = { getUser, getSavedRecipes, updatePantry };
 
 export default user;
