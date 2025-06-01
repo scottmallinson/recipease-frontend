@@ -1,0 +1,47 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "es6",
+            "es2015",
+            "es2017"
+        ],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react",
+        "declaration": true,
+        "declarationMap": true,
+        "baseUrl": "./src",
+        "paths": {
+            "*": [
+                "node_modules/*",
+                "src/types/*"
+            ]
+        },
+        "types": [
+            "@types/react",
+            "@types/react-router-dom",
+            "@types/node"
+        ]
+    },
+    "include": [
+        "src/**/*",
+        "src/types/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "build"
+    ]
+}
