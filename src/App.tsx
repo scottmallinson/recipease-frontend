@@ -5,7 +5,7 @@ import Footer from "./components/Footer";
 import Search from "./components/Search";
 import Recipes from "./views/Recipes";
 import RecipeCreate from "./views/RecipeCreate";
-import RecipeDetail from "./views/RecipeDetail";
+import RecipeDetailWrapper from "./views/RecipeDetailWrapper";
 import Pantry from "./views/Pantry";
 import Profile from "./views/Profile";
 import Signup from "./views/Signup";
@@ -15,13 +15,13 @@ import PrivateRoute from "./components/PrivateRoute";
 import AnonRoute from "./components/AnonRoute";
 import AuthProvider from "./lib/AuthProvider";
 
-function App() {
+const App: React.FC = () => {
   return (
     <AuthProvider>
       <Navbar />
       <Routes>
         <Route path="/recipes/create" element={<PrivateRoute><RecipeCreate /></PrivateRoute>} />
-        <Route path="/recipes/:id" element={<RecipeDetail />} />
+        <Route path="/recipes/:id" element={<RecipeDetailWrapper />} />
         <Route path="/signup" element={<AnonRoute><Signup /></AnonRoute>} />
         <Route path="/login" element={<AnonRoute><Login /></AnonRoute>} />
         <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
@@ -33,6 +33,6 @@ function App() {
       <Footer />
     </AuthProvider>
   );
-}
+};
 
 export default App;

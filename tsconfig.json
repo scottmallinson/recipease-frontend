@@ -29,7 +29,12 @@
                 "node_modules/*",
                 "src/types/*"
             ]
-        }
+        },
+        "types": [
+            "@types/react",
+            "@types/react-router-dom",
+            "@types/node"
+        ]
     },
     "include": [
         "src/**/*",
